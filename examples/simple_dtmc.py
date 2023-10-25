@@ -17,3 +17,7 @@ ss = mc.steady_state()
 print(ss)
 probas=mc.transient_probabilities(3,np.array([0.05,0.9,0,0.05]))
 print(probas)
+#Lets try the ocupation time function:
+M=mc.occupation_time(10)
+print("ocupation_matrix:")
+print(M)

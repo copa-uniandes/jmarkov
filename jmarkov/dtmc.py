@@ -68,10 +68,14 @@ class dtmc(markov_chain):
         print("TODO")
         return 0
 
-    def occupation_time(self, nsteps:int):
-        #TODO computes the expected occupation time matrix in nsteps steps
-        print("TODO")
-        return 0
+    def occupation_time(self, n:int):
+        #computes the expected occupation time matrix in nsteps steps:
+        ocupation=np.eye(self.transition_matrix.shape[0],self.transition_matrix.shape[1])#Create an identity matrix with the same shape of transition matrix
+        for i in range(1,n+1):
+            ocupation+=np.linalg.matrix_power(self.transition_matrix,i)
+        return ocupation
+        
+       
 
     def is_ergodic(self):
         #TODO determines id the chain is ergodic or not
