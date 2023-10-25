@@ -7,7 +7,8 @@ from dtmc import dtmc
 P = np.array([[0.2, 0.8, 0], [0.3, 0.4, 0.3], [0.4, 0, 0.6]])
 
 mc = dtmc(P)
-print(mc.transition_matrix)
+#print(mc.transition_matrix)
 
 ss = mc.steady_state()
-print(ss)
+probas=mc.transient_probabilities(1,np.array([0.3,0.4,0.3]))
+print(probas)
