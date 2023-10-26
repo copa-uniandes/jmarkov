@@ -33,7 +33,7 @@ class ctmc(markov_chain):
         # computes the steady state distribution
         if self.generator.any():
             # sets A to be Q and replace first column with ones for the normalizing equation
-            A = self.generator
+            A = self.generator.copy()
             A[:, 0] =  1
             # sets b as the right hand vector with a 1 for the normalizing equation
             b = np.zeros(self.n_states, dtype=float)
@@ -44,6 +44,14 @@ class ctmc(markov_chain):
         else:    
             print("Empty generator matrix")
         return 0
+    def transient_probabilities(self,t:float,alpha:np.ndarray):
+        shape=alpha.shape#lets get the shape of alpha vector
+        if shape[0]!=self.n_states:
+            raise ValueError("The dimensions of alpha vector are incorrect. It must be a vector 1xn_states")
+        P=linalg.expm(self.generator*t)#exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
+        probas=alpha@P
+        return probas
+
 
     def first_passage_time(self, target:str):
         #TODO computes the expected first passage time to target state
