@@ -27,6 +27,13 @@ class ctmc(markov_chain):
     def __init__(self,generator:np.array):
         self.n_states=generator.shape[0]
         self.generator = generator
+    def _check_transition_matrix(self,M:np.ndarray):
+        #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
+        vector=(sum(M.T)==1)
+        if vector.all():
+            return True
+        else:
+            return False
 
 
     def steady_state(self):

@@ -25,8 +25,18 @@ class dtmc(markov_chain):
 
     # initializer with a transition matrix
     def __init__(self,transition_matrix:np.array):
+        if not self._check_transition_matrix(transition_matrix):#Lets check if transition matrix is logical (i.e the rows sum 1)
+            raise ValueError("the rows of transition matrix do not sum 1")
         self.n_states=transition_matrix.shape[0]
         self.transition_matrix = transition_matrix
+
+    def _check_transition_matrix(self,M:np.ndarray):
+        #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
+        vector=(sum(M.T)==1)
+        if vector.all():
+            return True
+        else:
+            return False
 
 
     def steady_state(self):
