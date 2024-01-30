@@ -32,8 +32,7 @@ class dtmc(markov_chain):
 
     def _check_transition_matrix(self,M:np.ndarray):
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
-        vector=(sum(M.T)==1)
-        if vector.all():
+        if 0.99<=sum(M.T).all()<=1:
         #Check if a given transition matrix has the condition that every element of the matrix is between 0 and 1
             if np.all((M >= 0) & (M <= 1)):
                 return True
