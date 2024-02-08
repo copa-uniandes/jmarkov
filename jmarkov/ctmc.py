@@ -34,6 +34,7 @@ class ctmc(markov_chain):
         vector = np.isclose(np.sum(M, axis = 1),0,1e-5) == True
         if vector.all():
             condition = np.all(np.diag(M) < 0)
+            return True
         else:
             return False
 
