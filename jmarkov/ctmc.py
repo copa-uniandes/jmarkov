@@ -25,9 +25,11 @@ class ctmc(markov_chain):
 
     # initializer with a transition matrix
     def __init__(self,generator:np.array):
+        if not self._check_generator_matrix(generator):#Lets check if transition matrix is logical (i.e the rows sum 1)
+            raise ValueError("the rows of transition matrix do not sum 0 or the diagonal has non negative values")
         self.n_states=generator.shape[0]
         self.generator = generator
-    def _check_transition_matrix(self,M:np.ndarray):
+    def _check_generator_matrix(self,M:np.ndarray):
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 0
         vector = np.isclose(np.sum(M, axis = 1),0,1e-5) == True
         if vector.all():
