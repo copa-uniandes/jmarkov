@@ -1,6 +1,6 @@
 import numpy as np
 from scipy import linalg
-from .markov_chain import markov_chain
+from markov_chain import markov_chain
 
 class dtmc(markov_chain):
 
@@ -26,18 +26,21 @@ class dtmc(markov_chain):
     # initializer with a transition matrix
     def __init__(self,transition_matrix:np.array):
         if not self._check_transition_matrix(transition_matrix):#Lets check if transition matrix is logical (i.e the rows sum 1)
-            raise ValueError("the rows of transition matrix do not sum 1")
+            raise ValueError("the rows of transition matrix do not sum 1 or has non positive values")
         self.n_states=transition_matrix.shape[0]
         self.transition_matrix = transition_matrix
 
     def _check_transition_matrix(self,M:np.ndarray):
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
-        vector=(sum(M.T)==1)
+        vector = np.isclose(np.sum(M, axis = 1),1,1e-5) == True  
         if vector.all():
-            return True
+        #Check if a given transition matrix has the condition that every element of the matrix is between 0 and 1
+            if np.all((M >= 0) & (M <= 1)):
+                return True
+            else:
+                return False
         else:
             return False
-
 
     def steady_state(self):
         # computes the steady state distribution
@@ -91,5 +94,7 @@ class dtmc(markov_chain):
         #TODO determines id the chain is ergodic or not
         print("TODO")
         return True
+    
+
 
 
