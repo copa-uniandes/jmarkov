@@ -7,7 +7,7 @@ import numpy as np
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from jmarkov.ctmc import ctmc
 
-
+# Creating the Q of a drive Thru with one queue space, mic and window
 Q = np.array([[-50,50, 0, 0, 0, 0, 0, 0],
 [0, -80, 50, 30, 0, 0, 0, 0],
 [0, 0, -30, 0, 30, 0, 0, 0],
