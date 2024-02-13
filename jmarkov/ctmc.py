@@ -66,9 +66,20 @@ class ctmc(markov_chain):
 
 
     def first_passage_time(self, target:str):
-        #TODO computes the expected first passage time to target state
-        print("TODO")
-        return 0
+        #The transition matrix and the number of states are brought
+        e=self.n_states 
+        q=self.transition_matrix.copy()
+        
+        # Matrix of ones with n-1 rows is created
+        u=np.full([e-1,1],1)
+
+        #The column and row corresponding to the target state are eliminated from the transition matrix 
+        m=np.delete(q,target, axis=0)
+        m=np.delete(m,target, axis=1)
+
+
+        t=np.matmul(np.linalg.inv(-m),u)
+        return t
 
     def occupation_time(self, nsteps:int):
         #TODO computes the expected occupation time matrix in nsteps steps
