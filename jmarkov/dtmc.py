@@ -77,9 +77,19 @@ class dtmc(markov_chain):
 
 
     def first_passage_time(self, target:str):
-        #TODO computes the expected first passage time to target state
-        print("TODO")
-        return 0
+        #The transition matrix and the number of states are brought
+        n=self.n_states 
+        M=self.transition_matrix.copy()
+        # The identity matrix is created with size n-1 states
+        i=np.identity(n-1)
+        # Matrix of ones with n-1 rows is created
+        u=np.full([n-1,1],1)
+        # The column and row corresponding to the target state are eliminated from the transition matrix
+        p=np.delete(M,target, axis=0)
+        p=np.delete(p,target, axis=1)
+        
+        t=np.matmul(np.linalg.inv(i-p),u)
+        return t 
 
     def occupation_time(self, n:int):
         #computes the expected occupation time matrix in nsteps steps:
