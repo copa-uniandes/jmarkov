@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import linalg
+from scipy import sparse
 from markov_chain import markov_chain
 
 class ctmc(markov_chain):
@@ -76,8 +77,10 @@ class ctmc(markov_chain):
         return 0
 
     def is_ergodic(self):
-        #TODO determines id the chain is ergodic or not
-        print("TODO")
-        return True
-
-
+        # the finite case
+        if sparse.csgraph.connected_components(np.fill_diagonal(self.generator,0), directed=True,connection='strong',return_labels=False)==1:
+            print(np.fill_diagonal(self.generator,0))
+            return True
+        else:
+            return False
+        
