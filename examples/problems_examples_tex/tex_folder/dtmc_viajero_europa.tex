@@ -1,0 +1,39 @@
+%CMTD: dtmc_viajero_europa
+%\hfill {\footnotesize \textbf{DTMC}} 
+
+Un hombre de negocios viaja por Europa entre 4 países: Francia, Alemania, Inglaterra y España. Los viajes los realiza cada mes hacia alguno de estos países dependiendo del éxito en el negocio realizado en el país en el que esté. En algunos meses puede que este hombre permanezca otro mes en el mismo país en el que estaba el mes anterior. Se sabe que si el hombre comienza un mes en Francia, el otro mes deberá permanecer en Francia con probabilidad de 0.5, viajar a Alemania con probabilidad de 0.2, o ir a España en cualquier otro caso. Si comienza un mes en Alemania, permanecerá ahí mismo con probabilidad de 0.55, o viajará a los otros tres países con probabilidades iguales. Si comienza en Inglaterra, el siguiente mes estará en cualquiera de los 4 países con probabilidades iguales. Por último si comienza en España, viajará a Inglaterra con probabilidad de 0.7 o a Alemania con probabilidad de 0.3. 
+
+\begin{enumerate}
+    \item Modele este problema como una cadena de Markov de tiempo discreto.
+
+    \begin{itemize}
+    	\item[] \textbf{Variable de estado}:\\
+    	$X_n$: País en el que se encuentra el hombre de negocios al inicio del mes $n$
+    		
+    	\item[] \textbf{Espacios de estados}:\\
+    	  $S_X = \{\text{Francia (Fr), Alemania (Al), Inglaterra (In), España (Es)} \}$ 
+
+    	\item[] \textbf{Probabilidades de transiciones}:\
+
+            \begin{displaymath}
+            \mathbf{P} = \begin{array}{cccc}
+                & \begin{array}{cccc} Fr & \quad Al & \quad In & \quad Es \end{array}\\
+                \begin{array}{c}  Fr\\Al\\In\\Es \end{array} &  \left( \begin{array}{cccc}
+                0.5&0.2&0&0.3\\0.15&0.55&0.15&0.15\\0.25&0.25&0.25&0.25\\0&0.3&0.7&0
+                \end{array} \right)  
+            \end{array}
+            \end{displaymath}
+
+    
+    \end{itemize}
+
+    
+    \item Dado que el viajero comienza un mes en Inglaterra, encuentre la probabilidad de que en 2 meses deba estar de nuevo en Inglaterra
+    \begin{equation*}
+    \begin{split}
+    P(X_{n+2}= \text{Inglaterra} | X_{n}=\text{Inglaterra}) &= \mathbf{P}_{\text{In},\text{In}}^2\
+    \end{split}
+    \end{equation*}
+
+
+\end{enumerate}
