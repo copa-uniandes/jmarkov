@@ -1,0 +1,38 @@
+%CMTC: RentBike
+%\hfill {\footnotesize \textbf{CTMC}} 
+
+RentBike es un servicio de alquiler de bicicletas que cuál funciona en el área cercana a la zona universitaria del centro de la ciudad. Las personas se acercan a este lugar y rentan bicicletas para su uso en lugares cercanos. Después de esto, los clientes las devuelven en el mismo lugar. La llegada de clientes al local de RentBike sigue un Proceso de Poisson con media de 5 personas por hora. Por otro lado, los clientes hacen uso de las bicicletas durante un tiempo que se
+distribuye exponencial con tasa de 9 personas por hora. Actualmente, RentBike cuenta con 6 bicicletas.
+
+
+\begin{enumerate}
+\item Modele la situación de RentBike como una cadena de Markov de tiempo continuo. \
+
+    \begin{itemize}
+    	\item[] \textbf{Variable de estado}:\\
+    	$X(t)$: Número de bicicletas rentadas en el momento $t$
+    		
+    	\item[] \textbf{Espacios de estados}:\\
+    	  $S_X = \{0,1,2,3,4,5,6\}$ 
+
+    	\item[] \textbf{Tasas de transiciones}:\
+
+            $\lambda = 5$ personas por hora \\
+            $\mu = 9$ personas por hora 
+
+            \begin{align*}
+             q_{i \to i'} = \left\{ 
+                \begin{array}{llll}
+                    \lambda    &  i'=i+1 & i<6 \\ 
+                    \mu \cdot i & i'=i-1  & i>0 \\ 
+                    0 & \text{d.l.c.}
+                \end{array} \right.
+            \end{align*}
+
+    
+    \end{itemize}
+
+
+
+\end{enumerate}
+

@@ -1,0 +1,55 @@
+%CMTC: Auto eléctrico
+% \hfill {\footnotesize \textbf{CTMC}} 
+
+En el año 2017 el gobierno francés aprobó una nueva regulación que busca reemplazar todos los vehículos de gasolina o diesel del país por vehículos eléctricos. Además de la renovación de los vehículos, esta nueva política implica un cambio en la tecnología instalada en las estaciones de servicio.
+
+Actualmente existen dos métodos para recargar un vehículos eléctricos cuando éste llega a una estación: conectándose a un punto de recarga, o cambiando la batería descargada por una completamente cargada. El tiempo de recarga de la batería es una variable aleatoria exponencial con tasa $\mu$, mientras que el tiempo del cambio de batería es una variable aleatoria con distribución $Erlang(2,\alpha)$. Además, el gobierno local sabe que el 70\% de los vehículos eléctricos que actualmente circulan por la ciudad usan el primer método de recarga.
+
+El gobierno francés ha implementado un plan piloto en la ciudad de París, instalando estaciones de servicio para vehículos eléctricos, con el fin de dimensionar la capacidad requerida para cubrir la demanda de la ciudad en algunos años.
+
+Las estaciones instaladas como parte del plan piloto cuentan con sólo 1 punto de recarga y 1 punto de cambio de baterías. Si un vehículo llega a la estación y el espacio que corresponde a su método de recarga está ocupado, debe ir a otra estación. Por ejemplo, si en la estación solo hay un vehículo en el punto de recarga y llega un vehículo que requiere cambio de batería, éste empieza su servicio inmediatamente, pero si llega otro vehículo para recarga, no entrará a la estación. Finalmente, se ha estimado que los vehículos llegan a cada estación siguiendo un $PP(\lambda)$.
+
+
+\begin{enumerate}
+\item  Modele la dinámica de utilización de una estación de recarga como una cadena de Markov de tiempo continuo. \
+
+    \begin{itemize}
+    	\item[] \textbf{Variables de estado}:\\
+             $X(t) = \text{Estado del punto de recarga en el instante } t.$\\
+             $Y(t) = \text{Estado del punto de cambio de batería en el instante } t.$\\
+             $Z(t) = \{X(t), Y(t)\}$
+                    
+    
+    	\item[] \textbf{Espacios de estados}:\\
+            $S_X = \{\text{Vacío } (0), \text{Ocupado }(1)\}$\\
+            $S_Y = \{\text{Vacío } (0), \text{Ocupado en la primera fase del servicio }(1),\\ \text{Ocupado en la segunda fase de servicio }(2)\}$\\
+            $S_Z = \{S_X \times S_Y\}$ 
+
+    	\item[] \textbf{Tasas de transiciones}:
+
+            \begin{align*}
+             q_{{i,j} \to {i',j'}} = \left\{ 
+                \begin{array}{llll}
+                    0.7 \cdot \lambda    &  i'=1, j'=j & i=0 \\ 
+                    0.3 \cdot \lambda    &  i'=i, j'=1 & j=0 \\ 
+                    \mu    &  i'=0, j'=j & i=1 \\ 
+                    \alpha    &  i'=i, j'=2 & j=1 \\
+                    \alpha    &  i'=i, j'=0 & j=2 \\
+                    0 & \text{d.l.c.}
+                \end{array} \right.
+            \end{align*}
+            
+            \begin{figure}
+                \centering
+                \includegraphics[width=11 cm]{images/grafo_auto_eléctrico.png}
+                \caption{Diagrama de tasas de transición Auto eléctrico}
+                \label{fig:my_label}
+            \end{figure}
+
+
+    
+    \end{itemize}
+
+
+
+\end{enumerate}

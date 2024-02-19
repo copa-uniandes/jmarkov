@@ -1,0 +1,49 @@
+%CMTD: dtmc_brt_rio
+%\hfill {\footnotesize \textbf{DTMC}} 
+
+La ciudad de Rio de Janeiro en Brasil cuenta con el sistema BRT (Bus Rapid Transit) más grande de América Latina, BRT  Rio. Gracias a un avanzado sistema de trazabilidad, se ha calibrado la frecuencia de los buses para que un bus tarde exactamente 3 minutos entre cada par de estaciones del recorrido (y de la misma forma, cada 3 minutos para un bus en una estación). Cada uno de los buses del sistema tiene capacidad para 40 pasajeros sentados y 70 de pie. De las 40 sillas, 2 son puestos preferenciales para mujeres embarazadas, adultos mayores y personas con movilidad reducida.
+Actualmente, el gobierno de la ciudad esta buscando implementar políticas de inclusión y justicia social, por lo que quiere evaluar la ocupación de las sillas prefenciales en los buses. Para esto, la ciudad ha hecho un esfuerzo significativo para caracterizar el comportamiento de los usuarios que usan estas sillas, y ha determinado que los pasajeros preferenciales llegan a una estación siguiendo un Proceso de Poisson con tasa $\lambda$ pasajeros/minuto, y se bajan del bus en una estación con probabilidad $p$. Suponga que si un pasajero preferencial no se puede subir al primer bus que llega, utiliza otro medio de transporte (metro, bus municipal, etc.).
+
+
+\begin{enumerate}
+    \item Formule un modelo que le permita al gobierno de Brasil conocer la ocupación de las sillas preferenciales. 
+
+    \begin{itemize}
+    	\item[] \textbf{Variable de estado}:\\
+    	$X_n$: Sillas ocupadas en la $n$-ésima parada del bus\\
+    		
+    	\item[] \textbf{Espacios de estados}:\\
+            \[S_X=\{0,1,2\}\]
+
+    	\item[] \textbf{Variables aleatorias}:\\
+            Demanda (D): $\thicksim$ Poisson ($\lambda$)
+
+            \begin{align*} 
+                P[D=x]=\frac{e^{-\lambda t}(\lambda t)^{x}}{x!}\\
+                P[D\geq x]=\sum_{i=x}^\infty \frac{e^{-\lambda t }(\lambda t) ^x}{x!}
+            \end{align*}\\
+            Bajada de pasajeros: $\thicksim$ Binomial(N,$p$) \
+            \[
+            p_{N,h} = \binom{N}{h} p^h (1-p)^{N-h}. 
+            \]
+
+            \item[] \textbf{Probabilidades de transiciones}:\
+           
+    
+    \end{itemize}
+
+\end{enumerate}
+
+\begin{displaymath}
+\footnotesize
+\mathbf{P} =
+\begin{array}{ccc} &  
+    \left( 
+    \begin{array}{ccc}
+        P(D=0) & P(D=1) & P(D\geq2) \\
+        P(D=0)\cdot p_{1,1} & P(D=0)\cdot p_{1,0} +P(D=1)\cdot p_{1,1} & P(D\geq2)\cdot p_{1,1} +P(D\geq1)\cdot p_{1,0} \\
+         P(D=0)\cdot p_{2,2} & P(D=0)\cdot p_{2,1} +P(D=1)\cdot p_{2,1} & P(D\geq2)\cdot p_{2,2} +P(D\geq1)\cdot p_{2,1}+P(D\geq0)\cdot p_{2,0} \\
+    \end{array} 
+    \right)  
+\end{array}
+\end{displaymath}

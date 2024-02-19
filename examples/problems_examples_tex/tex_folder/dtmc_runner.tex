@@ -1,0 +1,47 @@
+%CMTD: dtmc_runner
+%\hfill {\footnotesize \textbf{DTMC}} 
+
+Cada mañana Federico sale de su casa a correr. Él puede salir de la casa por la puerta 1 o por la puerta 2. Independiente del día, él sale por la puerta 1 con probabilidad $s_1$ o sale por la puerta 2 con probabilidad $s_2$. Note que $s_1+s_2=1$. Cuando regresa a su casa después de correr, independiente del día, entra por la puerta 1 con probabilidad $r_1$ o por la puerta 2 con probabilidad $r_2$. Note que $r_1+r_2=1$. Asuma adicionalmente que la puerta por donde regresa es independiente de la puerta por donde salió.\\
+
+Federico tiene 4 pares de zapatos los cuales están repartidos en ambas puertas. Cuando él va a salir por alguna puerta, se pone alguno de los pares de zapatos que hay en esa puerta y sale a correr. Al regresar, deja los zapatos en la puerta por la cual entró. Si cuando va a salir por una puerta no encuentra zapatos disponibles, decide ir a correr descalzo.
+
+\begin{enumerate}
+    \item Modele la situación anterior como una cadena de Markov en tiempo discreto que le permita saber la distribución de los zapatos en las puertas. 
+
+    \begin{itemize}
+    	\item[] \textbf{Variable de estado}:\\
+    	$X_n$: Número de pares de zapatos que hay en la puerta 1 justo antes de salir a correr la $n$-ésima mañana\\
+            $Y_n$: Número de pares de zapatos que hay en la puerta 2 justo antes de salir a correr la $n$-ésima mañana\\
+            \[ W(t) = \{ X_n, Y_n \} \]
+    		
+    	\item[] \textbf{Espacios de estados}:\\
+            \[S_X=\{0,1,2,3,4\}\]
+            \[S_Y=\{0,1,2,3,4\}\]
+            \[S_W=\{(4,0),(3,1), (2,2), (1,3),(0,4)\}\]
+
+    	\item[] \textbf{Probabilidades de transiciones}:\
+            
+            Para calcular las probabilidades de transición de un paso se observa que independiente del día hay 4 eventos que pueden suceder:
+            \begin{enumerate}
+                \item Que él salga por la puerta 1 y regrese por la puerta 1 con $s_1r_1$.
+                \item Que él salga por la puerta 1 y regrese por la puerta 2 con $s_1r_2$.
+                \item Que él salga por la puerta 2 y regrese por la puerta 1 con  $s_2r_1$.
+                \item Que él salga por la puerta 2 y regrese por la puerta 2 con $s_2r_2$.
+            \end{enumerate}
+
+            Así, la matriz de probabilidades de transición a un paso está dada por:
+            \begin{displaymath}
+            \mathbf{P} = \begin{array}{ccccc}
+                \begin{array}{c}  (4,0)\\(3,1)\\(2,2)\\(1,3)\\(0,4) \end{array} &  \left( \begin{array}{ccccc}
+                s_1r_1+s_2 &s_1r_2&0&0&0\\
+                s_2r_1&s_1r_1+s_2r_2&s_1r_2&0&0\\
+                0&s_2r_1&s_1r_1+s_2r_2&s_1r_2&0\\
+                0&0&s_2r_1&s_1r_1+s_2r_2&s_1r_2\\
+                0&0&0&s_2r_1&s_1+s_2r_2
+                \end{array} \right)  
+            \end{array}
+            \end{displaymath}
+    
+    \end{itemize}
+
+\end{enumerate}
