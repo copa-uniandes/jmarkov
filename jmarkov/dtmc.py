@@ -1,6 +1,6 @@
 import numpy as np
 from scipy import linalg
-from markov_chain import markov_chain
+from .markov_chain import markov_chain
 
 class dtmc(markov_chain):
 
