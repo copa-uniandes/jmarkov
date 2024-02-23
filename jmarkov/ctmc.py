@@ -78,8 +78,9 @@ class ctmc(markov_chain):
 
     def is_ergodic(self):
         # the finite case: we check if the chain is irreducible
-        if sparse.csgraph.connected_components(np.fill_diagonal(self.generator,0), directed=True,connection='strong',return_labels=False)==1:
+        Q = np.copy(self.generator)
+        np.fill_diagonal(Q,0)
+        if sparse.csgraph.connected_components(Q, directed=True,connection='strong',return_labels=False)==1:
             return True
         else:
             return False
-        
