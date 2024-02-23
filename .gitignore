@@ -1,7 +1,5 @@
-jmarkov/__pycache__/ctmc.cpython-310.pyc
-jmarkov/__pycache__/dtmc.cpython-310.pyc
-jmarkov/__pycache__/markov_chain.cpython-310.pyc
+jmarkov/__pycache__/
 tests/__pycache__/tests_ctmc.cpython-310.pyc
 .gitignore
-tests/__pycache__/tests_dtmc.cpython-310.pyc
+tests/__pycache__/
 jmarkov/__pycache__/__init__.cpython-310.pyc
