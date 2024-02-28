@@ -33,11 +33,9 @@ class ctmc(markov_chain):
     def _check_generator_matrix(self,M:np.ndarray):
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 0
         vector = np.isclose(np.sum(M, axis = 1),0,1e-5) == True
-        if vector.all():
-            if np.all(np.diag(M) < 0):
-                return True
-            else:
-                return False
+        # Check if a given transition matrix has all diagonal elements non positive
+        if vector.all() and np.all(np.diag(M)<0):
+            return True
         else:
             return False
 
