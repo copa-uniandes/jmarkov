@@ -102,6 +102,23 @@ class dtmc(markov_chain):
         print("TODO")
         return True
     
+    def birth_death(self,n):
+        #Checks if diagonal, upper and lower diagonal has values
+        out_diag = np.ones(self.transition_matrix.shape, dtype=bool)
+        np.fill_diagonal(out_diag, False) #Turns diagonal to zeros
+        out_diag[np.eye(len(out_diag), k=1, dtype='bool')] = 0 #Turns upper diagonal to zeros
+        out_diag[np.eye(len(out_diag), k=-1, dtype='bool')] = 0 #Turns lower diagonal to zeros
+
+        all_zeros = np.all(self.transition_matrix[out_diag] == 0)
+
+        if not all_zeros:
+             raise ValueError("Transition matrix is not a birth-death process. Elements different from diagonal, upper and lower diagonals must be zero")
+
+
+
+
+
+    
 
 
 
