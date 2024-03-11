@@ -68,7 +68,7 @@ class ctmc(markov_chain):
     def first_passage_time(self, target:str):
         #The transition matrix and the number of states are brought
         e=self.n_states 
-        q=self.transition_matrix.copy()
+        q=self.generator.copy()
         
         # Matrix of ones with n-1 rows is created
         u=np.full([e-1,1],1)
@@ -81,14 +81,49 @@ class ctmc(markov_chain):
         t=np.matmul(np.linalg.inv(-m),u)
         return t
 
-    def occupation_time(self, nsteps:int):
-        #TODO computes the expected occupation time matrix in nsteps steps
-        print("TODO")
-        return 0
+    def occupation_time(self,T,Epsilon=0.00001):
+        n=self.n_states
+        m=self.generator.copy()
+        def P_from_R(n,m):            
+            # Inicializamos el valor máximo con el primer elemento de la diagonal
+            Vector_ri=np.diagonal(m)   
+            #Hallamos la r como el máximo de las r_i
+            r=max(-Vector_ri)
+            return r 
+        def creacion_P(n,m):
+            r= P_from_R(n,m)
+            #Hallamos la matriz P^        
+            h=np.zeros((n,n))
+            for i in range(n):
+                for j in range(n):
+                    if i==j:
+                        h[i][j]=1+(m[i][j]/r)
+                    else:
+                        h[i][j]=m[i][j]/r
+            return h 
+        r=P_from_R(n,m)
+        P=creacion_P(n,m)
+        i=np.identity(n)
+        A=P
+        k=0
+        yek=np.exp(-r*T)
+        ygk=1-yek
+        suma=ygk
+        B=ygk*i
+        while suma/r < T-Epsilon:
+            k=k+1
+            yek=yek*(r*T)/k
+            ygk=ygk-yek
+            B=B+ygk*A
+            A=A@P
+            suma=suma+ygk
+        return (B/r)
+    
 
     def is_ergodic(self):
         #TODO determines id the chain is ergodic or not
         print("TODO")
         return True
+    
 
 
