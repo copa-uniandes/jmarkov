@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import linalg
+from typing import Dict
 
 class dtmdp():
     # number of states in string array form
@@ -11,7 +12,7 @@ class dtmdp():
     # actions in array form
     actions:np.array = np.array([1])
     # transition matrix as dict of numpy arrays
-    transition_matrix:dict=np.array[1]
+    transition_matrices:Dict[str, np.array]
     # immediate return matrix as 2d numpy array 
     immediate_returns:np.array = np.array([1])   
     # discount factor as int
@@ -24,7 +25,7 @@ class dtmdp():
         self.transition_matrix = np.array([1])
     def __init__(self,n:int):
         self.n_states = n
-        self.transition_matrix = np.eye(2, dtype=float)
+        self.transition_matrices = {"a1": np.eye(1, type=float)}
 
     # initializer with a transition matrix
     def __init__(self,transition_matrix:np.array):
