@@ -7,7 +7,7 @@ class dtmc(markov_chain):
     # number of states in string array form
     n_states:int=1
 
-    # states in string array form
+    # states in string array form   
     states:np.array = np.array([1])
 
     # transition matrix as 2d numpy array
