@@ -22,33 +22,46 @@ class dtmdp():
     # chain with a single state
     def __init__(self):
         self.n_states = 1
-        self.transition_matrix = np.array([1])
+        self.transition_matrices = np.array([1])
+        self.immediate_returns = np.array([1])
     def __init__(self,n:int):
         self.n_states = n
         self.transition_matrices = {"a1": np.eye(1, type=float)}
+        self.immediate_returns = np.eye(1,type = float)
 
-    # initializer with a transition matrix
-    def __init__(self,transition_matrix:np.array):
-        if not self._check_transition_matrix(transition_matrix):#Lets check if transition matrix is logical (i.e the rows sum 1)
-            raise ValueError("the rows of transition matrix do not sum 1 or has non positive values")
-        self.n_states=transition_matrix.shape[0]
-        self.transition_matrix = transition_matrix
+    # initializer with a transition matrix, immediate returns and discount factor
+    def __init__(self,transition_matrices:Dict, immediate_returns: np.array,discount_factor:int):
+        if not self._check_transition_matrices(transition_matrices):#Lets check if transition matrix is logical (i.e the rows sum 1)
+            raise ValueError("the rows of transition matrices do not sum 1 or have non positive values")
+        if not self._check_immediate_returns(immediate_returns,transition_matrices): # Lets check if immediate returns are consistent
+            raise ValueError("the dimensions of the immediate returns are not coherent")
+        if not self._check_discount_factor(discount_factor): # Lets check if discount factor is logical
+            raise ValueError("discount factor should be a number between (or equal to) 0 and 1")
+        self.n_actions = len(transition_matrices)
+        self.n_states=len(transition_matrices[next(iter(transition_matrices))])
+        self.transition_matrices = transition_matrices
+        self.immediate_returns = immediate_returns
+        self.discount_factor = discount_factor
 
-    def _check_transition_matrix(self,M:np.ndarray):
-        #TODO determines if the transition matrices are logical
-        print("TODO")
-        return True
-    
-    def _check_immediate_returns(self,M:np.array):
-        #TODO determines if the immeadiate return matrix has correct dimensions
-        print("TODO")
-        return True
-    
+    def _check_transition_matrices(self,M:Dict):
+        # determines if the transition matrices are logical
+        # i.e: if the sum of the rows equals to 1 (is an stochastic matrix)
+        # and if all of the elements are positive
+        if all(np.all((np.array(value) >= 0) & (np.array(value) <= 1)) for value in M.values()) and np.all(np.isclose(np.sum(list(M.values()), axis=2), 1, atol=1e-5)):
+            return True
+        else:
+            return False
+        
+    def _check_immediate_returns(self,R:np.array, M:Dict):    
+        # checks if the dimensions of immediate returns are coherent
+        # expected: len(S) x len(actions)
+        if R.shape == (len(M),len(list(M.values())[0])):
+            return True
+
     def _check_discount_factor(self,beta:int):
-        #TODO determines if the discount factor is a number between 0 and 1 
-        print("TODO")
-        return True
+        # checks if the discount factor is a number between 0 and 1 
+        if beta >= 0 and beta <= 1:
+            return True
+        else: 
+            return False
     
-    
-
-
