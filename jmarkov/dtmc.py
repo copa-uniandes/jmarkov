@@ -20,9 +20,10 @@ class dtmc(markov_chain):
         self.n_states = 1
         self.transition_matrix = np.array([1])
 
+    # initializer with only the number of states
     def __init__(self,n:int):
         self.n_states = n
-        self.transition_matrix = np.eye(2, dtype=float)
+        self.transition_matrix = np.eye(n, dtype=float)
 
     # initializer with a transition matrix
     def __init__(self,transition_matrix:np.array):

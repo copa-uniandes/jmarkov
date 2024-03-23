@@ -20,9 +20,10 @@ class ctmc(markov_chain):
         self.n_states = 1
         self.generator = np.array([0])
 
+    # initializer with only the number of states
     def __init__(self,n:int):
         self.n_states = n
-        self.generator = np.eye(2, dtype=float)
+        self.generator = np.zeros((n,n), dtype=float)
 
     # initializer with a transition matrix
     def __init__(self,generator:np.array):
