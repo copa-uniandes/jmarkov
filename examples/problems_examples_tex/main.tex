@@ -1,0 +1,129 @@
+\documentclass[12pt]{article}
+
+% Paquetes de idioma y codificación de caracteres
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\decimalpoint % Establecer el punto decimal para números decimales en español
+
+% Paquetes matemáticos y de formato
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{yhmath}
+\usepackage{mathdots}
+\usepackage{bbold}
+
+% Paquetes para gráficos y figuras
+\usepackage{graphicx}
+\usepackage{tikz}
+%\usetikzlibrary{arrows, automata, positioning, calc}
+\usepackage{pgf}
+\usepackage{blkarray}
+\usepackage{booktabs}
+\usepackage{bigstrut}
+
+% Paquetes para el formato de texto y listas
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{soul}
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+
+% Otros paquetes y configuraciones
+\usepackage{comment}
+\usepackage{subfiles}
+\usepackage{ifthen}
+\usepackage{array}
+\usepackage{calc}
+
+% En caso de que se requiera utilizar listings y color, pueden incluirse una sola vez
+% \usepackage{listings}
+% \usepackage{color}
+
+
+% Definición de estilos de listas enumeradas
+\renewcommand{\theenumi}{\alph{enumi}}
+
+
+\setlength{\hoffset}{0.0cm}%
+\setlength{\voffset}{-1.0cm}%
+\setlength{\textwidth}{16cm}%
+\setlength{\textheight}{23.0cm}%
+\setlength{\topmargin}{0pt}%
+\setlength{\headsep}{10pt}%
+\setlength{\headheight}{28pt}%
+\setlength{\oddsidemargin}{0pt}%
+\setlength{\evensidemargin}{0pt}%
+
+\addto\captionsspanish{%
+    \def\listfigurename{\'{I}ndice de Figuras}
+    \def\listtablename{\'{I}ndice de Tablas}
+    \def\figurename{Figure}
+    \def\tablename{Tabla}
+    \def\abstractname{Resumen}
+}
+
+\newcommand{\bs}{\boldsymbol}
+
+\pagestyle{fancy}%
+\renewcommand{\headrulewidth}{0.4pt}% Default \headrulewidth is 0.4pt
+\renewcommand{\footrulewidth}{0.4pt}% Default \footrulewidth is 0pt
+
+\newcommand{\J}[1]{{\color{blue} #1}}
+
+
+\lstdefinestyle{sql}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  %frame=L,
+  %xleftmargin=\parindent,
+  language=SQL, %  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstset{escapechar=@,style=sql}
+\lstset{keepspaces=true}
+
+\lhead{}
+\chead{}%
+\rhead{}%
+\lfoot{Ejemplos de cadenas de Markov}%
+\cfoot{} %\thepage}%
+\rfoot{jmarkov}
+
+
+
+\newtheorem{defi}{Definición}
+
+\begin{document}
+\thispagestyle{fancy}
+
+\subsection*{Problema 1: RentBike}
+\subfile{tex_folder/ctmc_rent_bike}
+\noindent
+\subsection*{Problema 2: Viajero en Europa}
+\subfile{tex_folder/dtmc_viajero_europa}
+\noindent
+\noindent
+\subsection*{Problema 3: Elefante del Circo}
+\subfile{tex_folder/ctmc_elefante}
+\noindent
+\subsection*{Problema 4: Zapatos del Runner}
+\subfile{tex_folder/dtmc_runner}
+\noindent
+\subsection*{Problema 5: Autos Eléctricos}
+\subfile{tex_folder/ctmc_auto_eléctrico}
+\noindent
+\subsection*{Problema 6: Bus Rapid Transit}
+\subfile{tex_folder/dtmc_brt_rio}
+\noindent
+
+\end{document}

@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import linalg
+from scipy import sparse
 from .markov_chain import markov_chain
 
 class ctmc(markov_chain):
@@ -25,12 +26,15 @@ class ctmc(markov_chain):
 
     # initializer with a transition matrix
     def __init__(self,generator:np.array):
+        if not self._check_generator_matrix(generator):#Lets check if transition matrix is logical (i.e the rows sum 0)
+            raise ValueError("the rows of transition matrix do not sum 0 or the diagonal has non negative values")
         self.n_states=generator.shape[0]
         self.generator = generator
-    def _check_transition_matrix(self,M:np.ndarray):
-        #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
-        vector=(sum(M.T)==1)
-        if vector.all():
+    def _check_generator_matrix(self,M:np.ndarray):
+        #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 0
+        vector = np.isclose(np.sum(M, axis = 1),0,1e-5) == True
+        # Check if a given transition matrix has all diagonal elements non positive
+        if vector.all() and np.all(np.diag(M)<0):
             return True
         else:
             return False
@@ -61,9 +65,20 @@ class ctmc(markov_chain):
 
 
     def first_passage_time(self, target:str):
-        #TODO computes the expected first passage time to target state
-        print("TODO")
-        return 0
+        #The transition matrix and the number of states are brought
+        e=self.n_states 
+        q=self.transition_matrix.copy()
+        
+        # Matrix of ones with n-1 rows is created
+        u=np.full([e-1,1],1)
+
+        #The column and row corresponding to the target state are eliminated from the transition matrix 
+        m=np.delete(q,target, axis=0)
+        m=np.delete(m,target, axis=1)
+
+
+        t=np.matmul(np.linalg.inv(-m),u)
+        return t
 
     def occupation_time(self, nsteps:int):
         #TODO computes the expected occupation time matrix in nsteps steps
@@ -71,8 +86,10 @@ class ctmc(markov_chain):
         return 0
 
     def is_ergodic(self):
-        #TODO determines id the chain is ergodic or not
-        print("TODO")
-        return True
-
-
+        # the finite case: we check if the chain is irreducible
+        Q = np.copy(self.generator)
+        np.fill_diagonal(Q,0)
+        if sparse.csgraph.connected_components(Q, directed=True,connection='strong',return_labels=False)==1:
+            return True
+        else:
+            return False

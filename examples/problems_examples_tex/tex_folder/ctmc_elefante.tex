@@ -1,0 +1,43 @@
+%CMTC: Elefante en Circo
+% \hfill {\footnotesize \textbf{CTMC}} 
+
+Rosie es un elefante hembra y la mayor atracción del circo Benzini Brothers. Después de cada función, hay una sesión en la que los clientes se toman una foto montados en Rosie. Los clientes llegan a tomarse fotos siguiendo un proceso de Poisson con tasa $\lambda = 0.5 \text{ min}^{-1}$. El tiempo que tarda una persona mientras se le ayuda a subir al elefante, se toma la foto y baja del elefante se distribuye exponencial con media $\frac{1}{\mu} = 4$ minutos. Dado que Rosie es muy nerviosa no pueden haber más de 6 clientes en su carpa. Rosie tarda un tiempo exponencial con media $\frac{1}{\theta} = 45$ minutos en agotarse y demora descansando un tiempo exponencial con media $\frac{1}{\omega} = 10$ minutos. Mientras Rosie está descansando, los clientes que están tanto siendo atendidos como esperando permanecen en el sistema.
+
+\begin{enumerate}
+\item Modele la situación de Rosie como una cadena de Markov de tiempo continuo. \
+
+    \begin{itemize}
+    	\item[] \textbf{Variables de estado}:\\
+    	$X(t)$: Número de clientes en el circo en el momento $t$
+            \[Y(t) = \begin{cases} 
+                R & \text{si Rosie está descansando} \\
+                W & \text{si Rosie está trabajando} 
+                \end{cases}
+            \]
+            \[ W(t) = \{ X(t), Y(t) \} \]
+            
+    		
+    	\item[] \textbf{Espacios de estados}:\\
+    	$S_X = \{0,1,2,3,4,5,6\}$ \\
+            $S_Y = \{R,W\}$ \\
+            $S_W = \{S_X \times S_Y\}$ \\
+
+    	\item[] \textbf{Tasas de transiciones}:\
+
+            \begin{align*}
+             q_{{i,j} \to {i',j'}} = \left\{ 
+                \begin{array}{llll}
+                    \lambda    &  i'=i+1, j'=j & i<6 \\ 
+                    \mu    &  i'=i-1, j'=j & i>0, j=W \\ 
+                    \theta    &  i'=i, j'=R & j=W \\ 
+                    \omega    &  i'=i, j'=W & j=R \\
+                    0 & \text{d.l.c.}
+                \end{array} \right.
+            \end{align*}
+
+    
+    \end{itemize}
+
+
+
+\end{enumerate}

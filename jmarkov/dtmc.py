@@ -1,6 +1,6 @@
 import numpy as np
 from scipy import linalg
-from markov_chain import markov_chain
+from .markov_chain import markov_chain
 
 class dtmc(markov_chain):
 
@@ -32,8 +32,12 @@ class dtmc(markov_chain):
 
     def _check_transition_matrix(self,M:np.ndarray):
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
+
         #Check if a given transition matrix has the condition that every element of the matrix is between 0 and 1
         if np.all(np.isclose(np.sum(M,axis=1),1,1e-5)) and np.all((M>=0) & (M<=1)):
+        #vector = np.isclose(np.sum(M, axis = 1),1,1e-5) == True  
+        #Check if a given transition matrix has the condition that every element of the matrix is between 0 and 1
+        #if vector.all() and np.all((M >= 0) & (M <= 1)):
             return True
         else:
             return False
@@ -72,9 +76,19 @@ class dtmc(markov_chain):
 
 
     def first_passage_time(self, target:str):
-        #TODO computes the expected first passage time to target state
-        print("TODO")
-        return 0
+        #The transition matrix and the number of states are brought
+        n=self.n_states 
+        M=self.transition_matrix.copy()
+        # The identity matrix is created with size n-1 states
+        i=np.identity(n-1)
+        # Matrix of ones with n-1 rows is created
+        u=np.full([n-1,1],1)
+        # The column and row corresponding to the target state are eliminated from the transition matrix
+        p=np.delete(M,target, axis=0)
+        p=np.delete(p,target, axis=1)
+        
+        t=np.matmul(np.linalg.inv(i-p),u)
+        return t 
 
     def occupation_time(self, n:int):
         #computes the expected occupation time matrix in nsteps steps:

@@ -14,6 +14,11 @@ class TestSteadyState(unittest.TestCase):
         mc = ctmc(Q)
         assert_allclose(mc.steady_state(), [0.25, 0.25, 0.5],err_msg="should be [0.25, 0.25, 0.5]")
 
+class TestIsErgodic(unittest.TestCase):
+    def test_ctmc_isergodic(self):
+        Q = np.array([[-4, 1, 3], [2, -5, 3], [1, 2, -3]])
+        mc = ctmc(Q)
+        self.assertTrue(mc.is_ergodic())
 
 if __name__ == '__main__':
     unittest.main()
