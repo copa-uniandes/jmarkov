@@ -1,13 +1,14 @@
 import numpy as np
 from scipy import linalg
 from .markov_chain import markov_chain
+import math
 
 class dtmc(markov_chain):
 
     # number of states in string array form
     n_states:int=1
 
-    # states in string array form
+    # states in string array form   
     states:np.array = np.array([1])
 
     # transition matrix as 2d numpy array
@@ -96,7 +97,22 @@ class dtmc(markov_chain):
         for i in range(1,n+1):
             ocupation+=np.linalg.matrix_power(self.transition_matrix,i)
         return ocupation
-        
+    
+    def period(self):
+        #Initializes the transition matrix and the greatest common divisor for the periodicity calculations
+        P_k = self.transition_matrix
+        gcd = 0
+        #Loop to elevate the transition matrix to the k th power and evaluate its periodicity:
+        for k in range(2, (self.n_states)+1):
+            P_k = np.dot(self.transition_matrix, P_k)
+            #If the transition matrix to the k th power has a non-zero element in its diagonal, the chain could have a period k:
+            if np.any(np.diagonal(P_k) != 0):
+                #GCD between the current GCD for the period of the matrix and the potential new GCD
+                gcd = math.gcd(gcd, k)
+            #If the GCD is 1, there is no need to keep looking for the period, the chain is aperiodic:
+            if gcd == 1:
+                break
+        return gcd
        
 
     def is_ergodic(self):
