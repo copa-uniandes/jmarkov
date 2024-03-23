@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import linalg
-from markov_chain import markov_chain
+from scipy import sparse
+from .markov_chain import markov_chain
 
 class ctmc(markov_chain):
 
@@ -32,11 +33,9 @@ class ctmc(markov_chain):
     def _check_generator_matrix(self,M:np.ndarray):
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 0
         vector = np.isclose(np.sum(M, axis = 1),0,1e-5) == True
-        if vector.all():
-            if np.all(np.diag(M) < 0):
-                return True
-            else:
-                return False
+        # Check if a given transition matrix has all diagonal elements non positive
+        if vector.all() and np.all(np.diag(M)<0):
+            return True
         else:
             return False
 
@@ -121,9 +120,10 @@ class ctmc(markov_chain):
     
 
     def is_ergodic(self):
-        #TODO determines id the chain is ergodic or not
-        print("TODO")
-        return True
-    
-
-
+        # the finite case: we check if the chain is irreducible
+        Q = np.copy(self.generator)
+        np.fill_diagonal(Q,0)
+        if sparse.csgraph.connected_components(Q, directed=True,connection='strong',return_labels=False)==1:
+            return True
+        else:
+            return False
