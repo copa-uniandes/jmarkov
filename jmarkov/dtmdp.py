@@ -17,18 +17,6 @@ class dtmdp():
     immediate_returns:np.array = np.array([1])   
     # discount factor as int
     discount_factor:int = 0.8 
-
-    # empty initializer 
-    # chain with a single state
-    def __init__(self):
-        self.n_states = 1
-        self.transition_matrices = np.array([1])
-        self.immediate_returns = np.array([1])
-    def __init__(self,n:int):
-        self.n_states = n
-        self.transition_matrices = {"a1": np.eye(1, type=float)}
-        self.immediate_returns = np.eye(1,type = float)
-
     # initializer with a transition matrix, immediate returns and discount factor
     def __init__(self,transition_matrices:Dict, immediate_returns: np.array,discount_factor:int):
         if not self._check_transition_matrices(transition_matrices):#Lets check if transition matrix is logical (i.e the rows sum 1)
