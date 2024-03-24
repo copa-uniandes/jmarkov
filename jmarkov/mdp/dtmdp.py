@@ -24,7 +24,7 @@ class dtmdp():
         if not self._check_immediate_returns(immediate_returns,transition_matrices): # Lets check if immediate returns are consistent
             raise ValueError("the dimensions of the immediate returns are not coherent")
         if not self._check_discount_factor(discount_factor): # Lets check if discount factor is logical
-            raise ValueError("discount factor should be a number between (or equal to) 0 and 1")
+            raise ValueError("discount factor should be a number between 0 and 1")
         self.n_actions = len(transition_matrices)
         self.n_states=len(transition_matrices[next(iter(transition_matrices))])
         self.transition_matrices = transition_matrices
@@ -48,7 +48,7 @@ class dtmdp():
 
     def _check_discount_factor(self,beta:int):
         # checks if the discount factor is a number between 0 and 1 
-        if beta >= 0 and beta <= 1:
+        if beta >= 0 and beta < 1:
             return True
         else: 
             return False
