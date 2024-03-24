@@ -34,12 +34,8 @@ class dtmc(markov_chain):
 
     def _check_transition_matrix(self,M:np.ndarray):
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
-
         #Check if a given transition matrix has the condition that every element of the matrix is between 0 and 1
         if np.all(np.isclose(np.sum(M,axis=1),1,1e-5)) and np.all((M>=0) & (M<=1)):
-        #vector = np.isclose(np.sum(M, axis = 1),1,1e-5) == True  
-        #Check if a given transition matrix has the condition that every element of the matrix is between 0 and 1
-        #if vector.all() and np.all((M >= 0) & (M <= 1)):
             return True
         else:
             return False
@@ -62,7 +58,7 @@ class dtmc(markov_chain):
         #First, lets verify n is integer
         if not isinstance(n,int):
             raise ValueError("The number of transitions n must be integer")
-        #Now lets verify the demensions of the vector alpha:
+        #Now lets verify the dimensions of the vector alpha:
         try:
             shape=alpha.shape
         except:
