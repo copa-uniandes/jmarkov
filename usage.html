@@ -49,9 +49,76 @@
 </section>
 <section id="continuous-time-markov-chains">
 <h2>Continuous-time Markov chains<a class="headerlink" href="#continuous-time-markov-chains" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.ctmc.</span></span><span class="sig-name descname"><span class="pre">ctmc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctmc.ctmc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a finite continuous-time Markov chain (CTMC)</p>
+<p>The chain is defined by its number of states, states, and a 
+generator matrix. The class provides methods to compute both
+stationary and transient metrics, as well as to check the 
+chain properties (ergodicity).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctmc.ctmc.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a continuous-time Markov chain from its generator matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#jmarkov.ctmc.ctmc.steady_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the steady state distribution of the continuous-time Markov chain</p>
+<p>Computes the steady state probability distribution by replacing one of the 
+matrix equations with a normalizing equation that ensures the result is a 
+probability distribution.</p>
+<p>Returns the stationary probability distribution in array form</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.transient_probabilities">
+<span class="sig-name descname"><span class="pre">transient_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#jmarkov.ctmc.ctmc.transient_probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the transient distribution at time t with initial state alpha</p>
+<p>Computes alpha*exp(Q*t)*ones to obtain the probability distribution
+at time t given the initial probability distribution alpha</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="discrete-time-markov-chains">
 <h2>Discrete-time Markov chains<a class="headerlink" href="#discrete-time-markov-chains" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.dtmc.dtmc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.dtmc.</span></span><span class="sig-name descname"><span class="pre">dtmc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a finite discrete-time Markov chain (CTMC)</p>
+<p>The chain is defined by its number of states, states, and a 
+transition matrix. The class provides methods to compute both
+stationary and transient metrics, as well as to check the 
+chain properties (aperiodicity and ergodicity).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#jmarkov.dtmc.dtmc.steady_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the steady state distribution of the discrete-time Markov chain</p>
+<p>Computes the steady state probability distribution by replacing one of the 
+matrix equations with a normalizing equation that ensures the result is a 
+probability distribution.</p>
+<p>Returns the stationary probability distribution in array form</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.transient_probabilities">
+<span class="sig-name descname"><span class="pre">transient_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc.transient_probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the transient distribution at transition n with initial state alpha</p>
+<p>Computes alpha*(P^n)*ones to obtain the probability distribution
+at time/transition n given the initial probability distribution alpha</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
