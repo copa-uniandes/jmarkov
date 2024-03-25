@@ -2,3 +2,4 @@ sphinx_rtd_theme
 sphinx>=7.0.0
 docutils>=0.19
 numpy
+scipy
