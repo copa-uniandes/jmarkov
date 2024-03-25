@@ -4,6 +4,14 @@ from scipy import sparse
 from .markov_chain import markov_chain
 
 class ctmc(markov_chain):
+    """
+    Implements a finite continuous-time Markov chain (CTMC) 
+    
+    The chain is defined by its number of states, states, and a 
+    generator matrix. The class provides methods to compute both
+    stationary and transient metrics, as well as to check the 
+    chain properties (ergodicity). 
+    """
 
     # number of states in string array form
     n_states:int=1
@@ -25,14 +33,25 @@ class ctmc(markov_chain):
         self.n_states = n
         self.generator = np.zeros((n,n), dtype=float)
 
-    # initializer with a transition matrix
+    # initializer with a generator matrix
     def __init__(self,generator:np.array):
+        """
+        Creates a continuous-time Markov chain from its generator matrix
+        """
         if not self._check_generator_matrix(generator):#Lets check if transition matrix is logical (i.e the rows sum 0)
-            raise ValueError("the rows of transition matrix do not sum 0 or the diagonal has non negative values")
+            raise ValueError("the rows of generator matrix do not sum 0 or the diagonal has non negative values")
         self.n_states=generator.shape[0]
         self.generator = generator
+
+
     def _check_generator_matrix(self,M:np.ndarray):
-        #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 0
+        """
+        Checks that a matrix is a Markov chain generator
+         
+        Checks that all row sums are equal to zero, diagonal entries are non-positive, and 
+        non-diagonal entries are non-negative
+        """
+        #
         vector = np.isclose(np.sum(M, axis = 1),0,1e-5) == True
         # Check if a given transition matrix has all diagonal elements non positive
         if vector.all() and np.all(np.diag(M)<0):
@@ -41,8 +60,18 @@ class ctmc(markov_chain):
             return False
 
 
-    def steady_state(self):
-        # computes the steady state distribution
+    def steady_state(self) -> np.ndarray:
+        """
+        Computes the steady state distribution of the continuous-time Markov chain
+
+        Computes the steady state probability distribution by replacing one of the 
+        matrix equations with a normalizing equation that ensures the result is a 
+        probability distribution. 
+
+        Returns the stationary probability distribution in array form
+        """
+
+        # 
         if self.generator.any():
             # sets A to be Q and replace first column with ones for the normalizing equation
             A = self.generator.copy()
@@ -56,13 +85,21 @@ class ctmc(markov_chain):
         else:    
             print("Empty generator matrix")
         return 0
-    def transient_probabilities(self,t:float,alpha:np.ndarray):
+    
+
+    def transient_probabilities(self,t:float,alpha:np.ndarray) -> np.ndarray:
+        """
+        Computes the transient distribution at time t with initial state alpha
+
+        Computes alpha*exp(Q*t)*ones to obtain the probability distribution
+        at time t given the initial probability distribution alpha
+        """
         shape=alpha.shape#lets get the shape of alpha vector
         if shape[0]!=self.n_states:
             raise ValueError("The dimensions of alpha vector are incorrect. It must be a vector 1xn_states")
         P=linalg.expm(self.generator*t)#exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
-        probas=alpha@P
-        return probas
+        probs=alpha@P
+        return probs
 
 
     def first_passage_time(self, target:str):

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Usage &#8212; jMarkov 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=d59dc883" />
+    <script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to jMarkov’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to jMarkov’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">jMarkov 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<p>To use jMarkov, first install it using pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span> <span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>jmarkov
+</pre></div>
+</div>
+</section>
+<section id="markov-chains">
+<h2>Markov chains<a class="headerlink" href="#markov-chains" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.markov_chain.markov_chain">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.markov_chain.</span></span><span class="sig-name descname"><span class="pre">markov_chain</span></span><a class="headerlink" href="#jmarkov.markov_chain.markov_chain" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="continuous-time-markov-chains">
+<h2>Continuous-time Markov chains<a class="headerlink" href="#continuous-time-markov-chains" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.ctmc.</span></span><span class="sig-name descname"><span class="pre">ctmc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctmc.ctmc" title="Link to this definition">¶</a></dt>
+<dd><p>Implements a finite continuous-time Markov chain (CTMC)</p>
+<p>The chain is defined by its number of states, states, and a 
+generator matrix. The class provides methods to compute both
+stationary and transient metrics, as well as to check the 
+chain properties (ergodicity).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctmc.ctmc.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a continuous-time Markov chain from its generator matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#jmarkov.ctmc.ctmc.steady_state" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the steady state distribution of the continuous-time Markov chain</p>
+<p>Computes the steady state probability distribution by replacing one of the 
+matrix equations with a normalizing equation that ensures the result is a 
+probability distribution.</p>
+<p>Returns the stationary probability distribution in array form</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.transient_probabilities">
+<span class="sig-name descname"><span class="pre">transient_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#jmarkov.ctmc.ctmc.transient_probabilities" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the transient distribution at time t with initial state alpha</p>
+<p>Computes alpha*exp(Q*t)*ones to obtain the probability distribution
+at time t given the initial probability distribution alpha</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="discrete-time-markov-chains">
+<h2>Discrete-time Markov chains<a class="headerlink" href="#discrete-time-markov-chains" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.dtmc.dtmc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.dtmc.</span></span><span class="sig-name descname"><span class="pre">dtmc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc" title="Link to this definition">¶</a></dt>
+<dd><p>Implements a finite discrete-time Markov chain (CTMC)</p>
+<p>The chain is defined by its number of states, states, and a 
+transition matrix. The class provides methods to compute both
+stationary and transient metrics, as well as to check the 
+chain properties (aperiodicity and ergodicity).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transition_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#jmarkov.dtmc.dtmc.steady_state" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the steady state distribution of the discrete-time Markov chain</p>
+<p>Computes the steady state probability distribution by replacing one of the 
+matrix equations with a normalizing equation that ensures the result is a 
+probability distribution.</p>
+<p>Returns the stationary probability distribution in array form</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.transient_probabilities">
+<span class="sig-name descname"><span class="pre">transient_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc.transient_probabilities" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the transient distribution at transition n with initial state alpha</p>
+<p>Computes alpha*(P^n)*ones to obtain the probability distribution
+at time/transition n given the initial probability distribution alpha</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Usage</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#markov-chains">Markov chains</a><ul>
+<li><a class="reference internal" href="#jmarkov.markov_chain.markov_chain"><code class="docutils literal notranslate"><span class="pre">markov_chain</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#continuous-time-markov-chains">Continuous-time Markov chains</a><ul>
+<li><a class="reference internal" href="#jmarkov.ctmc.ctmc"><code class="docutils literal notranslate"><span class="pre">ctmc</span></code></a><ul>
+<li><a class="reference internal" href="#jmarkov.ctmc.ctmc.__init__"><code class="docutils literal notranslate"><span class="pre">ctmc.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#jmarkov.ctmc.ctmc.steady_state"><code class="docutils literal notranslate"><span class="pre">ctmc.steady_state()</span></code></a></li>
+<li><a class="reference internal" href="#jmarkov.ctmc.ctmc.transient_probabilities"><code class="docutils literal notranslate"><span class="pre">ctmc.transient_probabilities()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#discrete-time-markov-chains">Discrete-time Markov chains</a><ul>
+<li><a class="reference internal" href="#jmarkov.dtmc.dtmc"><code class="docutils literal notranslate"><span class="pre">dtmc</span></code></a><ul>
+<li><a class="reference internal" href="#jmarkov.dtmc.dtmc.__init__"><code class="docutils literal notranslate"><span class="pre">dtmc.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#jmarkov.dtmc.dtmc.steady_state"><code class="docutils literal notranslate"><span class="pre">dtmc.steady_state()</span></code></a></li>
+<li><a class="reference internal" href="#jmarkov.dtmc.dtmc.transient_probabilities"><code class="docutils literal notranslate"><span class="pre">dtmc.transient_probabilities()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Welcome to jMarkov’s documentation!</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/usage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to jMarkov’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">jMarkov 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, juanfperez.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>

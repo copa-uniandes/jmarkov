@@ -4,6 +4,14 @@ from .markov_chain import markov_chain
 import math
 
 class dtmc(markov_chain):
+    """
+    Implements a finite discrete-time Markov chain (CTMC) 
+    
+    The chain is defined by its number of states, states, and a 
+    transition matrix. The class provides methods to compute both
+    stationary and transient metrics, as well as to check the 
+    chain properties (aperiodicity and ergodicity). 
+    """
 
     # number of states in string array form
     n_states:int=1
@@ -17,6 +25,9 @@ class dtmc(markov_chain):
     # empty initializer 
     # chain with a single state
     def __init__(self):
+        """
+        Creates a continuous-time Markov chain from its transition matrix
+        """
         self.n_states = 1
         self.transition_matrix = np.array([1])
 
@@ -33,6 +44,11 @@ class dtmc(markov_chain):
         self.transition_matrix = transition_matrix
 
     def _check_transition_matrix(self,M:np.ndarray):
+        """
+        Checks that a matrix is a Markov chain transition matrix
+         
+        Checks that all entries are non-negative and all row sums are equal to one
+        """
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
 
         #Check if a given transition matrix has the condition that every element of the matrix is between 0 and 1
@@ -43,7 +59,18 @@ class dtmc(markov_chain):
             return True
         else:
             return False
-    def steady_state(self):
+        
+
+    def steady_state(self) -> np.ndarray:
+        """
+        Computes the steady state distribution of the discrete-time Markov chain
+
+        Computes the steady state probability distribution by replacing one of the 
+        matrix equations with a normalizing equation that ensures the result is a 
+        probability distribution. 
+
+        Returns the stationary probability distribution in array form
+        """
         # computes the steady state distribution
         if self.transition_matrix.any():
             # sets A to be I-P and replace first column with ones for the normalizing equation
@@ -58,7 +85,16 @@ class dtmc(markov_chain):
         else:    
             print("Empty transition matrix")
         return 0
+    
+
     def transient_probabilities(self,n,alpha):
+        """
+        Computes the transient distribution at transition n with initial state alpha
+
+        Computes alpha*(P^n)*ones to obtain the probability distribution
+        at time/transition n given the initial probability distribution alpha
+        """
+         
         #First, lets verify n is integer
         if not isinstance(n,int):
             raise ValueError("The number of transitions n must be integer")
