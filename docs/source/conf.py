@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'jMarkov'
-copyright = '2024, juanfperez'
+copyright = '2024, COPA@Uniandes'
 author = 'juanfperez'
 release = '0.1'
 
@@ -34,5 +34,5 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinxdoc'
+html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
