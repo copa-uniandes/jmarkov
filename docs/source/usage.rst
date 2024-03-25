@@ -12,10 +12,12 @@ To use jMarkov, first install it using pip:
 
 Markov chains 
 -------------
+
 .. autoclass:: jmarkov.markov_chain.markov_chain
 
 Continuous-time Markov chains 
 -----------------------------
+
 .. autoclass:: jmarkov.ctmc.ctmc
 
    .. automethod:: jmarkov.ctmc.ctmc.__init__
@@ -26,8 +28,9 @@ Continuous-time Markov chains
 
 Discrete-time Markov chains 
 -----------------------------
+
 .. autoclass:: jmarkov.dtmc.dtmc
-    
+
    .. automethod:: jmarkov.dtmc.dtmc.__init__
    
    .. automethod:: jmarkov.dtmc.dtmc.steady_state
