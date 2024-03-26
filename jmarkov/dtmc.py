@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import linalg
+from scipy import sparse
 from .markov_chain import markov_chain
 import math
 
@@ -132,26 +133,50 @@ class dtmc(markov_chain):
         return ocupation
     
     def period(self):
-        #Initializes the transition matrix and the greatest common divisor for the periodicity calculations
+        '''
+        Initializes the transition matrix and the greatest common divisor for the periodicity calculations
+        '''
         P_k = self.transition_matrix
         gcd = 0
-        #Loop to elevate the transition matrix to the k th power and evaluate its periodicity:
+        '''
+        Loop to elevate the transition matrix to the k th power and evaluate its periodicity:
+        '''
         for k in range(2, (self.n_states)+1):
             P_k = np.dot(self.transition_matrix, P_k)
-            #If the transition matrix to the k th power has a non-zero element in its diagonal, the chain could have a period k:
+            '''
+            If the transition matrix to the k th power has a non-zero element in its diagonal, the chain could have a period k:
+            '''
             if np.any(np.diagonal(P_k) != 0):
-                #GCD between the current GCD for the period of the matrix and the potential new GCD
+                '''
+                GCD between the current GCD for the period of the matrix and the potential new GCD
+                '''
                 gcd = math.gcd(gcd, k)
-            #If the GCD is 1, there is no need to keep looking for the period, the chain is aperiodic:
+            '''
+            If the GCD is 1, there is no need to keep looking for the period, the chain is aperiodic:
+            '''
             if gcd == 1:
                 break
         return gcd
+    
+    def is_irreducible(self):
+        '''
+        We check if the chain is irreducible
+        '''
+        P = np.copy(self.transition_matrix)
+        if sparse.csgraph.connected_components(P, directed=True,connection='strong',return_labels=False)==1:
+            return True
+        else:
+            return False
        
 
     def is_ergodic(self):
-        #TODO determines id the chain is ergodic or not
-        print("TODO")
-        return True
+        '''
+        A Finite Discrete Time Markov Chain is ergodic if it is aperiodic and irreducible:
+        '''
+        if self.period() == 1 & self.is_irreducible() == True:
+            return True
+        else:
+            return False
     
 
 

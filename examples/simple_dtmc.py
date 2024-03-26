@@ -17,6 +17,110 @@ ss = mc.steady_state()
 print(ss)
 probas=mc.transient_probabilities(3,np.array([0.05,0.9,0,0.05]))
 print(probas)
+
+'''
+Let's check the ergodicity of the chain by calculating its period and checking if it is irreducible:
+'''
+print('Period of the chain:')
+print(mc.period())
+print('Is the chain irreducible?')
+print(mc.is_irreducible())
+print('Is the chain ergodic?')
+print(mc.is_ergodic())
+
+'''
+Let's check the oergodicity of some other examples of aperiodic chains
+'''
+print('\n')
+print('Let\'s check the ergodicity of some other examples of aperiodic chains')
+print('\n')
+P = np.array([[0.1, 0.4, 0.5, 0.0, 0.0, 0.0],
+              [0.0, 0.2, 0.3, 0.5, 0.0, 0.0],
+              [0.0, 0.0, 0.1, 0.4, 0.5, 0.0],
+              [0.0, 0.0, 0.0, 0.2, 0.3, 0.5],
+              [0.5, 0.0, 0.0, 0.0, 0.2, 0.3],
+              [0.3, 0.5, 0.0, 0.0, 0.0, 0.2]])
+P = dtmc(P)
+print('Period of the chain:')
+print(P.period())
+print('Is the chain irreducible?')
+print(P.is_irreducible())
+print('Is the chain ergodic?')
+print(P.is_ergodic())
+
+print('\n')
+
+P = np.array([[0, 1/3, 2/3],
+              [0,0,1],
+              [1,0,0]])
+P = dtmc(P)
+print('Period of the chain:')
+print(P.period())
+print('Is the chain irreducible?')
+print(P.is_irreducible())
+print('Is the chain ergodic?')
+print(P.is_ergodic())
+
+'''
+Now, let's check the ergodicity of some non-aperiodic chains:
+'''
+print('\n')
+print('Now, let\'s check the ergodicity of some non-aperiodic chains:')
+print('\n')
+
+'''
+Chain of period 2:
+'''
+P = np.array([[0, 0, 0.8, 0.2],
+              [0, 0, 0.4, 0.6],
+              [0.7, 0.3, 0, 0],
+              [0.2, 0.8, 0, 0]])
+P = dtmc(P)
+print('Period of the chain:')
+print(P.period())
+print('Is the chain irreducible?')
+print(P.is_irreducible())
+print('Is the chain ergodic?')
+print(P.is_ergodic())
+
+'''
+Chain of period 3:
+'''
+print('\n')
+P = np.array([[0, 0, 0.5, 0.25, 0.25, 0, 0],
+              [0, 0, 1/3, 0, 2/3, 0, 0],
+              [0, 0, 0, 0, 0, 1/3, 2/3],
+              [0, 0, 0, 0, 0, 1/2, 1/2],
+              [0, 0, 0, 0, 0, 3/4, 1/4],
+              [0.5, 0.5, 0, 0, 0, 0, 0],
+              [0.25, 0.75, 0, 0, 0, 0, 0]])
+P = dtmc(P)
+print('Period of the chain:')
+print(P.period())
+print('Is the chain irreducible?')
+print(P.is_irreducible())
+print('Is the chain ergodic?')
+print(P.is_ergodic())
+
+'''
+Chain of period 4:
+'''
+print('\n')
+P = np.array([[0, 1, 0, 0],
+              [0, 0, 1, 0],
+              [0, 0, 0, 1],
+              [1, 0, 0, 0]])
+P = dtmc(P)
+print('Period of the chain:')
+print(P.period())
+print('Is the chain irreducible?')
+print(P.is_irreducible())
+print('Is the chain ergodic?')
+print(P.is_ergodic())
+
+print('\n')
+
+
 #Lets try the ocupation time function:
 M=mc.occupation_time(10)
 print("ocupation_matrix:")
