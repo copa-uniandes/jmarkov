@@ -48,12 +48,12 @@ Discrete-time Markov chains
 Discrete-time Markov Decision Processes (MDPs) 
 ----------------------------------------------
 
-.. autoclass:: jmarkov.dtmdp.dtmdp
+.. autoclass:: jmarkov.mdp.dtmdp.dtmdp
 
-   .. automethod:: jmarkov.dtmdp.dtmdp.__init__
+   .. automethod:: jmarkov.mdp.dtmdp.dtmdp.__init__
    
-   .. automethod:: jmarkov.dtmdp.dtmdp._check_transition_matrices
+   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_transition_matrices
 
-   .. automethod:: jmarkov.dtmdp.dtmdp._check_immediate_returns
+   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_immediate_returns
 
-   .. automethod:: jmarkov.dtmdp.dtmdp._check_discount_factor
+   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_discount_factor
