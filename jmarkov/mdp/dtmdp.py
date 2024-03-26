@@ -19,6 +19,9 @@ class dtmdp():
     discount_factor:int = 0.8 
     # initializer with a transition matrix, immediate returns and discount factor
     def __init__(self,transition_matrices:Dict, immediate_returns: np.array,discount_factor:int):
+        """
+        Creates a markov decision process from its transition matrices, immediate returns and discount factor
+        """
         if not self._check_transition_matrices(transition_matrices):#Lets check if transition matrix is logical (i.e the rows sum 1)
             raise ValueError("the rows of transition matrices do not sum 1 or have non positive values")
         if not self._check_immediate_returns(immediate_returns,transition_matrices): # Lets check if immediate returns are consistent
@@ -32,6 +35,11 @@ class dtmdp():
         self.discount_factor = discount_factor
 
     def _check_transition_matrices(self,M:Dict):
+        """
+        Checks that all matrices are stochastic
+         
+        Checks that all row sums are equal to one and all elements are non negative
+        """
         # determines if the transition matrices are logical
         # i.e: if the sum of the rows equals to 1 (is an stochastic matrix)
         # and if all of the elements are positive
@@ -40,13 +48,23 @@ class dtmdp():
         else:
             return False
         
-    def _check_immediate_returns(self,R:np.array, M:Dict):    
+    def _check_immediate_returns(self,R:np.array, M:Dict):  
+        """
+        Checks that the immediate returns are valid and dimensionally-coherent
+         
+        Checks that immediate return array has dimensions length of states x length of actions
+        """  
         # checks if the dimensions of immediate returns are coherent
         # expected: len(S) x len(actions)
         if R.shape == (len(M),len(list(M.values())[0])):
             return True
 
     def _check_discount_factor(self,beta:int):
+        """
+        Checks that the discount factor is valid
+         
+        Checks that discount factor is a number equal to or greater than 0 and  less than 1
+        """  
         # checks if the discount factor is a number between 0 and 1 
         if beta >= 0 and beta < 1:
             return True
