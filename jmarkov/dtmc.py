@@ -134,33 +134,37 @@ class dtmc(markov_chain):
     
     def period(self):
         '''
-        Initializes the transition matrix and the greatest common divisor for the periodicity calculations
+        Computes the period of a discrete-time Markov Chain.
+        
+        This method calculates the period of a discrete-time Markov Chain by iterating a total of N steps, where N represents
+        the number of states that the chain has. In each k-th iteration, the chain is elevated to the k-th power to compute the
+        transient probabilities in the k-th step. If one of the elementsin in the diagonal of the resulting matrix is greater than 0,
+        the chain can potentially have a period k. The period of the matrix will be the Greatest Common Divisor (GCD) between the
+        potential new period of the matrix in the k-th iteration and the current GCD before the k-th iteration.
         '''
+        
+        #Initializes the transition matrix and the greatest common divisor for the periodicity calculations
         P_k = self.transition_matrix
         gcd = 0
-        '''
-        Loop to elevate the transition matrix to the k th power and evaluate its periodicity:
-        '''
+        
+        #Loop to elevate the transition matrix to the k th power and evaluate its periodicity:
         for k in range(2, (self.n_states)+1):
             P_k = np.dot(self.transition_matrix, P_k)
-            '''
-            If the transition matrix to the k th power has a non-zero element in its diagonal, the chain could have a period k:
-            '''
+            #If the transition matrix to the k-th power has a non-zero element in its diagonal, the chain could have a period k:
             if np.any(np.diagonal(P_k) != 0):
-                '''
-                GCD between the current GCD for the period of the matrix and the potential new GCD
-                '''
+                #GCD between the current GCD for the period of the matrix and the potential new GCD
                 gcd = math.gcd(gcd, k)
-            '''
-            If the GCD is 1, there is no need to keep looking for the period, the chain is aperiodic:
-            '''
+            #If the GCD is 1, there is no need to keep looking for the period, the chain is aperiodic:
             if gcd == 1:
                 break
         return gcd
     
     def is_irreducible(self):
         '''
-        We check if the chain is irreducible
+        Checks if the given discrete-time Markov Chain is irreducible.
+        
+        This method determines if the discrete-time Markov Chain is irreducible by checking if, starting in
+        any state, it is possible to reach any other state in a sequence of transitiions.
         '''
         P = np.copy(self.transition_matrix)
         if sparse.csgraph.connected_components(P, directed=True,connection='strong',return_labels=False)==1:
@@ -171,7 +175,10 @@ class dtmc(markov_chain):
 
     def is_ergodic(self):
         '''
-        A Finite Discrete Time Markov Chain is ergodic if it is aperiodic and irreducible:
+        Checks if a given discrete-time Markov Chain is ergodic.
+        
+        Given that a finite discrete-time Markov Chain is ergodic if it is aperiodic and irreducible, this
+        method checks if both conditions are met to determine if the provided chain is ergodic or not.
         '''
         if self.period() == 1 & self.is_irreducible() == True:
             return True
