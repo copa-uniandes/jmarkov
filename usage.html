@@ -120,19 +120,28 @@ at time/transition n given the initial probability distribution alpha</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.period">
 <span class="sig-name descname"><span class="pre">period</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc.period" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes the transition matrix and the greatest common divisor for the periodicity calculations</p>
+<dd><p>Computes the period of a discrete-time Markov Chain.</p>
+<p>This method calculates the period of a discrete-time Markov Chain by iterating a total of N steps, where N represents
+the number of states that the chain has. In each k-th iteration, the chain is elevated to the k-th power to compute the
+transient probabilities in the k-th step. If one of the elementsin in the diagonal of the resulting matrix is greater than 0,
+the chain can potentially have a period k. The period of the matrix will be the Greatest Common Divisor (GCD) between the
+potential new period of the matrix in the k-th iteration and the current GCD before the k-th iteration.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.is_irreducible">
 <span class="sig-name descname"><span class="pre">is_irreducible</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc.is_irreducible" title="Permalink to this definition">¶</a></dt>
-<dd><p>We check if the chain is irreducible</p>
+<dd><p>Checks if the given discrete-time Markov Chain is irreducible.</p>
+<p>This method determines if the discrete-time Markov Chain is irreducible by checking if, starting in
+any state, it is possible to reach any other state in a sequence of transitiions.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jmarkov.dtmc.dtmc.is_ergodic">
 <span class="sig-name descname"><span class="pre">is_ergodic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.dtmc.dtmc.is_ergodic" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Finite Discrete Time Markov Chain is ergodic if it is aperiodic and irreducible:</p>
+<dd><p>Checks if a given discrete-time Markov Chain is ergodic.</p>
+<p>Given that a finite discrete-time Markov Chain is ergodic if it is aperiodic and irreducible, this
+method checks if both conditions are met to determine if the provided chain is ergodic or not.</p>
 </dd></dl>
 
 </dd></dl>
