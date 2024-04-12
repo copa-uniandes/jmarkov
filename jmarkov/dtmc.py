@@ -44,12 +44,13 @@ class dtmc(markov_chain):
         self.n_states=transition_matrix.shape[0]
         self.transition_matrix = transition_matrix
 
-    def _check_transition_matrix(self,M:np.ndarray):
+    def _check_transition_matrix(self):
         """
         Checks that a matrix is a Markov chain transition matrix
          
         Checks that all entries are non-negative and all row sums are equal to one
         """
+        M = self.transition_matrix
         #Check if a given transition matrix has the condition that for every row the sum of all elements is equal to 1
         #Check if a given transition matrix has the condition that every element of the matrix is between 0 and 1
         if np.all(np.isclose(np.sum(M,axis=1),1,1e-5)) and np.all((M>=0) & (M<=1)):
