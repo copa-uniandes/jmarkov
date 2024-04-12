@@ -71,36 +71,51 @@ class dtmdp():
         else: 
             return False
     
-    def value_iteration(self, S:np.array, A:np.array, M:Dict, R:np.array, beta:int):
+    def solver(self, tolerance, minimize = False, method = "value_iteration"):
         """
-        Solves MDP's with value iteration
+        Solves MDP's with defined method
 
-        Returns the optimal policy for each state
+        Returns the expected value of following the optimal policy at each state and the optimal policy for each state
         """
-        # initialize value functions
-        V = {i: 0 for i in S}
-        # initialize optimal policy
-        optimal_policy = {i: 0 for i in S}
-        
-        # iterate as long as there is improvement
-        while True:
-            # save values from previous iteration
-            oldV = V.copy()
-            # iterate through states
-            for i in S:
-                # initialize Q -> value-action function
-                Q = {}
-                # iterate through actions
-                for a in A:
-                    # evaluate the new value function
-                    Q[str(a)] = R[i, a] + beta*sum(M[str(a)][i, j] * oldV[j] for j in S)
-                    # update the new value function for each state
-                    V[i] = max(Q.values())
-                    # update the action for each state
-                    optimal_policy[i] = max(Q, key = Q.get)
+        S = self.states
+        A = self.actions
+        M = self.transition_matrices
+        R = self.immediate_returns
+        beta = self.discount_factor
+
+        # if the sense of the search is minimize, change the values of the immediate returns
+        # so that we maximize minimums
+        if minimize == True:
+            R = -1*R
+            
+        if method == "value_iteration":
+            # initialize value functions
+            V = np.zeros(len(S))
+            # initialize optimal policy
+            optimal_policy = {i: 0 for i in S}
+
+            # iterate while there is no improvement
+            while True:
+                # save values from previous iteration
+                oldV = V.copy()
+                # iterate through states
+                for i in S:
+                    # initialize Q -> value-action function
+                    Q = {}
+                    # iterate through actions
+                    for a in A:
+                        # evaluate the new value function
+                        Q[str(a)] = R[i, a] + beta*sum(M[str(a)][i, j] * oldV[j] for j in S)
+                        # update the new value function for each state
+                        V[i] = max(Q.values())
+                        # update the action for each state
+                        optimal_policy[i] = max(Q, key = Q.get)
+
+                # if there is no improvement break the cycle
+                if np.allclose(oldV, V, tolerance):
+                    break
                     
-            # if there is no improvement break the cycle
-            if all(oldV[i] == V[i] for i in S):
-                break
-        # return the optimal policy
-        return optimal_policy
+            if minimize == True:
+                V = -1 * V
+            # return the optimal policy
+            return V, optimal_policy
