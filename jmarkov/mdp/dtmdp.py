@@ -115,7 +115,7 @@ class dtmdp():
                 if np.allclose(oldV, V, tolerance):
                     break
                     
-            if minimize == True:
-                V = -1 * V
-            # return the optimal policy
-            return V, optimal_policy
+        if minimize == True:
+            V = -1 * V
+        # return the optimal policy
+        return V, optimal_policy
