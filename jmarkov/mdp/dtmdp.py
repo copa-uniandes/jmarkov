@@ -121,7 +121,7 @@ def value_iteration(S, A, M, R, beta, tolerance):
             # iterate through actions
             for a in A:
                 # evaluate the new value function
-                Q[str(a)] = R[i, a] + beta*sum(M[str(a)][i, j] * oldV[j] for j in S)
+                Q[a] = R[i, a] + beta*sum(M[str(a)][i, j] * oldV[j] for j in S)
                 # update the new value function for each state
                 V[i] = max(Q.values())
                 # update the action for each state
