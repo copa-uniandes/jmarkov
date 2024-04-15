@@ -165,8 +165,7 @@ def policy_evaluation(policy, S, A, M, R, beta, tolerance):
     return V
 def policy_iteration(S, A, M, R, beta, tolerance):
     # initialize optimal policy
-    #optimal_policy = {i: 0 for i in S}
-    optimal_policy = {0:0,1:0}
+    optimal_policy = {i: 0 for i in S}
     # iterate while there is improvement
     while True:
         # save values of current policy
