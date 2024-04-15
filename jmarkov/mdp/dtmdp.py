@@ -18,7 +18,7 @@ class dtmdp():
     # discount factor as int
     discount_factor:int = 0.8 
     # initializer with a transition matrix, immediate returns and discount factor
-    def __init__(self,states:np.array, transition_matrices:Dict, immediate_returns: np.array,discount_factor:int, actions: np.array):
+    def __init__(self,states:np.array, actions: np.array, transition_matrices:Dict, immediate_returns: np.array,discount_factor:int):
         """
         Creates a markov decision process from its transition matrices, immediate returns and discount factor
         """
@@ -94,35 +94,36 @@ class dtmdp():
             result = value_iteration(S, A, M, R, beta, tolerance)
             V = result[0]
             optimal_policy = result[1]
+
         if minimize == True:
             V = -1 * V
         # return the optimal policy
         return V, optimal_policy
 
 def value_iteration(S, A, M, R, beta, tolerance):
-        # initialize value functions
-        V = np.zeros(len(S))
-        # initialize optimal policy
-        optimal_policy = {i: 0 for i in S}
+    # initialize value functions
+    V = np.zeros(len(S))
+    # initialize optimal policy
+    optimal_policy = {i: 0 for i in S}
 
-        # iterate while there is no improvement
-        while True:
-            # save values from previous iteration
-            oldV = V.copy()
-            # iterate through states
-            for i in S:
-                # initialize Q -> value-action function
-                Q = {}
-                # iterate through actions
-                for a in A:
-                    # evaluate the new value function
-                    Q[str(a)] = R[i, a] + beta*sum(M[str(a)][i, j] * oldV[j] for j in S)
-                    # update the new value function for each state
-                    V[i] = max(Q.values())
-                    # update the action for each state
-                    optimal_policy[i] = max(Q, key = Q.get)
+    # iterate while there is no improvement
+    while True:
+        # save values from previous iteration
+        oldV = V.copy()
+        # iterate through states
+        for i in S:
+            # initialize Q -> value-action function
+            Q = {}
+            # iterate through actions
+            for a in A:
+                # evaluate the new value function
+                Q[str(a)] = R[i, a] + beta*sum(M[str(a)][i, j] * oldV[j] for j in S)
+                # update the new value function for each state
+                V[i] = max(Q.values())
+                # update the action for each state
+                optimal_policy[i] = max(Q, key = Q.get)
 
-            # if there is no improvement break the cycle
-            if np.allclose(oldV, V, tolerance):
-                break
-        return V, optimal_policy
+        # if there is no improvement break the cycle
+        if np.allclose(oldV, V, tolerance):
+            break
+    return V, optimal_policy
