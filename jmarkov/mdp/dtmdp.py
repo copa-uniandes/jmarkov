@@ -94,6 +94,10 @@ class dtmdp():
             result = value_iteration(S, A, M, R, beta, tolerance)
             V = result[0]
             optimal_policy = result[1]
+        elif method == "policy_iteration":
+            result = policy_iteration(S, A, M, R, beta, tolerance)
+            V = result[0]
+            optimal_policy = result[1]
 
         if minimize == True:
             V = -1 * V
@@ -126,4 +130,53 @@ def value_iteration(S, A, M, R, beta, tolerance):
         # if there is no improvement break the cycle
         if np.allclose(oldV, V, tolerance):
             break
+    return V, optimal_policy
+
+def policy_improvement(V, S, A, M, R, beta):
+    # initialize optimal policy
+    optimal_policy = {i: 0 for i in S}
+    # iterate through states
+    for i in S:
+        # initialize Q -> value-action function
+        Q = {}
+        # iterate through actions
+        for a in A:
+            # evaluate the new value function
+            Q[a] = R[i,a] + beta*sum(M[str(a)][i,j]*V[j] for j in S)
+        # update the action for each state
+        optimal_policy[i] = max(Q, key = Q.get)
+    return optimal_policy
+def policy_evaluation(policy, S, A, M, R, beta, tolerance):
+    # initialize value functions
+    V = np.zeros(len(S))
+    # iterate while there is improvement
+    while True:
+        # save old values of value functions
+        oldV = V.copy()
+        # iterate through states
+        for i in S:
+            # save current policy
+            a = policy[i]
+            # evaluate the current policy for each state
+            V[i] = R[i,a] + beta*sum(M[str(a)][i,j]*V[j] for j in S)
+        # if there is no improvement break the cycle    
+        if np.allclose(oldV, V, tolerance):
+            break
+    return V
+def policy_iteration(S, A, M, R, beta, tolerance):
+    # initialize optimal policy
+    #optimal_policy = {i: 0 for i in S}
+    optimal_policy = {0:0,1:0}
+    # iterate while there is improvement
+    while True:
+        # save values of current policy
+        old_policy = optimal_policy.copy()
+        # evaluate current policy
+        V = policy_evaluation(optimal_policy, S, A, M, R, beta, tolerance)
+        # improve current policy
+        optimal_policy = policy_improvement(V, S, A, M, R, beta)
+        # if old policy and new policy are the same (there is no improvement) break cycle 
+        if all(old_policy[i] == optimal_policy[i] for i in S):
+            break
+    V = policy_evaluation(optimal_policy, S, A, M, R, beta, tolerance)
     return V, optimal_policy
