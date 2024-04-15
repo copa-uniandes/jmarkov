@@ -177,5 +177,4 @@ def policy_iteration(S, A, M, R, beta, tolerance):
         # if old policy and new policy are the same (there is no improvement) break cycle 
         if all(old_policy[i] == optimal_policy[i] for i in S):
             break
-    V = policy_evaluation(optimal_policy, S, A, M, R, beta, tolerance)
     return V, optimal_policy
