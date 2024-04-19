@@ -58,7 +58,7 @@ class dtmdp():
         """  
         # checks if the dimensions of immediate returns are coherent
         # expected: len(S) x len(actions)
-        if R.shape == (len(M),len(list(M.values())[0])):
+        if R.shape == (len(list(M.values())[0]),len(M)):
             return True
 
     def _check_discount_factor(self,beta:int):
