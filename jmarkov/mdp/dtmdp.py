@@ -1,5 +1,4 @@
 import numpy as np
-from scipy import linalg
 from typing import Dict
 
 class dtmdp():
