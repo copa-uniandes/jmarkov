@@ -1,0 +1,86 @@
+\noindent La empresa de acueducto y alcantarillado de la ciudad de Bogotá (\textsc{EAAB}) es la responsable entre otros de realizar el mantenimiento de las tuberías, rejillas y alcantarillas del sistema de aguas de la ciudad. Los mantenimientos se realizan por localidades y el costo depende de la localidad y de la clasificación de la misma. La clasificación de una localidad está dada por el estado de su alcantarillado, rejillas y tuberías y da cuenta del nivel de riesgo de la misma. De acuerdo con lo anterior, una localidad puede estar clasificada como normal o en alerta y en estos casos el mantenimiento realizado se conoce como preventivo y correctivo respectivamente.
+
+\noindent De acuerdo con datos históricos, se sabe que cuando una localidad está clasificada como normal tiene una probabilidad de 70\% de pasar a estado de alerta y que si se realiza un mantenimiento preventivo esta probabilidad se reduce a 30\%. Adicionalmente, se sabe que el mantenimiento correctivo tiene un 80\% de éxito.
+
+\noindent Actualmente, la \textsc{EAAB} se encuentra implementando un plan piloto en dos localidades: Fontibón y Usme. En ese sentido, el costo de mantenimiento preventivo es de $\$$90 millones de pesos en la localidad de Fontibón y de $\$$55 millones de pesos en la localidad de Usme, mientras que el mantenimiento correctivo tiene un costo de $\$$180 millones de pesos en la localidad de Fontibón y $\$$175 millones de pesos en la localidad de Usme. Debido a restricciones de presupuesto, al inicio de cada mes, si la \textsc{EAAB} decide realizar mantenimiento, solo puede realizar un único mantenimiento en una de las localidades, sin importar que tipo de mantenimiento es.
+
+\noindent Como consecuencia de las implicaciones sociales, ambientales, de salud, entre otras que tiene sobre una localidad el mal funcionamiento del sistema de aguas, la Alcaldía de Bogotá impone una multa a la \textsc{EAAB} por valor de $\$$50 millones de pesos por localidad cuando no se realiza mantenimiento correctivo y la localidad se encuentra en alerta. Adicionalmente, se sabe que en el 70\% de los casos cuando la localidad de Fontibón está en alerta y no es atendida, produce una catástrofe por valor de $\$$190 millones de pesos que deben ser asumidos en su totalidad por la \textsc{EAAB}. Para el caso de la Localidad de Usme, esta probabilidad es del 60\% y el costo es de $\$$165 millones de pesos.
+
+\noindent \textbf{Hint:} Tenga en cuenta que si al inicio de este mes la localidad de Fontibon se encuentra clasificada en Alerta y la localidad de Usme se encuentra clasificada como Normal y se decide intervenir la localidad de Fontibon, la probabilidad de que a inicios del siguiente mes la localidad de Fontibon y Usme se encuentren clasificadas como Normal es de 0.24.
+
+\begin{enumerate}[label=\alph*.]
+    \item Modele esta situación como un proceso de decisión Markoviano con el fin de minimizar los costos esperados en el largo plazo. \textbf{Sea explícito en la definición de los supuestos y los componentes de su modelo.} \\
+
+
+\noindent \textbf{Solución} \\
+
+\noindent \textbf{Épocas}: $E=\{1,2,\dots, \infty\}$
+\noindent \textbf{Variables de estado:}
+\begin{align*}
+    X_{t}:&\text{Clasificación de la localidad de Fontibón al inicio de la época } t \\
+    Y_{t}:&\text{Clasificación de la localidad de Usme al inicio de la época } t \\
+    Z_{t}:&\{X_{t},Y_{t}\}
+\end{align*}
+
+\noindent \textbf{Espacio de estados:}
+    \begin{align*}
+      S_{X}&=\{\text{Normal (N), Alerta (A)} \} \\
+      S_{Y}&=\{\text{Normal (N), Alerta (A)}\} \\
+      S_{Z}&= S_{X} \times S_{Y}
+    \end{align*}
+\textbf{Decisiones:}
+    \begin{align*}
+      A((i,j))=\{\text{Ningún Mantenimiento (NM), Fontibón (F), Usme (U)}\}
+    \end{align*}
+\textbf{Probabilidades de Transición:}
+    \begin{equation*}
+        \bm{P}_{(i,j) \to (i',j')}(\text{NM}) =
+        \begin{blockarray}{cccccc}
+          & NN & NA & AN & AA \\
+        \begin{block}{c[ccccc]}
+        NN & 0.09& 0.21& 0.21&0.49\bigstrut[t] \\
+        NA & 0&0.3&0&0.7\bigstrut[t] \\
+        AN & 0& 0& 0.3& 0.7\\
+        AA & 0&0& 0&1\bigstrut[b]\\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}
+\begin{equation*}
+\bm{P}_{(i,j) \to (i',j')}(\text{F}) =
+\begin{blockarray}{cccccc}
+  & NN & NA & AN & AA \\
+\begin{block}{c[ccccc]}
+NN & 0.21& 0.49& 0.09&0.21\bigstrut[t] \\
+NA & 0&0.7&0&0.3\bigstrut[t] \\
+AN & 0.24& 0.56& 0.06& 0.14\\
+AA & 0&0.8& 0&0.2\bigstrut[b]\\
+\end{block}
+\end{blockarray}\vspace*{-1.25\baselineskip}
+\end{equation*}
+\begin{equation*}
+\bm{P}_{(i,j) \to (i',j')}(\text{U}) =
+\begin{blockarray}{cccccc}
+  & NN & NA & AN & AA \\
+\begin{block}{c[ccccc]}
+NN & 0.21& 0.09& 0.49&0.21\bigstrut[t] \\
+NA & 0.24&0.06&0.56&0.14\bigstrut[t] \\
+AN & 0& 0& 0.7& 0.3\\
+AA & 0&0& 0.8&0.2 \bigstrut[b]\\
+\end{block}
+\end{blockarray}\vspace*{-1.25\baselineskip}
+\end{equation*}
+\textbf{Retornos inmediatos:}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+  &\multicolumn{3}{|c|}{Costos}\\ \hline
+  &\multicolumn{3}{|c|}{Decisiones}\\ \hline
+Estado & NM & F & U\\ \hline
+NN & 0 & 90 & 55 \\ \hline
+NA & 149 & 239 & 175\\ \hline
+AN & 183 & 180 & 238 \\ \hline
+AA & 332 & 329 & 358 \\ \hline
+\end{tabular}
+\end{table}
+\end{enumerate}

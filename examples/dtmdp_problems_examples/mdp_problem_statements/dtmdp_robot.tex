@@ -5,16 +5,24 @@
 \noindent Si el nivel de la batería es alto, los diseñadores estiman que el robot puede buscar activamente latas sin que se descargue la batería. En este caso, al final del ciclo, el nivel de la batería será alto con probabilidad de $\alpha$. Por el contrario, si se inicia la búsqueda activa de latas con un nivel de batería bajo, los experimentos realizados han demostrado que la probabilidad de que el robot se quede sin batería es $\beta$. Para realizar el entrenamiento del robot, \textbf{se busca maximizar el número de latas que el robot recoge a lo largo del tiempo.} Si al robot se le descarga la batería, este es penalizado con -3 latas. 
     \begin{enumerate}[label=\alph*.] 
         \item Plantee un proceso de decisión de Márkov que permita maximizar las recompensas del robot en el largo plazo. \\
-    \end{enumerate}
+        \noindent \textbf{Solución} \\
 
-    \textbf{Epocas:} $\{1,2,3,...\}$\\
-    $X_t$: Nivel de carga del robot al inicio de los t-ésimos 15 minutos\\
-    $S_X=\{Alto, Bajo, Descargado\}$ \\
-    \textbf{Decisiones:}\\
-    $A\{Descargado\}=\{Recargar\}$\\
-    $A\{Bajo\}=\{Buscar, Esperar, Recargar\}$\\
-    $A\{Alto\}=\{Buscar, Esperar\}$ o $\{Buscar, Esperar, Recargar\}$, ya que aunque no tenga sentido recargar, la optimización por si sola determinará que no es una opción eficiente. \\
-    \textbf{Probabilidades de transición:}
+\noindent \textbf{Épocas}: $E=\{1,2,\dots, \infty\}$ \\
+\textbf{Variable de estado:}
+    \begin{itemize}
+        \item[] $X_t$: Nivel de carga del robot al inicio de los t-ésimos 15 minutos
+    \end{itemize}
+\textbf{Espacio de estados:}
+    \begin{itemize}
+        \item[] $S_X=\{Alto, Bajo, Descargado\}$ 
+    \end{itemize}
+\textbf{Decisiones:}
+    \begin{itemize}
+        \item[] $A\{Descargado\}=\{Recargar\}$
+        \item[] $A\{Bajo\}=\{Buscar, Esperar, Recargar\}$
+        \item[] $A\{Alto\}=\{Buscar, Esperar\}$ o $\{Buscar, Esperar, Recargar\}$, ya que aunque no tenga sentido recargar, la optimización por si sola determinará que no es una opción eficiente.
+    \end{itemize}
+\textbf{Probabilidades de transición:}
     \begin{table}[H]
     \centering
     \begin{tabular}{|l|c|c|c|}
@@ -57,5 +65,5 @@
     \textbf{Descargado} & NA & NA & -3 \\
     \hline
     \end{tabular}
-    \end{table}
-%\end{comment}
+    \end{table} 
+    \end{enumerate}

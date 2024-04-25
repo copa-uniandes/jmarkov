@@ -118,7 +118,7 @@ def value_iteration(S, A, M, R, beta, tolerance):
             # initialize Q -> value-action function
             Q = {}
             # iterate through actions
-            for a in A:
+            for a in range(0,len(A)):
                 # evaluate the new value function
                 Q[a] = R[i, a] + beta*sum(M[str(a)][i, j] * oldV[j] for j in range(0, len(S)))
                 # update the new value function for each state
@@ -139,7 +139,7 @@ def policy_improvement(V, S, A, M, R, beta):
         # initialize Q -> value-action function
         Q = {}
         # iterate through actions
-        for a in A:
+        for a in range(0, len(A)):
             # evaluate the new value function
             Q[a] = R[i,a] + beta*sum(M[str(a)][i,j]*V[j] for j in range(0, len(S)))
         # update the action for each state

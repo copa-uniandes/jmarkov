@@ -1,0 +1,49 @@
+\noindent El Ministerio de Ambiente en Brasil está interesado en realizar una planeación de la gestión para la represa de Alto Jatapu con el fin de alcanzar altos niveles de producción. Se sabe que la represa tiene cuatro niveles de llenado: Lleno, Alto, Medio y Bajo. Los niveles de llenado se pueden ver afectados por la lluvia en cada día de operación. Se sabe que, si un día llueve, la represa aumentará de nivel de llenado con probabilidad $q$. Tenga en cuenta que la probabilidad de que un día cualquiera llueva es de $p$.
+\noindent Al inicio de cada día, se pueden abrir y cerrar las compuertas de salida de la represa que permiten la generación de la energía. SI en un día las compuertas se mantienen cerradas, no sale agua a las turbinas de generación y no se produce energía. Por el contrario, si el nivel de llenado es $i$ y si las compuertas se abren, el nivel de lagua de la represa disminuirá hasta llegar a Bajo (sin importar lo que pase con la lluvia), y se producirán $\delta_{i}$kW de energía.
+\noindent Suponga que el precio por kW de energía es de $\$W$, y el costo por apertura de las compuertas es de $\$Z$ en cada día de operación. Además, se sabe que, si en un día la represa está llena y llueve, con probabilidad de $q$ se ocasionará un derrame y la empresa incurrirá en un gasto de $\$R$ por reparar a las víctimas de las poblaciones aledañas. En estos casos la represa mantiene el nivel lleno al inicio del día siguiente. La apertura de compuertas permite mitigar el riesgo de derrame de la represa.
+
+\textbf{Nota:} Tenga en cuenta que no hay probabilidad asociada a no llover y a la disminución de la represa.
+\begin{enumerate}
+    \item Plantee un modelo de decisión en el tiempo con el objetivo de maximizar el ingreso recibido por la represa a través de la planeación de la producción de energía.
+
+    \noindent \textbf{Solución:} \\
+
+\noindent \textbf{Épocas}: $E=\{1,2,\dots, \infty\}$ \\
+\textbf{Variable de estado:}
+    $X_t$: Nivel de llenado de la represa al inicio del $n$-ésimo día\\
+\textbf{Espacio de estados:}
+    $S_X=\{Lleno, Alto, Medio, Bajo\}$ \\
+\textbf{Decisiones:}
+$A\{i\}=\{Abrir, No Abrir\} \forall i \in S_X$\\
+\textbf{Retornos Inmediatos:}\\
+$r_{(i,Abrir)} = \delta_i \cdot W - Z \ \forall i \in S_X$\\
+$r_{(i,NoAbrir)} = 0  \ \forall i \in S_X -{Lleno}$ \\
+$r_{(Lleno,NoAbrir)} =  - R\cdot (p\cdot q)$ \\
+\noindent \textbf{Probabilidades de transición:} 
+\begin{equation*}
+    \bm{P}_{(i) \to (j)}(\text{Abrir}) =
+    \begin{blockarray}{cccccc}
+        & Lleno & Alto & Medio & Bajo \\
+    \begin{block}{c[ccccc]}
+    Lleno & 0& 0& 0&1\bigstrut[t] \\
+    Alto & 0&0&0&1\bigstrut[t] \\
+    Medio & 0& 0& 0& 1\\
+    Bajo & 0&0& 0&1\bigstrut[b]\\
+    \end{block}
+    \end{blockarray}\vspace*{-1.25\baselineskip}
+\end{equation*}
+\begin{equation*}
+    \bm{P}_{(i) \to (j)}(\text{NoAbrir}) =
+    \begin{blockarray}{cccccc}
+        & Lleno & Alto & Medio & Bajo \\
+    \begin{block}{c[ccccc]}
+    Lleno & 1& 0& 0&1\bigstrut[t] \\
+    Alto & p\cdot q & 1 - p \cdot q &0&0\bigstrut[t] \\
+    Medio & 0& p \cdot q & 1 - p \cdot q & 0\\
+    Bajo & 0&0& p \cdot q &1 - p \cdot q\bigstrut[b]\\
+    \end{block}
+    \end{blockarray}\vspace*{-1.25\baselineskip}
+\end{equation*}
+
+\end{enumerate}
+

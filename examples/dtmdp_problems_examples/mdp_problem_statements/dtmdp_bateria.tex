@@ -1,4 +1,4 @@
- \noindent La empresa Logistik ha encontrado información más detallada sobre la evolución del estado de las baterías a lo largo del tiempo. 
+\noindent La empresa Logistik ha encontrado información más detallada sobre la evolución del estado de las baterías a lo largo del tiempo. 
 Se sabe que la batería pasa por 5 grandes etapas: buen funcionamiento (1), desgaste bajo (2), desgaste intermedio (3), desgaste alto (4), y falla (5). 
 
 \noindent En un mes la batería pasa al siguiente nivel de desgaste con probabilidad $q$, y con la probabilidad restante permanece en el mismo nivel. 
@@ -8,56 +8,49 @@ Puede suponer que esta acumulación de horas sucede siempre que la batería \emp
 \noindent Siempre y cuando la batería esté sin falla, al inicio de cualquier mes, la empresa puede decidir no hacer nada o realizar un mantenimiento a la batería, el cual tiene un costo de $L$ pesos y la batería queda en nivel de buen funcionamiento. 
 El mantenimiento se realiza al inicio del mes, y la batería sigue acumulando las horas de operación luego del mantenimiento. Además, tras realizar el mantenimiento la batería seguirá en buen estado al inicio del siguiente mes. 
 
-
 \noindent En caso de que la batería falle, se debe reemplazar por una batería nueva, lo cual tiene un costo de $100L$ pesos. Note que toda batería nueva tiene 0 horas acumuladas de operación. Además, si la batería llega a las 100000 horas de operación también debe reemplazarse por una batería nueva. Cuando se reemplace la batería no hay acumulación de horas de operación. 
 
 \noindent Bajo estas condiciones, la empresa quiere realizar la planeación de la operación a largo plazo, que se debe traducir en una política óptima de mantenimiento y reemplazo de \textbf{una batería}. 
 
 
 \begin{enumerate}
-	\item Formule un modelo de decisión en el tiempo para apoyar las decisiones de la empresa en el largo plazo. 
+\item Formule un modelo de decisión en el tiempo para apoyar las decisiones de la empresa en el largo plazo. 
 Defina explícitamente todos los componentes de su modelo. \\ 
 
-\noindent \textbf{Solución:}\\
+\noindent\textbf{Solución:}
 
+\textbf{Épocas}: $E=\{1,2,\dots, \infty\}$
+	Es un problema de largo plazo, sin época terminal. \\
+\textbf{Variables de estado}:
 \begin{itemize}
-	\item[] \textbf{Épocas}: $E=\{1,2,\dots\}$
-	Es un problema de largo plazo, sin época terminal. 
-	
-	\item[] \textbf{Variables de estado}:
-	\begin{itemize}
-		\item[] $X_n$: nivel de desgaste de la batería al inicio del mes $n$
-		\item[] $Y_n$: número de horas de operación acumuladas por la batería al inicio del mes $n$
+	\item[] $X_n$: nivel de desgaste de la batería al inicio $n$-ésimo mes
+		\item[] $Y_n$: número de horas de operación acumuladas por la batería al inicio del $n$-ésimo mes
 		\item[] $Z_n = (X_n,Y_n)$
-	\end{itemize}
-		
-	\item[] \textbf{Espacios de estados}:
-	\begin{itemize}
-		\item $S_X = \{1, 2, 3, 4, 5\}$ 
-		\item $S_Y = \{0, 500, 1000, 1500, \dots, 100000\}$. 
-		\item $S_Z = S_X \times S_Y$ (aquí hay algunos estados inalcanzables como (i,0) con i>1, pero creo que podemos no considerarlos en la rúbrica)
-	\end{itemize}
-		
-		
-	\item[] \textbf{Espacio de acciones}:
-	\begin{itemize}
-		\item[] Mantenimiento (M) o Nada (N) al inicio del mes $n$: $A(i,j) = \{N,M\},\ i \neq F,\ j\neq 100000$. 
-		\item[] Reemplazo (R) al inicio del mes $n$: $A(i,j) = \{R\},\ i = F \text{ ó } j = 100000$.
-	\end{itemize}
+\end{itemize}
+\textbf{Espacios de estados}:
+\begin{itemize}
+    \item $S_X = \{1, 2, 3, 4, 5\}$ 
+    \item $S_Y = \{0, 500, 1000, 1500, \dots, 100000\}$. 
+    \item $S_Z = S_X \times S_Y$ (aquí hay algunos estados inalcanzables como (i,0) con i>1 pero se puede modelar sin excepciones y penalizar las decisiones y estados infactibles)
+\end{itemize}
+\textbf{Espacio de acciones}:
+\begin{itemize}
+    \item[] $A(i,j) = \{N,M\},\ i \neq F,\ j\neq 100000$. 
+    \item[] $A(i,j) = \{R\},\ i = F \text{ ó } j = 100000$.
+\end{itemize}
 	
-	\item[] \textbf{Costos inmediatos}:
-	\begin{itemize}
-		\item[] \[c(i,a) = 
+\textbf{Costos inmediatos}:
+\begin{itemize}
+    \item[] \[c(i,a) = 
 		\begin{cases}
 		0,							& i\neq F, a = N, \\ 
 		L, 							& i\neq F, a = M, \\ 
 		100L,  					& i=F o j=100000, a = R. \\ 
 		\end{cases} \]
-		
-	\end{itemize}
+\end{itemize}
 
-	\item[] \textbf{Probabilidades de transición}:
-	\[P_{((i,j),(i',j'))}^{(N)} = 
+\textbf{Probabilidades de transición}:
+    \[P_{((i,j),(i',j'))}^{(N)} = 
 		\begin{cases}
 		q*r							&	i' = i + 1, j' = \min\{j + 1000, 100000\}, i < 5, j < 100000,\\
 		q*(1-r)					&	i' = i + 1, j' = \min\{j + 500, 100000\},  i < 5, j < 100000, \\
@@ -80,5 +73,4 @@ Defina explícitamente todos los componentes de su modelo. \\
 		1,		&	i' = 1, j' = 0, j = 100000,\\
 		0,		& \text{dlc}.  
 		\end{cases} \]
-\end{itemize}
 \end{enumerate}

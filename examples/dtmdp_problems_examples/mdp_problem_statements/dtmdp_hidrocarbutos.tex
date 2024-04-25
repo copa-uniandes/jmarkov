@@ -1,0 +1,74 @@
+\noindent La compañía de  petróleos YTF usa una sofisticada máquina para la extracción de hidrocarburos de difícil obtención en la Orinoquía Colombiana. Al inicio de cada mes, el jefe de operación debe revisar las condiciones de avería de la máquina y determinar si ésta debe ser intervenida o no. Dado que la máquina puede tener diferentes grados de deterioro, la compañía  ha decidido agruparlos en tres categorías que son: perfectas condiciones, con defecto o avería total. 
+
+\noindent Se ha estimado que la máquina en perfectas condiciones puede presentar algún defecto en el mes siguiente con una probabilidad de 0.09 o pasar a una situación de avería total con una probabilidad de 0.01. Trabajando con defecto, la máquina puede mantenerse en ese estado el mes siguiente con una probabilidad de 0.55 o pasar a un estado de avería total con una probabilidad de 0.45. 
+
+\noindent El jefe de operación puede decidir si envía a reparar la máquina, la sustituye por una nueva o simplemente la deja como está. La sustitución implica la llegada de una máquina en perfectas condiciones para el mes siguiente en el que fue tomada la decisión. En el caso de enviar a reparar la máquina, se debe tener en cuenta que si la reparación se hace cuando la máquina se encuentra con defecto, en el 80\% de las veces la máquina queda perfecta y en el restante la máquina continua con defecto. Si la reparación es realizada cuando la máquina se encuentra en avería total, en un 30\% de los casos la máquina queda en perfectas condiciones y en el restante, la máquina continua averiada totalmente. 
+
+\noindent Si se toma la decisión de enviar a reparar la máquina, se acarreará en un costo de \$30k y la pérdidas en productividad  de un mes de extracción que tiene un costo de \$20k. En caso de realizar la sustitución de la máquina, se acarreará en costos iguales a \$60k y la perdida de un mes de extracción. En caso de trabajar con la máquina defectuosa, se prevé que YTP incurre en costos iguales a \$10k, si la máquina se encuentra averiada totalmente no hay extracción de petroleo.
+
+\begin{enumerate}[label=\alph*.]
+\item  Usando la información anterio formule un proceso de decisión en el tiempo que le permita al jefe de operación determinar la política de decisión que \textbf{minimiza los costos totales}. Defina explícita y claramente todos los componentes de su modelo. \\
+
+
+
+\noindent \textbf{Solución:} \\
+
+\noindent \textbf{Épocas}: $E=\{1,2,\dots, \infty\}$ \\
+\textbf{Variable de estado:}
+    $X_t$: Grado de deterioro de la máquina extractora al inicio del $n$-ésimo mes\\
+\textbf{Espacio de estados:}
+    $S_X=\{\text{Perfecta}(P), \text{Defecto} (D), \text{Avería} (A)\}$ \\
+\textbf{Decisiones:}
+$A\{i\}=\{\text{No hacer nada} (N) , \text{Reparar} (R),\text{Sustituir} (S) \} \forall i \in S_X$\\
+\textbf{Probabilidades de Transición:}
+    \begin{equation*}
+        \bm{P}_{(i) \to (j)}(\text{R}) =
+        \begin{blockarray}{cccc}
+          & P & D & A\\
+        \begin{block}{c[ccc]}
+        P & 1& 0& 0\bigstrut[t] \\
+        D & 0.8&0.2&0\bigstrut[t] \\
+        A & 0.3&0&0.7\bigstrut[b]\\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}
+
+    \begin{equation*}
+        \bm{P}_{(i) \to (j)}(\text{N}) =
+        \begin{blockarray}{cccc}
+          & P & D & A\\
+        \begin{block}{c[ccc]}
+        P & 0.9& 0.09& 0.01\bigstrut[t] \\
+        D & 0&0.55&0.45\bigstrut[t] \\
+        A & 0&0& 1\bigstrut[b]\\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}
+
+    \begin{equation*}
+        \bm{P}_{(i) \to (j)}(\text{S}) =
+        \begin{blockarray}{cccc}
+          & P & D & A\\
+        \begin{block}{c[ccc]}
+        P & 1& 0& 0\bigstrut[t] \\
+        D & 1&0&0\bigstrut[t] \\
+        A & 1&0&0\bigstrut[b]\\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}
+    
+\noindent \textbf{Matriz de retornos:}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline      
+
+        &\multicolumn{3}{|c|}{Decisiones}\\ \hline
+Estado  & N & R & S\\ \hline
+P   & 0 & 50 & 80            \\ \hline
+D   & 10 & 50 & 80           \\ \hline
+A   & 20 & 50 & 80           \\ \hline
+\end{tabular}
+\end{table}
+
+\end{enumerate}
