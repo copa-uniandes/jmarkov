@@ -30,17 +30,17 @@ retornosAcueducto = np.array([[0, 90, 55],
 # Matrices de transición
 matricesAcueducto = {}
 # Para a == Nada
-matricesAcueducto["0"] = np.array([[0.09, 0.21, 0.21, 0.49],
+matricesAcueducto[accionesAcueducto[0]] = np.array([[0.09, 0.21, 0.21, 0.49],
                                    [0, 0.3, 0, 0.7],
                                    [0, 0, 0.3, 0.7],
                                    [0, 0, 0, 1]])  
 # Para a == Fontibón
-matricesAcueducto["1"] = np.array([[0.21, 0.49, 0.09, 0.21],
+matricesAcueducto[accionesAcueducto[1]] = np.array([[0.21, 0.49, 0.09, 0.21],
                                    [0, 0.7, 0, 0.3],
                                    [0.24, 0.56, 0.06, 0.14],
                                    [0, 0.8, 0, 0.2]])
 # Para a == Usme
-matricesAcueducto["2"] = np.array([[0.21, 0.09, 0.49, 0.21],
+matricesAcueducto[accionesAcueducto[2]] = np.array([[0.21, 0.09, 0.49, 0.21],
                                    [0.24, 0.06, 0.56, 0.14],
                                    [0, 0, 0.7, 0.3],
                                    [0, 0, 0.8, 0.2]])

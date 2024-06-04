@@ -1,0 +1,46 @@
+\noindent Los mensajeros de Rappi reciben los encargos asignados en la app móvil para Rappitenderos. Cuando reciben un encargo deciden si lo aceptan y lo realizan inmediatamente, o lo rechazan esperando a que el próximo encargo les traia mejores ganancias. Ellos reciben cuatro tipos de encargo: Premium (P), Bundles (B), Estándar (E), y Rappifavor (F); y obtienen $\$W_{i}$ de ganancia por aceptar un pedido del tipo $i \in \{P,B,E,F\}.$
+
+\begin{enumerate}[label=\alph*.]
+    \item Plantee un modelo de decisión en el tiempo con el objetivo de maximizar las ganancias percibidas por \emph{un} Rappitendero. Sea explícito en la definición de los supuestos y los componentes de su modelo.
+\end{enumerate}
+
+\noindent \textbf{Solución:}
+
+
+\noindent \textbf{Épocas}: $E=\{1,2,\dots, \infty\}$ \\
+\textbf{Variable de estado:}
+    $X_n$: tipo de encargo que recibe el Rappitendero en la $n$-ésima época\\
+\textbf{Espacio de estados:}
+    $S_X=\{\text{Premium}(P), \text{Bundle} (B), \text{Estándar} (E), \text{Rappifavor} (F) \}$ \\
+\textbf{Decisiones:}
+$A\{i\}=\{\text{Aceptar} (A) , \text{Rechazar} (R) \} \forall i \in S_X$\\
+\textbf{Retornos Inmediatos:}
+$R\{i|Aceptar\}= w_{i}, R\{i|Rechazar\} = 0$ \\
+
+\noindent \textbf{Probabilidades de transición:}
+\noindent Definimos $\lambda_{T}$ como $\lambda_{T} = \lambda_{P}+\lambda_{B}+\lambda_{E}+\lambda_{F}$
+    \begin{equation*}
+        \bm{P}_{(i) \to (j)}(\text{Aceptar}) =
+        \begin{blockarray}{ccccc}
+          & P & B & E & F\\
+        \begin{block}{c[cccc]}
+        P & \frac{\lambda_{P}}{\lambda_{T}} & \frac{\lambda_{B}}{\lambda_{T}} & \frac{\lambda_{E}}{\lambda_{T}} & \frac{\lambda_{F}}{\lambda_{T}}\bigstrut[t] \\
+        B & \frac{\lambda_{P}}{\lambda_{T}} & \frac{\lambda_{B}}{\lambda_{T}} & \frac{\lambda_{E}}{\lambda_{T}} & \frac{\lambda_{F}}{\lambda_{T}} \bigstrut[t] \\
+        E & \frac{\lambda_{P}}{\lambda_{T}} & \frac{\lambda_{B}}{\lambda_{T}} & \frac{\lambda_{E}}{\lambda_{T}} & \frac{\lambda_{F}}{\lambda_{T}} \bigstrut[t]\\
+        F & \frac{\lambda_{P}}{\lambda_{T}} & \frac{\lambda_{B}}{\lambda_{T}} & \frac{\lambda_{E}}{\lambda_{T}} & \frac{\lambda_{F}}{\lambda_{T}} \bigstrut[b] \\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}
+
+    \begin{equation*}
+        \bm{P}_{(i) \to (j)}(\text{Rechazar}) =
+        \begin{blockarray}{ccccc}
+          & P & B & E & F\\
+        \begin{block}{c[cccc]}
+        P & \frac{\lambda_{P}}{\lambda_{P}+\lambda{B}} & \frac{\lambda_{B}}{\lambda_{P}+\lambda{B}} & 0 & 0 \bigstrut[t] \\
+        B & \frac{\lambda_{P}}{\lambda_{P}+\lambda{B}} & \frac{\lambda_{B}}{\lambda_{P}+\lambda{B}} & 0 & 0 \bigstrut[t] \\
+        E & \frac{\lambda_{P}}{\lambda_{P}+\lambda{B}} & \frac{\lambda_{B}}{\lambda_{P}+\lambda{B}} & 0 & 0 \bigstrut[t]\\
+        F &\frac{\lambda_{P}}{\lambda_{P}+\lambda{B}} & \frac{\lambda_{B}}{\lambda_{P}+\lambda{B}} & 0 & 0 \bigstrut[b] \\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}

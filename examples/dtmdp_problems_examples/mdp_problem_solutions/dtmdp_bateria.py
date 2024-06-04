@@ -5,6 +5,7 @@ import numpy as np
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..')))
 from jmarkov.mdp.dtmdp import dtmdp
 
+
 # Parámetros:
 q = 0.6
 r = 0.4
@@ -100,7 +101,7 @@ for a in acciones:
                 else:
                     listaAux.append(0)
             matriz.append(listaAux)
-        matrices[str(a)] = np.array(matriz)
+        matrices[acciones[0]] = np.array(matriz)
     # Para a == 1 ~ hacer mantenimiento
     elif a == 1:
         matriz = []
@@ -123,7 +124,7 @@ for a in acciones:
                 else:
                     listaAux.append(0)
             matriz.append(listaAux)
-        matrices[str(1)] = np.array(matriz)
+        matrices[acciones[1]] = np.array(matriz)
     # Para a == 2 ~ reemplazar
     elif a == 2:
         matriz=[]
@@ -140,7 +141,7 @@ for a in acciones:
                 else:
                     listaAux.append(0)
             matriz.append(listaAux)
-        matrices[str(a)] = np.array(matriz)
+        matrices[acciones[2]] = np.array(matriz)
         
 # Creo el problema como un mdp
 mdpBateria = dtmdp(estados, acciones, matrices, retornos, discount_factor)

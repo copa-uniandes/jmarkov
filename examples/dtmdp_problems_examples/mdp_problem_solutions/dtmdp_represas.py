@@ -21,10 +21,12 @@ C = 12
 # X_{t}: Nivel del embalse en la época t
 
 # Espacio de estados
-estadosRepresa = [i for i in range(0,4)] # [0, 1, 2, 3] --> 0: Lleno, 1: Alto, 2: Medio, 3: Bajo
+#estadosRepresa = [i for i in range(0,4)] # [0, 1, 2, 3] --> 0: Lleno, 1: Alto, 2: Medio, 3: Bajo
+estadosRepresa = np.array(['Lleno', 'Alto', 'Medio', 'Bajo'])
 
 # Acciones
-accionesRepresa = np.array([a for a in range(0,2)]) # array([0, 1])--> 0: Abrir, 1:Cerrar
+#accionesRepresa = np.array([a for a in range(0,2)]) # array([0, 1])--> 0: Abrir, 1:Cerrar
+accionesRepresa = np.array(['Abrir','Cerrar'])
 
 # Retornos Inmediatos
 retornosRepresa = []
@@ -63,7 +65,7 @@ for estado_actual in range(0,len(estadosRepresa)):
         else:
             listaAux.append(0)
     matrizRepresa.append(listaAux)
-    matricesRepresa["0"] = np.array(matrizRepresa)
+    matricesRepresa[accionesRepresa[0]] = np.array(matrizRepresa)
     
 # Para a == 1
 matrizRepresa = []
@@ -82,7 +84,7 @@ for estado_actual in range(0,len(estadosRepresa)):
         else:
             listaAux.append(0)
     matrizRepresa.append(listaAux)
-    matricesRepresa["1"] = np.array(matrizRepresa)
+    matricesRepresa[accionesRepresa[1]] = np.array(matrizRepresa)
 
 # Creo el problema como un mdp
 mdpRepresa = dtmdp(estadosRepresa, accionesRepresa, matricesRepresa, retornosRepresa, 0.8)

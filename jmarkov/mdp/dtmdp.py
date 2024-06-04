@@ -107,8 +107,7 @@ def value_iteration(S, A, M, R, beta, tolerance):
     # initialize value functions
     V = np.zeros(len(S))
     # initialize optimal policy
-    optimal_policy = {i: 0 for i in range(0, len(S))}
-
+    optimal_policy = {S[i]: A[0] for i in range(0, len(S))}
     # iterate while there is no improvement
     while True:
         # save values from previous iteration
@@ -120,11 +119,11 @@ def value_iteration(S, A, M, R, beta, tolerance):
             # iterate through actions
             for a in range(0,len(A)):
                 # evaluate the new value function
-                Q[a] = R[i, a] + beta*sum(M[str(a)][i, j] * oldV[j] for j in range(0, len(S)))
+                Q[A[a]] = R[i, a] + beta*sum(M[A[a]][i,j]*oldV[j] for j in range(0, len(S)))
                 # update the new value function for each state
                 V[i] = max(Q.values())
                 # update the action for each state
-                optimal_policy[i] = max(Q, key = Q.get)
+                optimal_policy[S[i]] = max(Q, key = Q.get)
 
         # if there is no improvement break the cycle
         if np.allclose(oldV, V, tolerance):
@@ -133,7 +132,7 @@ def value_iteration(S, A, M, R, beta, tolerance):
 
 def policy_improvement(V, S, A, M, R, beta):
     # initialize optimal policy
-    optimal_policy = {i: 0 for i in range(0, len(S))}
+    optimal_policy = {S[i]: A[0] for i in range(0, len(S))}
     # iterate through states
     for i in range(0, len(S)):
         # initialize Q -> value-action function
@@ -141,12 +140,12 @@ def policy_improvement(V, S, A, M, R, beta):
         # iterate through actions
         for a in range(0, len(A)):
             # evaluate the new value function
-            Q[a] = R[i,a] + beta*sum(M[str(a)][i,j]*V[j] for j in range(0, len(S)))
+            Q[A[a]] = R[i,a] + beta*sum(M[A[a]][i,j]*V[j] for j in range(0, len(S)))
         # update the action for each state
-        optimal_policy[i] = max(Q, key = Q.get)
+        optimal_policy[S[i]] = max(Q, key = Q.get)
     return optimal_policy
 
-def policy_evaluation(policy, S, M, R, beta, tolerance):
+def policy_evaluation(policy, S, A, M, R, beta, tolerance):
     # initialize value functions
     V = np.zeros(len(S))
     # iterate while there is improvement
@@ -156,25 +155,26 @@ def policy_evaluation(policy, S, M, R, beta, tolerance):
         # iterate through states
         for i in range(0,len(S)):
             # save current policy
-            a = policy[i]
+            a = np.where(A == policy[S[i]])[0][0]
             # evaluate the current policy for each state
-            V[i] = R[i,a] + beta*sum(M[str(a)][i,j]*V[j] for j in range(0, len(S)))
+            V[i] = R[i,a] + beta*sum(M[A[a]][i,j]*V[j] for j in range(0,len(S)))
         # if there is no improvement break the cycle    
         if np.allclose(oldV, V, tolerance):
             break
     return V
+
 def policy_iteration(S, A, M, R, beta, tolerance):
     # initialize optimal policy
-    optimal_policy = {i: 0 for i in range(0, len(S))}
+    optimal_policy = {S[i]: A[0] for i in range(0, len(S))}
     # iterate while there is improvement
     while True:
         # save values of current policy
         old_policy = optimal_policy.copy()
         # evaluate current policy
-        V = policy_evaluation(optimal_policy, S, M, R, beta, tolerance)
+        V = policy_evaluation(optimal_policy, S, A, M, R, beta, tolerance)
         # improve current policy
         optimal_policy = policy_improvement(V, S, A, M, R, beta)
         # if old policy and new policy are the same (there is no improvement) break cycle 
-        if all(old_policy[i] == optimal_policy[i] for i in range(0,len(S))):
+        if all(old_policy[S[i]] == optimal_policy[S[i]] for i in range(0, len(S))):
             break
     return V, optimal_policy
