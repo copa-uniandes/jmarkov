@@ -29,29 +29,10 @@ estadosRepresa = np.array(['Lleno', 'Alto', 'Medio', 'Bajo'])
 accionesRepresa = np.array(['Abrir','Cerrar'])
 
 # Retornos Inmediatos
-retornosRepresa = []
-for i in range(0,len(estadosRepresa)):
-    listaAux = []
-    for a in accionesRepresa:
-        # Si decide abrir y el nivel del embalse es lleno
-        if a == 0 and i == 0:
-            listaAux.append(W*retLleno - Z)
-        # Si decide abrir y el nivel del embalse es alto
-        elif a == 0 and i == 1:
-            listaAux.append(W*retAlto - Z)
-        # Si decide abrir y el nivel del embalse es medio
-        elif a == 0 and i == 1:
-            listaAux.append(W*retMedio - Z)
-        # Si decide abrir y el nivel del embalse es bajo
-        elif a == 0 and i == 2:
-            listaAux.append(W*retBajo - Z)
-        # Si decide cerrar y el nivel del embalse es lleno
-        elif a == 1 and i == 0:
-            listaAux.append(-C*(p*q))
-        else:
-            listaAux.append(0)
-    retornosRepresa.append(listaAux)
-retornosRepresa = np.array(retornosRepresa)
+retornosRepresa = np.array([[W*retLleno - Z,  -C*(p*q)],
+                            [W*retAlto - Z, 0],
+                            [W*retMedio - Z, 0],
+                            [W*retBajo - Z, 0]])
 
 # Matrices de transición
 matricesRepresa = {}

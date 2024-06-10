@@ -33,5 +33,5 @@ matricesAcacias['No hacer nada (N)'] = np.array([[0.6, 0.4, 0],
 
 # Creo el problema como un mdp
 mdpAcacias = dtmdp(estadosAcacias, accionesAcacias, matricesAcacias, retornosAcacias, 0.8)
-print(mdpAcacias.solve(0, minimize = True, method = "value_iteration"))
-print(mdpAcacias.solve(0, minimize = True, method="policy_iteration"))
+print(mdpAcacias.solve(0, method = "value_iteration"))
+print(mdpAcacias.solve(0, method="policy_iteration"))
