@@ -1,5 +1,9 @@
 import numpy as np
 from typing import Dict
+import sys
+import os.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..')))
+from jmarkov.dtmc import dtmc
 
 class dtmdp():
     # number of states in string array form
@@ -102,7 +106,35 @@ class dtmdp():
             V = -1 * V
         # return the optimal policy
         return V, optimal_policy
+    
+    def policy_transition_matrix(self, policy):
+        """
+        Calculates the expected value of a policy according 
 
+        Returns the transition matrix for following the optimal policy
+        """
+        # gets the transition matrix for the optimal policy
+        S = self.states
+        M = self.transition_matrices
+        optimal_transition_matrix = []
+        for i in range(0, len(S)):
+            optimal_transition_matrix.append(M[policy[S[i]]][i])
+        optimal_transition_matrix = np.array(optimal_transition_matrix)
+        return optimal_transition_matrix
+        
+    def expected_policy_value(self, value_function, policy):
+        """
+        Calculates the expected value of a policy according to the steady state probability of being in each state
+
+        Returns the expected value of following the optimal policy
+        """
+        # gets the transition matrix for the optimal policy
+        optimal_transition_matrix = self.policy_transition_matrix(policy)
+        # creates the dtmc object
+        mc = dtmc(optimal_transition_matrix)
+        expected_value = sum(mc.steady_state()*value_function)
+        return expected_value
+    
 def value_iteration(S, A, M, R, beta, tolerance):
     # initialize value functions
     V = np.zeros(len(S))
