@@ -1,0 +1,75 @@
+\noindent En Acacias, un municipio ubicado en el departamento del Meta, se vive en su mayoría de la agricultura. El cacao es uno de los cultivos más deseados debido a su alta importancia en el contexto internacional. Sin embargo, la incidencia de moniliasis, una enfermedad fúngica capaz de ocasionar pérdidas de más del 50$\%$ de la producción anual de cacao, ha generado un grave impacto en las familias de la región.
+
+\noindent Cada trimestre, los agricultores deben decidir que estrategia utilizar para el control de la moniliasis: Fumigación (F), Erradicación (E) o No hacer nada (N). Debido a los requerimientos tecnológicos necesarios para llevar a cabo la fumigación de un cultivo esta estrategia tiene un costo de 400 USD. La incidencia de moniliasis en el cultivo se puede clasificar en tres categorías dependiendo su presencia en los granos de cacao por trimestre: Alta (en promedio se encuentra en 600 kg de cacao), Media (en promedio se encuentra en 400 kg de cacao) o Baja (en promedio se encuentra en 50 kg de cacao). El cacao se vende en el mercado internacional a un precio de 2.5 USD por kilogramo. Adicionalmente, se ha determinado que cuando se decide: No hacer nada (N) o Fumigar (F) el 40$\%$ del cacaoafectado por la enfermedad se clasificacomo no apto para exportar y se considera como cosecha perdida. Por otra parte, cuando se decide utilizar la estrategia de Erradicación (E) los agricultores deben desechar el 100$\%$ de los kilogramos de cacao afectados por la enfermedad. 
+
+\noindent En un trimestre cualquiera si se decide no hacer nada el próximo trimestre la presencia de moniliasis permanecerá igual con una probabilidad del 50$\%$, bajará un nivel con una probabilidad del 10$\%$ y subirá un nivel con probabilidad restante. Por otro lado, si se decide fumigar el próximo trimestre la presencia de moniliasis bajará un nivel con una probabilidad del 50$\%$, subirá un nivel con probabilidad del 20$\%$ y se mantendrá igual con la probabilidad restante. Finalmente, si se decide utilizar la estrategia de Erradicación el próximo trimestre la presencia de moniliasis bajará un nivel con probabilidad del 80$\%$, subirá un nivel con probabilidad del 5$\%$ y se mantendrá igual con la probabilidad restante. 
+
+\begin{enumerate}
+    \item Plantee un modelo de decisión en el tiemppo con el objetivo de minimizar los costos asumidos por los agricultores de Acacias en el largo plazzo asociados al control y pérdidas en el cultivo por moniliasis.
+\end{enumerate}
+
+\noindent \textbf{Solución:}
+
+
+\noindent \textbf{Épocas}: $E=\{1,2,\dots, \infty\}$ \\
+\textbf{Variable de estado:}
+    $X_t$: Nivel de la incidencia de moniliasis en los cultivos de cacao en la época $t$\\
+\textbf{Espacio de estados:}
+    $S_X=\{\text{Baja}(B), \text{Media} (M), \text{Alta} (A)\}$ \\
+\textbf{Decisiones:}
+$A\{i\}=\{\text{Erradicar} (E)  , \text{Fumigar} (F), \text{No hacer nada} (N) \} \forall i \in S_X$\\
+
+\textbf{Probabilidades de transición:}
+    \begin{equation*}
+        \bm{P}_{(i) \to (j)}(\text{E}) =
+        \begin{blockarray}{cccc}
+          & B & M & A\\
+        \begin{block}{c[ccc]}
+        B & 0.95 & 0.05 & 0\bigstrut[t] \\
+        M & 0.8 & 0.15 &0.05\bigstrut[t] \\
+        A & 0 & 0.8 &0.2\bigstrut[b]\\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}
+
+    \begin{equation*}
+        \bm{P}_{(i) \to (j)}(\text{F}) =
+        \begin{blockarray}{cccc}
+          & B & M & A\\
+        \begin{block}{c[ccc]}
+        B & 0.8 & 0.2 & 0\bigstrut[t] \\
+        M & 0.5 & 0.3 &0.2\bigstrut[t] \\
+        A & 0 & 0.5 &0.5\bigstrut[b]\\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}
+
+    \begin{equation*}
+        \bm{P}_{(i) \to (j)}(\text{N}) =
+        \begin{blockarray}{cccc}
+          & B & M & A\\
+        \begin{block}{c[ccc]}
+        B & 0.6 & 0.4 & 0\bigstrut[t] \\
+        M & 0.1 & 0.5 &0.4\bigstrut[t] \\
+        A & 0 & 0.1 &0.9\bigstrut[b]\\
+        \end{block}
+        \end{blockarray}\vspace*{-1.25\baselineskip}
+    \end{equation*}
+
+
+
+\textbf{Retornos Inmediatos:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline      
+
+        &\multicolumn{3}{|c|}{Decisiones}\\ \hline
+Estado  & Erradicar & Fumigar & No hacer nada\\ \hline
+Baja   & -450 & -125 & -50            \\ \hline
+Media  & -800 & -1000 & -400           \\ \hline
+Alta   & -1000 & -1500 & -600           \\ \hline
+\end{tabular}
+\end{table}
+

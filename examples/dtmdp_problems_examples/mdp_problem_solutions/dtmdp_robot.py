@@ -75,7 +75,7 @@ for estado_actual in range(0,len(estadosRobot)):
         else:
             listaAux.append(0)
     matrizRobot.append(listaAux)
-    matricesRobot["0"] = np.array(matrizRobot)
+    matricesRobot[accionesRobot[0]] = np.array(matrizRobot)
 # Para a == 1
 matrizRobot = []
 for estado_actual in range(0,len(estadosRobot)):
@@ -86,7 +86,7 @@ for estado_actual in range(0,len(estadosRobot)):
         else:
             listaAux.append(0)
     matrizRobot.append(listaAux)
-    matricesRobot["1"] = np.array(matrizRobot)
+    matricesRobot[accionesRobot[1]] = np.array(matrizRobot)
 # Para a == 2
 matrizRobot = []
 for estado_actual in range(0,len(estadosRobot)):
@@ -97,7 +97,7 @@ for estado_actual in range(0,len(estadosRobot)):
         else:
             listaAux.append(0)
     matrizRobot.append(listaAux)
-    matricesRobot["2"] = np.array(matrizRobot)
+    matricesRobot[accionesRobot[2]] = np.array(matrizRobot)
     
 # Creo el problema como un mdp
 mdpRobot = dtmdp(estadosRobot, accionesRobot, matricesRobot, retornosRobot, 0.8)
