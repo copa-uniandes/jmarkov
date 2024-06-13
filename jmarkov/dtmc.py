@@ -111,6 +111,14 @@ class dtmc(markov_chain):
 
 
     def first_passage_time(self, target:str):
+        """
+        Computes the expected first passage time to a target state from a start state.
+
+        This method calculates the expected number of steps required for the Markov chain to reach
+        the specified target state from the start state by creating a sub-matrix of the transition matrix with the target removed.
+
+        Returns the expected steps to reach the target state from any start state (except target) in array form        
+        """
         #The transition matrix and the number of states are brought
         n=self.n_states 
         M=self.transition_matrix.copy()
@@ -126,14 +134,24 @@ class dtmc(markov_chain):
         return t 
 
     def occupation_time(self, n:int):
-        #computes the expected occupation time matrix in nsteps steps:
-        ocupation=np.eye(self.transition_matrix.shape[0],self.transition_matrix.shape[1])#Create an identity matrix with the same shape of transition matrix
+        """
+        Computes the expected occupation time in n steps.
+
+        This method calculates the expected time that the discrete-time Markov chain will remain in each state, from all starting states.
+
+
+        Returns the occupation matrix in array form  
+        """
+        # Create an identity matrix with the same shape of transition matrix
+        occupation=np.eye(self.transition_matrix.shape[0],self.transition_matrix.shape[1])
+        # Iterate for each step
         for i in range(1,n+1):
-            ocupation+=np.linalg.matrix_power(self.transition_matrix,i)
-        return ocupation
+            # Calculate the occupation time for each step, and update the occupation matrix
+            occupation+=np.linalg.matrix_power(self.transition_matrix,i)
+        return occupation
     
     def period(self):
-        '''
+        """
         Computes the period of a discrete-time Markov Chain.
         
         This method calculates the period of a discrete-time Markov Chain by iterating a total of N steps, where N represents
@@ -141,7 +159,9 @@ class dtmc(markov_chain):
         transient probabilities in the k-th step. If one of the elementsin in the diagonal of the resulting matrix is greater than 0,
         the chain can potentially have a period k. The period of the matrix will be the Greatest Common Divisor (GCD) between the
         potential new period of the matrix in the k-th iteration and the current GCD before the k-th iteration.
-        '''
+
+        Returns the period of the chain as an int
+        """
         
         #Initializes the transition matrix and the greatest common divisor for the periodicity calculations
         P_k = self.transition_matrix
@@ -160,26 +180,32 @@ class dtmc(markov_chain):
         return gcd
     
     def is_irreducible(self):
-        '''
+        """
         Checks if the given discrete-time Markov Chain is irreducible.
         
         This method determines if the discrete-time Markov Chain is irreducible by checking if, starting in
-        any state, it is possible to reach any other state in a sequence of transitiions.
-        '''
+        any state, it is possible to reach any other state in a sequence of transitions.
+
+        Returns a boolean
+        """
+        # Brings a copy of the transition matrix
         P = np.copy(self.transition_matrix)
+        # Checks if all the states in the Markov chain are strongly connected
         if sparse.csgraph.connected_components(P, directed=True,connection='strong',return_labels=False)==1:
             return True
         else:
             return False
-       
 
     def is_ergodic(self):
-        '''
+        """
         Checks if a given discrete-time Markov Chain is ergodic.
         
         Given that a finite discrete-time Markov Chain is ergodic if it is aperiodic and irreducible, this
         method checks if both conditions are met to determine if the provided chain is ergodic or not.
-        '''
+        
+        Returns a boolean
+        """
+        # Checks if the chain is irreducible and if it has a period of 1
         if self.period() == 1 & self.is_irreducible() == True:
             return True
         else:

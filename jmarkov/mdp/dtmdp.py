@@ -6,6 +6,13 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 from jmarkov.dtmc import dtmc
 
 class dtmdp():
+    """
+    Implements a Markov decision process (MDP)  
+    
+    The process is defined by its number of states, states, number of actions, actions,
+    the immediate returns of implementing each action and a transition matrix for each action. 
+    The class provides methods to solve MDPs and to compute the expected value of the optimal policy. 
+    """
     # number of states in string array form
     n_states:int=1
     # states in string array form
