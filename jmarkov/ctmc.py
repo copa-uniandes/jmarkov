@@ -103,6 +103,14 @@ class ctmc(markov_chain):
 
 
     def first_passage_time(self, target:str):
+        """
+        Computes the expected first passage time to a target state from a start state.
+
+        This method calculates the expected number of steps required for the Markov chain to reach
+        the specified target state from the start state by creating a sub-matrix of the generator matrix with the target removed.
+
+        Returns the expected steps to reach the target state from any start state (except target) in array form        
+        """
         #The transition matrix and the number of states are brought
         e=self.n_states 
         q=self.generator.copy()
@@ -157,11 +165,35 @@ class ctmc(markov_chain):
         return (B/r)
     
 
-    def is_ergodic(self):
-        # the finite case: we check if the chain is irreducible
+    def is_irreducible(self):
+        """
+        Checks if the given continous-time Markov Chain is irreducible.
+        
+        This method determines if the continous-time Markov Chain is irreducible by checking if, starting in
+        any state, it is possible to reach any other state in a sequence of transitions.
+
+        Returns a boolean
+        """
+        # the finite case:
+
+        # We bring the generator matrix and replace all the diagonal elements for 0
         Q = np.copy(self.generator)
         np.fill_diagonal(Q,0)
+        # We check if all the components in the chain are strongly connected
         if sparse.csgraph.connected_components(Q, directed=True,connection='strong',return_labels=False)==1:
+            return True
+        else:
+            return False
+
+    def is_ergodic(self):
+        """
+        Checks if a given continous-time Markov Chain is ergodic.
+        
+        Given that a finite continous-time Markov Chain is ergodic if it is irreducible, this
+        method checks if it is irreducible to determine if the provided chain is ergodic or not.
+        """
+        # We check if the chain is irreducible
+        if self.is_irreducible()==True:
             return True
         else:
             return False
