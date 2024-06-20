@@ -21,8 +21,8 @@ class TestSolver(unittest.TestCase):
         discount_factor = 0.8
         # transition matrices
         transition_matrices = {}
-        transition_matrices["0"] = np.array([[1/2, 1/2],[1/3, 2/3]])
-        transition_matrices["1"] = np.array([[1/4, 3/4],[2/3, 1/3]])
+        transition_matrices[actions[0]] = np.array([[1/2, 1/2],[1/3, 2/3]])
+        transition_matrices[actions[1]] = np.array([[1/4, 3/4],[2/3, 1/3]])
 
         mdp = dtmdp(states, actions, transition_matrices, immediate_returns, discount_factor)
         result = mdp.solve(0, minimize = True)[0]
@@ -40,8 +40,8 @@ class TestSolver(unittest.TestCase):
         discount_factor = 0.8
         # transition matrices
         transition_matrices = {}
-        transition_matrices["0"] = np.array([[1/2, 1/2],[1/3, 2/3]])
-        transition_matrices["1"] = np.array([[1/4, 3/4],[2/3, 1/3]])
+        transition_matrices[actions[0]] = np.array([[1/2, 1/2],[1/3, 2/3]])
+        transition_matrices[actions[1]] = np.array([[1/4, 3/4],[2/3, 1/3]])
 
         mdp = dtmdp(states, actions, transition_matrices, immediate_returns, discount_factor)
         result = mdp.solve(0, minimize = True)[1]
@@ -59,12 +59,13 @@ class TestSolver(unittest.TestCase):
         discount_factor = 0.8
         # transition matrices
         transition_matrices = {}
-        transition_matrices["0"] = np.array([[1/2, 1/2],[1/3, 2/3]])
-        transition_matrices["1"] = np.array([[1/4, 3/4],[2/3, 1/3]])
+        transition_matrices[actions[0]] = np.array([[1/2, 1/2],[1/3, 2/3]])
+        transition_matrices[actions[1]] = np.array([[1/4, 3/4],[2/3, 1/3]])
 
         mdp = dtmdp(states, actions, transition_matrices, immediate_returns, discount_factor)
         result = mdp.solve(0, minimize = True)[0]
         assert_allclose(result, ([7.81249996, 8.74999996]),err_msg="should be ([7.81249996, 8.74999996])")
+
     def test_policy_policy_iteration(self):
         # number of states:
         N = 2
@@ -78,12 +79,55 @@ class TestSolver(unittest.TestCase):
         discount_factor = 0.8
         # transition matrices
         transition_matrices = {}
-        transition_matrices["0"] = np.array([[1/2, 1/2],[1/3, 2/3]])
-        transition_matrices["1"] = np.array([[1/4, 3/4],[2/3, 1/3]])
+        transition_matrices[actions[0]] = np.array([[1/2, 1/2],[1/3, 2/3]])
+        transition_matrices[actions[1]] = np.array([[1/4, 3/4],[2/3, 1/3]])
 
         mdp = dtmdp(states, actions, transition_matrices, immediate_returns, discount_factor)
         result = mdp.solve(0, minimize = True)[1]
         self.assertEqual(result, {0: 1, 1: 0})
+    
+    def test_expected_policy_value(self):
+        # number of states:
+        N = 2
+        # states:
+        states = np.array([i for i in range(0,N)])
+        # actions
+        actions = np.array([a for a in range(0,N)]) 
+        # immediate returns:
+        immediate_returns = np.array([[3, 1], [2, 3]])
+        # discount factor:
+        discount_factor = 0.8
+        # transition matrices
+        transition_matrices = {}
+        transition_matrices[actions[0]] = np.array([[1/2, 1/2],[1/3, 2/3]])
+        transition_matrices[actions[1]] = np.array([[1/4, 3/4],[2/3, 1/3]])
+
+        mdp = dtmdp(states, actions, transition_matrices, immediate_returns, discount_factor)
+        value, policy = mdp.solve(0, minimize = True)
+        expected_value = mdp.expected_policy_value(value,policy)
+
+        self.assertAlmostEqual(expected_value, 8.461538422347294)
         
+    def test_policy_transition_matrix(self):
+        # number of states:
+        N = 2
+        # states:
+        states = np.array([i for i in range(0,N)])
+        # actions
+        actions = np.array([a for a in range(0,N)]) 
+        # immediate returns:
+        immediate_returns = np.array([[3, 1], [2, 3]])
+        # discount factor:
+        discount_factor = 0.8
+        # transition matrices
+        transition_matrices = {}
+        transition_matrices[actions[0]] = np.array([[1/2, 1/2],[1/3, 2/3]])
+        transition_matrices[actions[1]] = np.array([[1/4, 3/4],[2/3, 1/3]])
+
+        mdp = dtmdp(states, actions, transition_matrices, immediate_returns, discount_factor)
+        value, policy = mdp.solve(0, minimize = True)
+        transition_matrix = mdp.policy_transition_matrix(policy)
+        assert_allclose(transition_matrix, np.array([[0.25, 0.75],[0.33333333, 0.66666667]]),  err_msg = "should be ([[0.25, 0.75],[0.33333333, 0.66666667]])")  
+
 if __name__ == '__main__':
     unittest.main()

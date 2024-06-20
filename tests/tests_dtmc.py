@@ -76,5 +76,37 @@ class TestIsErgodic(unittest.TestCase):
         mc = dtmc(P)
         self.assertFalse(mc.is_ergodic())
 
+class TestTransientProbabilities(unittest.TestCase):
+    def test_transient_probabilities(self):
+        P = np.array([[0.2, 0.8, 0],
+                      [0.3, 0.4, 0.3],
+                      [0.4, 0, 0.6]])
+        mc = dtmc(P)
+        assert_allclose(mc.transient_probabilities(3,np.array([1,0,0])),np.array([0.296, 0.416, 0.288]))
+
+class TestFirstPassageTime(unittest.TestCase):
+    def test_first_passage_time(self):
+        P = np.array([[0.2, 0.8, 0],
+                      [0.3, 0.4, 0.3],
+                      [0.4, 0, 0.6]])
+        mc = dtmc(P)
+        assert_allclose(mc.first_passage_time(1),np.array([[1.25],[3.75]]))      
+
+class TestIsIrreducible(unittest.TestCase):
+    def test_is_irreducible(self):
+        P = np.array([[0.2, 0.8, 0],
+                      [0.3, 0.4, 0.3],
+                      [0.4, 0, 0.6]])
+        mc = dtmc(P)
+        self.assertTrue(mc.is_irreducible())    
+
+class TestIsErgodic(unittest.TestCase):
+    def test_is_ergodic(self):
+        P = np.array([[0.2, 0.8, 0],
+                      [0.3, 0.4, 0.3],
+                      [0.4, 0, 0.6]])
+        mc = dtmc(P)
+        self.assertTrue(mc.is_ergodic())      
+
 if __name__ == '__main__':
     unittest.main()
