@@ -15,6 +15,7 @@
 \usepackage{yhmath}
 \usepackage{mathdots}
 \usepackage{bbold}
+\usepackage{float}
 
 % Paquetes para gráficos y figuras
 \usepackage{graphicx}
@@ -89,13 +90,16 @@
   stringstyle=\color{orange},
 }
 
+
+
+
 \lstset{escapechar=@,style=sql}
 \lstset{keepspaces=true}
 
 \lhead{}
 \chead{}%
 \rhead{}%
-\lfoot{Ejemplos de cadenas de Markov}%
+\lfoot{Ejemplos de procesos de decisión en el tiempo}%
 \cfoot{} %\thepage}%
 \rfoot{jmarkov}
 
@@ -107,23 +111,12 @@
 \thispagestyle{fancy}
 
 \subsection*{Problema 1: RentBike}
-\subfile{tex_folder/ctmc_rent_bike}
-\noindent
-\subsection*{Problema 2: Viajero en Europa}
-\subfile{tex_folder/dtmc_viajero_europa}
-\noindent
-\noindent
-\subsection*{Problema 3: Elefante del Circo}
-\subfile{tex_folder/ctmc_elefante}
-\noindent
-\subsection*{Problema 4: Zapatos del Runner}
-\subfile{tex_folder/dtmc_runner}
-\noindent
-\subsection*{Problema 5: Autos Eléctricos}
-\subfile{tex_folder/ctmc_auto_eléctrico}
-\noindent
-\subsection*{Problema 6: Bus Rapid Transit}
-\subfile{tex_folder/dtmc_brt_rio}
-\noindent
+\subfile{ctmc_problem_statements/ctmc_rent_bike}
+
+\subsection*{Problema 2: Elefante en el Circo}
+\subfile{ctmc_problem_statements/ctmc_elefante}
+
+\subsection*{Problema 3: Autos Eléctricos}
+\subfile{ctmc_problem_statements/ctmc_auto_eléctrico}
 
 \end{document}
