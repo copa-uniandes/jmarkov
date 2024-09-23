@@ -9,28 +9,46 @@ from jmarkov.sdp.dtsdp import dtsdp
 #Vector de épocas
 E = np.array([i for i in range(1,4)])
 # Variables
-estados = np.array(["Excelente", "Bueno", "Promedio", "Malo"])    # Estado de la máquina al inicio de la semana t
+estados = np.array(["Excelente","Bueno","Promedio","Malo"]) # Estado de la máquina al inicio de la semana
 # Decisiones
 A = np.array(["Reemplazar","No Reemplazar"])
 # Retornos Inmediatos
-R = np.array([[-1000000,100],
-              [-100,80],
-              [-100,50],
-              [-100,10]])
+R = np.zeros((len(E), len(estados), len(A)))
+for t in range(len(E)): 
+    for s_index,i in enumerate(estados):
+        for posA,a in enumerate(A):
+            if(i=="Excelente" and a=="Reemplazar"):
+                R[t,s_index,posA]=-1000000
+            elif(i=="Excelente" and a=="No Reemplazar"):
+                R[t,s_index,posA]=100
+            elif(i=="Bueno" and a=="Reemplazar"):
+                R[t,s_index,posA]=-100
+            elif(i=="Bueno" and a=="No Reemplazar"):
+                R[t,s_index,posA]=80
+            elif(i=="Promedio" and a=="Reemplazar"):
+                R[t,s_index,posA]=-100
+            elif(i=="Promedio" and a=="No Reemplazar"):
+                R[t,s_index,posA]=50
+            elif(i=="Malo" and a=="Reemplazar"):
+                R[t,s_index,posA]=-100
+            elif(i=="Malo" and a=="No Reemplazar"):
+                R[t,s_index,posA]=10
+
 # Matrices de transición
-probs = {a:[] for a in A}
-matrizReemplazar = np.array([[0, 0, 0, 1],
-                             [0.7, 0.3, 0, 0],
-                             [0.7, 0.3, 0, 0],
-                             [0.7, 0.3, 0, 0]])
+probs = {a:np.zeros((len(E), len(estados), len(estados))) for a in A}
 
-matrizNoReemplazar = np.array([[0.7,0.3,0,0],
-                               [0,0.7,0.3,0],
-                               [0,0,0.6,0.4],
-                               [0,0,0,1]])
+matNoReemplazar = np.array([[0.7,0.3,0,0],
+                          [0,0.7,0.3,0],
+                          [0,0,0.7,0.3],
+                          [0,0,0,1]])
 
-probs["Reemplazar"] = matrizReemplazar
-probs["No Reemplazar"] = matrizNoReemplazar
+matReemplazar = np.array([[1,0,0,0],
+                          [0.7,0.3,0,0],
+                          [0.7,0.3,0,0],
+                          [0.7,0.3,0,0]])
+for t in range(len(E)):
+    probs["Reemplazar"][t, :, :] = matReemplazar
+    probs["No Reemplazar"][t,:,:] = matNoReemplazar
 
 sdpMaquinas = dtsdp(E,estados,A,probs,R,0.99)
 print(sdpMaquinas.solve(minimize = False))
