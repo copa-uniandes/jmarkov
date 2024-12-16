@@ -35,7 +35,7 @@ for t in range(len(E)):
                 R[t,s_index,posA]=10
 
 # Matrices de transición
-probs = {a:np.zeros((len(E), len(estados), len(estados))) for a in A}
+probs = {t:np.zeros((len(A), len(estados), len(estados))) for t in E}
 
 matNoReemplazar = np.array([[0.7,0.3,0,0],
                           [0,0.7,0.3,0],
@@ -46,9 +46,15 @@ matReemplazar = np.array([[1,0,0,0],
                           [0.7,0.3,0,0],
                           [0.7,0.3,0,0],
                           [0.7,0.3,0,0]])
-for t in range(len(E)):
-    probs["Reemplazar"][t, :, :] = matReemplazar
-    probs["No Reemplazar"][t,:,:] = matNoReemplazar
+probs = {}
+for t in E:  # Iterar sobre cada época
+    decisiones_dict = {}
+    for posA, a in enumerate(A):
+        if a == "Reemplazar":
+            decisiones_dict[a] = matReemplazar
+        elif a == "No Reemplazar":
+            decisiones_dict[a] = matNoReemplazar
+    probs[t] = decisiones_dict
 
-sdpMaquinas = dtsdp(E,estados,A,probs,R,0.99)
+sdpMaquinas = dtsdp(E,estados,A,probs,R,0.9)
 print(sdpMaquinas.solve(minimize = False))

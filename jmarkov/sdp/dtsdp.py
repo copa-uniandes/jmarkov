@@ -8,7 +8,7 @@ class dtsdp():
     
     The process is defined by its time horizon, number of states, states, number of actions, actions,
     the immediate returns of implementing each action and a transition matrix for each action. 
-    The class provides methods to solve MDPs and to compute the expected value of the optimal policy.     
+    The class provides methods to solve SDPs and to compute the expected value of the optimal policy.     
     """
     # time steps in array form
     periods:np.array=np.array([1])
@@ -24,10 +24,10 @@ class dtsdp():
     actions:np.array = np.array([1])
     # transition matrix as dict of numpy arrays
     transition_matrices:Dict[str, np.array]
-    # immediate return matrix as 2d numpy array 
+    # immediate return matrix as 3d numpy array 
     immediate_returns:np.array = np.array([[[1]]])
     # discount factor as int
-    discount_factor:int = 0.8 
+    discount_factor:int = 0.9
     # initializer with a transition matrix, immediate returns and discount factor
     def __init__(self,periods:np.array,states:np.array, actions: np.array, transition_matrices:Dict, immediate_returns: np.array,discount_factor:int):
         """
@@ -59,12 +59,11 @@ class dtsdp():
         # determines if the transition matrices are logical
         # i.e: if the sum of the rows equals to 1 (is an stochastic matrix)
         # and if all of the elements are positive
-        for action, matrices in M.items():
-            for epoch in range(matrices.shape[0]):
-                for state in range(matrices.shape[1]):
-                    row_sum = matrices[epoch, state].sum()
-                    # Comprobación de la suma y los límites
-                    if not np.allclose(row_sum, 1, atol=1e-6) and np.all((matrices[epoch, state] >= 0) & (matrices[epoch, state] <= 1)):
+        for epoch, matrices in M.items():
+            for action, probabilities in matrices.items():
+                for state in range(probabilities.shape[0]):
+                    row_sum = probabilities[state,].sum()
+                    if not np.allclose(row_sum,1,atol=1e-6) and not np.all((probabilities[state,] >= 0) & (probabilities[state,] <= 1)):
                         return False
                     else:
                         return True
@@ -72,7 +71,7 @@ class dtsdp():
         """
         Checks that the immediate returns are valid and dimensionally-coherent
          
-        Checks that immediate return array has dimensions length of states x length of actions
+        Checks that immediate return array has dimensions length of epochs x length of states x length of actions
         """  
         # checks if the dimensions of immediate returns are coherent
         # expected: len(E)xlen(S) x len(actions)
@@ -147,7 +146,7 @@ class dtsdp():
                 a_optima = len(A)-1
                 # iterate through decisions
                 for posA, a in enumerate(A):
-                    expected_value = R[t,s_index,posA] + beta*np.sum(M[a][t,s_index,:]*Ft_optimo[:,t+1])
+                    expected_value = R[t,s_index,posA] + beta*np.sum(M[t+1][a][s_index,:]*Ft_optimo[:,t+1])
                     # check if it promises improvement
                     if expected_value>best_value:
                         # if it improves, update the values
@@ -155,6 +154,5 @@ class dtsdp():
                         a_optima = posA
                 # update de matrix of bellman equation and optimal decisions
                 Ft_optimo[s_index,t] = best_value
-                Mat_Dec_optimo[s_index,t] = A[a_optima]
-               
+                Mat_Dec_optimo[s_index,t] = A[a_optima]     
         return(Ft_optimo,Mat_Dec_optimo)     

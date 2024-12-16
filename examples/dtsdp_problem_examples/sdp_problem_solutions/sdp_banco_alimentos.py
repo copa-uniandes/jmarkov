@@ -24,7 +24,7 @@ for t in range(len(E)):
                 R[t,s,a]=1
                 
 # Matrices de transición
-probs = {a:np.zeros((len(E), len(estados), len(estados))) for a in A}
+probs = {t:np.zeros((len(A), len(estados), len(estados))) for t in E}
 
 matriz_ra = np.array([[0.31,0.1,0.09,0.124,0.04,0.036,0.186,0.06,0.054],
                         [0.21,0.26,0.03,0.084,0.104,0.012,0.126,0.156,0.018],
@@ -57,11 +57,17 @@ matriz_ab = np.array([[0.3136,0.112,0.1344,0.112,0.04,0.048,0.1344,0.048,0.0576]
                         [0.0784,0.14,0.0616,0.14,0.25,0.11,0.0616,0.11,0.0484]])
 
 
-for t in range(len(E)):
-    probs["A"][t, :, :] = matriz_ra
-    probs["B"][t,:,:] = matriz_rb
-    probs["2"][t,:,:] = matriz_ab
-
+probs = {}
+for t in E:  # Iterar sobre cada época
+    decisiones_dict = {}
+    for posA, a in enumerate(A):
+        if a == "A":
+            decisiones_dict[a] = matriz_ra
+        elif a == "B":
+            decisiones_dict[a] = matriz_rb
+        else:
+            decisiones_dict[a] = matriz_ab
+    probs[t] = decisiones_dict
 
 sdpBancoAlimentos = dtsdp(E,estados,A,probs,R,0.99)
 print(sdpBancoAlimentos.solve(minimize = False))
