@@ -27,7 +27,7 @@ class dtsdp():
     # immediate return matrix as 3d numpy array 
     immediate_returns:np.array = np.array([[[1]]])
     # discount factor as int
-    discount_factor:int = 0.9
+    discount_factor:float = 0.9
     # initializer with a transition matrix, immediate returns and discount factor
     def __init__(self,periods:np.array,states:np.array, actions: np.array, transition_matrices:Dict, immediate_returns: np.array,discount_factor:int):
         """
@@ -43,8 +43,8 @@ class dtsdp():
             raise ValueError("the time period should be greater than 0")
         self.periods = periods
         self.n_periods = len(periods)
-        self.n_actions = len(transition_matrices)
-        self.n_states=len(transition_matrices[next(iter(transition_matrices))])
+        self.n_actions = len(actions)
+        self.n_states=len(states)
         self.transition_matrices = transition_matrices
         self.immediate_returns = immediate_returns
         self.discount_factor = discount_factor
@@ -118,7 +118,6 @@ class dtsdp():
             R = -R
             best_init = 100000
         else:
-            R = self.immediate_returns
             best_init = -100000
 
         # creates an array to save the value of Bellman's equation
@@ -154,5 +153,7 @@ class dtsdp():
                         a_optima = posA
                 # update de matrix of bellman equation and optimal decisions
                 Ft_optimo[s_index,t] = best_value
-                Mat_Dec_optimo[s_index,t] = A[a_optima]     
+                Mat_Dec_optimo[s_index,t] = A[a_optima]  
+        if minimize == True:
+            Ft_optimo = -Ft_optimo   
         return(Ft_optimo,Mat_Dec_optimo)     
