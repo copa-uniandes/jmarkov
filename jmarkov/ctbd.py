@@ -80,14 +80,15 @@ class ctbd():
             # Compute C factors as division of cumulative products
             c_factors = np.divide(birth_prod,death_prod)
             # Compute pi_0: probability that the chain is empty in steady state
-            pi0 = 1/(1+np.sum(c_factors[:1-2])+c_factors[-1]*self.death_rates[-1]/(self.death_rates[-1]-self.birth_rates[-1]))
+            pi0 = 1/(1+np.sum(c_factors[:-1])+c_factors[-1]*self.death_rates[-1]/(self.death_rates[-1]-self.birth_rates[-1]))
             # Compute remaining entries of pi up to length of birth/death rates arrays
             pi = pi0*c_factors
             pi = np.append(np.array(pi0), pi)
             # Compute remaining entries pi up to n    
+            final_factor = self.birth_rates[-1]/self.death_rates[-1]
             if n > len(self.birth_rates):
                 for _ in range(n-len(self.birth_rates)-1):
-                    pi = np.append(pi, pi[-1]*c_factors[-1])
+                    pi = np.append(pi, pi[-1]*final_factor)
             return pi
         else:    
             print("Birth-death Markov chain is not ergodic")
