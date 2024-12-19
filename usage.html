@@ -150,6 +150,122 @@ method checks if both conditions are met to determine if the provided chain is e
 </dd></dl>
 
 </section>
+<section id="infinite-continuous-time-birth-death-markov-chains">
+<h2>Infinite Continuous-time Birth-death Markov chains<a class="headerlink" href="#infinite-continuous-time-birth-death-markov-chains" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.ctbd.ctbd">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.ctbd.</span></span><span class="sig-name descname"><span class="pre">ctbd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">birth_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">death_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctbd.ctbd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements an infinite continuous-time birth-death (CTBD) Markov chain</p>
+<p>The CTBD chain is defined by its birth and death rates, which themselves
+define the number of states, states, and the generator matrix. 
+The representation in this class relies on the birth and death rates between
+states 0 to K, and it is assumed that from state K onwards the birth and death rates
+have the same values.  
+The class provides methods to compute both
+stationary and transient metrics, as well as to check the 
+chain properties (ergodicity).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctbd.ctbd.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">birth_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">death_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctbd.ctbd.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a continuous-time Birth-Death Markov chain from its birth and death rates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctbd.ctbd._check_birth_death_rates">
+<span class="sig-name descname"><span class="pre">_check_birth_death_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">birth_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">death_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctbd.ctbd._check_birth_death_rates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that all birth and death rates are positive</p>
+<p>Checks that arrays of birth and death rates have the same nonzero size</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctbd.ctbd.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#jmarkov.ctbd.ctbd.steady_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the steady state distribution of the continuous-time BD Markov chain</p>
+<p>Computes the steady state probability distribution by solving the balance equations
+to first find pi0 and then the remaining entries of the distribution.</p>
+<p>n is an optional parameter to specify the length of the steady state distribution 
+vector. It should be at least as large as the size of the birth and death rate arrays. 
+If not specified, the returned vector is equal to the length of the birth and death arrays.</p>
+<p>Returns the stationary probability distribution in array form</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctbd.ctbd.is_irreducible">
+<span class="sig-name descname"><span class="pre">is_irreducible</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctbd.ctbd.is_irreducible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given continous-time BD Markov Chain is irreducible.</p>
+<p>This method determines if the birth-death continous-time Markov Chain is irreducible 
+by checking if, starting in any state, it is possible to reach any other state 
+in a sequence of transitions.</p>
+<p>Returns a boolean</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctbd.ctbd.is_ergodic">
+<span class="sig-name descname"><span class="pre">is_ergodic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctbd.ctbd.is_ergodic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given continous-time BD Markov Chain is ergodic.</p>
+<p>Given that this chain is infinite, we first check if is irreducible 
+and next check if the last birth rate is smaller than the last 
+death rate, a condition that ensures ergodicity.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="finite-continuous-time-birth-death-markov-chains">
+<h2>Finite Continuous-time Birth-death Markov chains<a class="headerlink" href="#finite-continuous-time-birth-death-markov-chains" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.finite_ctbd.finite_ctbd">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.finite_ctbd.</span></span><span class="sig-name descname"><span class="pre">finite_ctbd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">birth_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">death_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.finite_ctbd.finite_ctbd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a finite continuous-time birth-death (CTBD) Markov chain</p>
+<p>The finite CTBD chain is defined by its birth and death rates, which themselves
+define the number of states, states, and the generator matrix. 
+The representation in this class relies on the birth and death rates between
+states 0 to K.  
+The class provides methods to compute stationary metrics, as well as to check the 
+chain properties (ergodicity).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.finite_ctbd.finite_ctbd.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">birth_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">death_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.finite_ctbd.finite_ctbd.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a finite  continuous-time Birth-Death Markov chain from its birth and death rates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.finite_ctbd.finite_ctbd._check_birth_death_rates">
+<span class="sig-name descname"><span class="pre">_check_birth_death_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">birth_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">death_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.finite_ctbd.finite_ctbd._check_birth_death_rates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that all birth and death rates are positive</p>
+<p>Checks that arrays of birth and death rates have the same nonzero size</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.finite_ctbd.finite_ctbd.steady_state">
+<span class="sig-name descname"><span class="pre">steady_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#jmarkov.finite_ctbd.finite_ctbd.steady_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the steady state distribution of the continuous-time BD Markov chain</p>
+<p>Computes the steady state probability distribution by solving the balance equations
+to first find pi0 and then the remaining entries of the distribution.</p>
+<p>Returns the stationary probability distribution in array form</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.finite_ctbd.finite_ctbd.is_irreducible">
+<span class="sig-name descname"><span class="pre">is_irreducible</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.finite_ctbd.finite_ctbd.is_irreducible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given continous-time BD Markov Chain is irreducible.</p>
+<p>This method determines if the birth-death continous-time Markov Chain is irreducible 
+by checking if, starting in any state, it is possible to reach any other state 
+in a sequence of transitions.</p>
+<p>Returns a boolean</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.finite_ctbd.finite_ctbd.is_ergodic">
+<span class="sig-name descname"><span class="pre">is_ergodic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.finite_ctbd.finite_ctbd.is_ergodic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given continous-time BD Markov Chain is ergodic.</p>
+<p>Given that a finite continous-time Markov Chain is ergodic if it is irreducible, this
+method checks if it is irreducible to determine if the provided chain is ergodic or not.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="discrete-time-markov-decision-processes-mdps">
 <h2>Discrete-time Markov Decision Processes (MDPs)<a class="headerlink" href="#discrete-time-markov-decision-processes-mdps" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
@@ -189,6 +305,156 @@ The class provides methods to solve MDPs and to compute the expected value of th
 </dd></dl>
 
 </section>
+<section id="queueing-systems">
+<h2>Queueing systems<a class="headerlink" href="#queueing-systems" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.queue.mmk.</span></span><span class="sig-name descname"><span class="pre">mmk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ser_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.queue.mmk.mmk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements an M/M/k queue and computes steady state metrics</p>
+<p>The M/M/k queue has exponential interarrival times, with rate arr_rate,
+exponential service times, with ser_rate,
+and k servers in parallel.</p>
+<p>The class builds a birth-death chain that models this queue and uses 
+the steady state probability distribution of the chain to compute
+measures of performance such as mean number of entities in the system,
+in queue, in service, and the mean time in the system, in queue, and in service.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ser_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.queue.mmk.mmk.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an M/M/k queue with k servers, arr_rate arrival rate and ser_rate service rate</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk.mean_number_entities">
+<span class="sig-name descname"><span class="pre">mean_number_entities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmk.mmk.mean_number_entities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in the system in steady state</p>
+<p>A birth-death chain is built and its stattionary probability distribution is used 
+to compute the mean number of entities in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk.mean_number_entities_queue">
+<span class="sig-name descname"><span class="pre">mean_number_entities_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmk.mmk.mean_number_entities_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in queue in steady state</p>
+<p>A birth-death chain is built and its stattionary probability distribution is used 
+to compute the mean number of entities in queue in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk.mean_number_entities_service">
+<span class="sig-name descname"><span class="pre">mean_number_entities_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmk.mmk.mean_number_entities_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in service in steady state</p>
+<p>A birth-death chain is built and its stattionary probability distribution is used 
+to compute the mean number of entities in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk.mean_time_system">
+<span class="sig-name descname"><span class="pre">mean_time_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmk.mmk.mean_time_system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in the system in steady state</p>
+<p>A birth-death chain is built and its stationary probability distribution is used 
+to compute the mean number of entities in the system in steady state, which is 
+then used with Little’s Law to obtain the mean time in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk.mean_time_queue">
+<span class="sig-name descname"><span class="pre">mean_time_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmk.mmk.mean_time_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in the queue in steady state</p>
+<p>A birth-death chain is built and its stationary probability distribution is used 
+to compute the mean number of entities in the queue in steady state, which is 
+then used with Little’s Law to obtain the mean time in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk.mean_time_service">
+<span class="sig-name descname"><span class="pre">mean_time_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmk.mmk.mean_time_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in service</p>
+<p>A simple relation is used to obtain the mean service time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmk.mmk.is_stable">
+<span class="sig-name descname"><span class="pre">is_stable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#jmarkov.queue.mmk.mmk.is_stable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the queue is stable, False otherwise</p>
+<p>This queue is stable if the arrival rate is smaller than the 
+maximum service rate</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.queue.mmkn.mmkn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.queue.mmkn.</span></span><span class="sig-name descname"><span class="pre">mmkn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ser_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.queue.mmkn.mmkn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements an M/M/k/n queue and computes steady state metrics</p>
+<p>The M/M/k/n queue has exponential interarrival times, with rate arr_rate,
+exponential service times, with ser_rate,
+k servers in parallel, and
+n places in total (n-k for waiting).</p>
+<p>The class builds a birth-death chain that models this queue and uses 
+the steady state probability distribution of the chain to compute
+measures of performance such as mean number of entities in the system,
+in queue, in service, and the mean time in the system, in queue, and in service.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmkn.mmkn.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ser_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.queue.mmkn.mmkn.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an M/M/k/n queue with k servers, arr_rate arrival rate, ser_rate service rate, and capacity n</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmkn.mmkn.mean_number_entities">
+<span class="sig-name descname"><span class="pre">mean_number_entities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmkn.mmkn.mean_number_entities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in the system in steady state</p>
+<p>A birth-death chain is built and its stationary probability distribution is used 
+to compute the mean number of entities in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmkn.mmkn.mean_number_entities_queue">
+<span class="sig-name descname"><span class="pre">mean_number_entities_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmkn.mmkn.mean_number_entities_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in queue in steady state</p>
+<p>A birth-death chain is built and its stattionary probability distribution is used 
+to compute the mean number of entities in queue in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmkn.mmkn.mean_number_entities_service">
+<span class="sig-name descname"><span class="pre">mean_number_entities_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmkn.mmkn.mean_number_entities_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in service in steady state</p>
+<p>A birth-death chain is built and its stattionary probability distribution is used 
+to compute the mean number of entities in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmkn.mmkn.mean_time_system">
+<span class="sig-name descname"><span class="pre">mean_time_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmkn.mmkn.mean_time_system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in the system in steady state</p>
+<p>A birth-death chain is built and its stationary probability distribution is used 
+to compute the mean number of entities in the system in steady state, which is 
+then used with Little’s Law to obtain the mean time in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmkn.mmkn.mean_time_queue">
+<span class="sig-name descname"><span class="pre">mean_time_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmkn.mmkn.mean_time_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in the queue in steady state</p>
+<p>A birth-death chain is built and its stationary probability distribution is used 
+to compute the mean number of entities in the queue in steady state, which is 
+then used with Little’s Law to obtain the mean time in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mmkn.mmkn.mean_time_service">
+<span class="sig-name descname"><span class="pre">mean_time_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mmkn.mmkn.mean_time_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in service</p>
+<p>A birth-death chain is built and its stationary probability distribution is used 
+to compute the mean number of entities in the queue in steady state, which is 
+then used with Little’s Law to obtain the mean time in the system in steady state</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -215,7 +481,10 @@ The class provides methods to solve MDPs and to compute the expected value of th
 <li class="toctree-l2"><a class="reference internal" href="#markov-chains">Markov chains</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#continuous-time-markov-chains">Continuous-time Markov chains</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#discrete-time-markov-chains">Discrete-time Markov chains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#infinite-continuous-time-birth-death-markov-chains">Infinite Continuous-time Birth-death Markov chains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#finite-continuous-time-birth-death-markov-chains">Finite Continuous-time Birth-death Markov chains</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#discrete-time-markov-decision-processes-mdps">Discrete-time Markov Decision Processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#queueing-systems">Queueing systems</a></li>
 </ul>
 </li>
 </ul>
