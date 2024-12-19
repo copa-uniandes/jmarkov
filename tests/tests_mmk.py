@@ -24,6 +24,38 @@ class TestSteadyState(unittest.TestCase):
         q = mmk(k,lda,mu) 
         assert_almost_equal(q.mean_number_entities_queue(), 0.0030303030, 
                         err_msg="should be 0.0030303030]")
+    
+    def test_mmk_mean_number_service(self):
+        lda = 1 
+        mu = 2
+        k =3
+        q = mmk(k,lda,mu) 
+        assert_almost_equal(q.mean_number_entities_service(), 0.5, 
+                        err_msg="should be 0.5]")
+
+    def test_mmk_mean_time_system(self):
+        lda = 1 
+        mu = 2
+        k =3
+        q = mmk(k,lda,mu) 
+        assert_almost_equal(q.mean_time_system(), 0.5030303030, 
+                        err_msg="should be 0.5030303030]")
+
+    def test_mmk_mean_time_queue(self):
+        lda = 1 
+        mu = 2
+        k =3
+        q = mmk(k,lda,mu) 
+        assert_almost_equal(q.mean_time_queue(), 0.0030303030, 
+                        err_msg="should be 0.0030303030]")
+    
+    def test_mmk_mean_time_service(self):
+        lda = 1 
+        mu = 2
+        k =3
+        q = mmk(k,lda,mu) 
+        assert_almost_equal(q.mean_time_service(), 0.5, 
+                        err_msg="should be 0.5]")
 
 
 if __name__ == '__main__':
