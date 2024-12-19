@@ -26,7 +26,7 @@ class mmk():
     # initializer 
     def __init__(self, k:int, arr_rate:np.float64, ser_rate:np.float64):
         """
-        Creates an M/M/k queue with k servers, arr_rate arrival rate an ser_rate service rate
+        Creates an M/M/k queue with k servers, arr_rate arrival rate and ser_rate service rate
         """
         self.k=k
         self.arr_rate = arr_rate
