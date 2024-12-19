@@ -24,5 +24,6 @@ dependencies = [
 
 
 [project.urls]
+Documentation = "https:/https://jmarkov.readthedocs.io/en/latest/"
 Homepage = "https://github.com/copa-uniandes/jmarkov"
 Issues = "https://github.com/copa-uniandes/jmarkov/issues"
