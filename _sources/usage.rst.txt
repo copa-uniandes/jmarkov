@@ -44,7 +44,7 @@ Discrete-time Markov chains
    .. automethod:: jmarkov.dtmc.dtmc.is_ergodic
 
 Infinite Continuous-time Birth-death Markov chains 
------------------------------
+--------------------------------------------------
 .. autoclass:: jmarkov.ctbd.ctbd
 
    .. automethod:: jmarkov.ctbd.ctbd.__init__
@@ -58,7 +58,7 @@ Infinite Continuous-time Birth-death Markov chains
    .. automethod:: jmarkov.ctbd.ctbd.is_ergodic
 
 Finite Continuous-time Birth-death Markov chains 
------------------------------
+------------------------------------------------
 .. autoclass:: jmarkov.finite_ctbd.finite_ctbd
 
    .. automethod:: jmarkov.finite_ctbd.finite_ctbd.__init__
@@ -71,23 +71,8 @@ Finite Continuous-time Birth-death Markov chains
 
    .. automethod:: jmarkov.finite_ctbd.finite_ctbd.is_ergodic
 
-
-Discrete-time Markov Decision Processes (MDPs) 
-----------------------------------------------
-
-.. autoclass:: jmarkov.mdp.dtmdp.dtmdp
-
-   .. automethod:: jmarkov.mdp.dtmdp.dtmdp.__init__
-   
-   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_transition_matrices
-
-   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_immediate_returns
-
-   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_discount_factor
-
-
 Queueing systems 
-----------------------------------------------
+----------------
 
 .. autoclass:: jmarkov.queue.mmk.mmk
 
@@ -123,3 +108,33 @@ Queueing systems
    .. automethod:: jmarkov.queue.mmkn.mmkn.mean_time_queue
 
    .. automethod:: jmarkov.queue.mmkn.mmkn.mean_time_service
+
+Discrete-time Markov Decision Processes (MDPs) 
+----------------------------------------------
+
+.. autoclass:: jmarkov.mdp.dtmdp.dtmdp
+
+   .. automethod:: jmarkov.mdp.dtmdp.dtmdp.__init__
+   
+   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_transition_matrices
+
+   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_immediate_returns
+
+   .. automethod:: jmarkov.mdp.dtmdp.dtmdp._check_discount_factor
+
+Discrete-time Stochastic Dynamic Programming (SDPs) 
+---------------------------------------------------
+
+.. autoclass:: jmarkov.sdp.dtsdp.dtsdp
+
+   .. automethod:: jmarkov.sdp.dtsdp.dtsdp.__init__
+   
+   .. automethod:: jmarkov.sdp.dtsdp.dtsdp._check_transition_matrices
+
+   .. automethod:: jmarkov.sdp.dtsdp.dtsdp._check_immediate_returns
+
+   .. automethod:: jmarkov.sdp.dtsdp.dtsdp._check_discount_factor
+
+   .. automethod:: jmarkov.sdp.dtsdp.dtsdp._check_time_period
+
+   .. automethod:: jmarkov.sdp.dtsdp.dtsdp.solve           

@@ -266,45 +266,6 @@ method checks if it is irreducible to determine if the provided chain is ergodic
 </dd></dl>
 
 </section>
-<section id="discrete-time-markov-decision-processes-mdps">
-<h2>Discrete-time Markov Decision Processes (MDPs)<a class="headerlink" href="#discrete-time-markov-decision-processes-mdps" title="Permalink to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.mdp.dtmdp.</span></span><span class="sig-name descname"><span class="pre">dtmdp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immediate_returns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements a Markov decision process (MDP)</p>
-<p>The process is defined by its number of states, states, number of actions, actions,
-the immediate returns of implementing each action and a transition matrix for each action. 
-The class provides methods to solve MDPs and to compute the expected value of the optimal policy.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immediate_returns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a markov decision process from its transition matrices, immediate returns and discount factor</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp._check_transition_matrices">
-<span class="sig-name descname"><span class="pre">_check_transition_matrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp._check_transition_matrices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks that all matrices are stochastic</p>
-<p>Checks that all row sums are equal to one and all elements are non negative</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp._check_immediate_returns">
-<span class="sig-name descname"><span class="pre">_check_immediate_returns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp._check_immediate_returns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks that the immediate returns are valid and dimensionally-coherent</p>
-<p>Checks that immediate return array has dimensions length of states x length of actions</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp._check_discount_factor">
-<span class="sig-name descname"><span class="pre">_check_discount_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp._check_discount_factor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks that the discount factor is valid</p>
-<p>Checks that discount factor is a number equal to or greater than 0 and  less than 1</p>
-</dd></dl>
-
-</dd></dl>
-
-</section>
 <section id="queueing-systems">
 <h2>Queueing systems<a class="headerlink" href="#queueing-systems" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
@@ -455,6 +416,99 @@ then used with Little’s Law to obtain the mean time in the system in steady st
 </dd></dl>
 
 </section>
+<section id="discrete-time-markov-decision-processes-mdps">
+<h2>Discrete-time Markov Decision Processes (MDPs)<a class="headerlink" href="#discrete-time-markov-decision-processes-mdps" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.mdp.dtmdp.</span></span><span class="sig-name descname"><span class="pre">dtmdp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immediate_returns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a Markov decision process (MDP)</p>
+<p>The process is defined by its number of states, states, number of actions, actions,
+the immediate returns of implementing each action and a transition matrix for each action. 
+The class provides methods to solve MDPs and to compute the expected value of the optimal policy.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immediate_returns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a markov decision process from its transition matrices, immediate returns and discount factor</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp._check_transition_matrices">
+<span class="sig-name descname"><span class="pre">_check_transition_matrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp._check_transition_matrices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that all matrices are stochastic</p>
+<p>Checks that all row sums are equal to one and all elements are non negative</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp._check_immediate_returns">
+<span class="sig-name descname"><span class="pre">_check_immediate_returns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp._check_immediate_returns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the immediate returns are valid and dimensionally-coherent</p>
+<p>Checks that immediate return array has dimensions length of states x length of actions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.mdp.dtmdp.dtmdp._check_discount_factor">
+<span class="sig-name descname"><span class="pre">_check_discount_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.mdp.dtmdp.dtmdp._check_discount_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the discount factor is valid</p>
+<p>Checks that discount factor is a number equal to or greater than 0 and  less than 1</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="discrete-time-stochastic-dynamic-programming-sdps">
+<h2>Discrete-time Stochastic Dynamic Programming (SDPs)<a class="headerlink" href="#discrete-time-stochastic-dynamic-programming-sdps" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jmarkov.sdp.dtsdp.dtsdp">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.sdp.dtsdp.</span></span><span class="sig-name descname"><span class="pre">dtsdp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immediate_returns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.sdp.dtsdp.dtsdp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements an Stochastic Decision Process (SDP)</p>
+<p>The process is defined by its time horizon, number of states, states, number of actions, actions,
+the immediate returns of implementing each action and a transition matrix for each action. 
+The class provides methods to solve SDPs and to compute the expected value of the optimal policy.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.sdp.dtsdp.dtsdp.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_matrices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">immediate_returns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.sdp.dtsdp.dtsdp.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a markov decision process from its transition matrices, immediate returns and discount factor</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.sdp.dtsdp.dtsdp._check_transition_matrices">
+<span class="sig-name descname"><span class="pre">_check_transition_matrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.sdp.dtsdp.dtsdp._check_transition_matrices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that all matrices are stochastic</p>
+<p>Checks that all row sums are equal to one and all elements are non negative</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.sdp.dtsdp.dtsdp._check_immediate_returns">
+<span class="sig-name descname"><span class="pre">_check_immediate_returns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.sdp.dtsdp.dtsdp._check_immediate_returns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the immediate returns are valid and dimensionally-coherent</p>
+<p>Checks that immediate return array has dimensions length of epochs x length of states x length of actions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.sdp.dtsdp.dtsdp._check_discount_factor">
+<span class="sig-name descname"><span class="pre">_check_discount_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.sdp.dtsdp.dtsdp._check_discount_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the discount factor is valid</p>
+<p>Checks that discount factor is a number equal to or greater than 0 and  less than 1</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.sdp.dtsdp.dtsdp._check_time_period">
+<span class="sig-name descname"><span class="pre">_check_time_period</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.sdp.dtsdp.dtsdp._check_time_period" title="Permalink to this definition">¶</a></dt>
+<dd><p>”
+Checks that the time period is valid</p>
+<p>Checks that the time period is a number greater than 0</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.sdp.dtsdp.dtsdp.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.sdp.dtsdp.dtsdp.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves SDP’s with backward iteration</p>
+<p>Returns the expected value of following the optimal policy at each state and the optimal policy for each state</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -483,8 +537,9 @@ then used with Little’s Law to obtain the mean time in the system in steady st
 <li class="toctree-l2"><a class="reference internal" href="#discrete-time-markov-chains">Discrete-time Markov chains</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#infinite-continuous-time-birth-death-markov-chains">Infinite Continuous-time Birth-death Markov chains</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#finite-continuous-time-birth-death-markov-chains">Finite Continuous-time Birth-death Markov chains</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#discrete-time-markov-decision-processes-mdps">Discrete-time Markov Decision Processes (MDPs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#queueing-systems">Queueing systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#discrete-time-markov-decision-processes-mdps">Discrete-time Markov Decision Processes (MDPs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#discrete-time-stochastic-dynamic-programming-sdps">Discrete-time Stochastic Dynamic Programming (SDPs)</a></li>
 </ul>
 </li>
 </ul>
