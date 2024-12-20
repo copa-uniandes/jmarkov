@@ -127,6 +127,15 @@ class ctmc(markov_chain):
         return t
 
     def occupation_time(self,T,Epsilon=0.00001):
+        """
+        Computes the expected occupation time in each state until time T.
+
+        This method computes the expected time the chain spends in each state,
+        from time 0 until time T. To this end it uses the embedded matrix and 
+        the uniformization method. 
+
+        Returns the expected time in each state from 0 to T   
+        """
         n=self.n_states
         m=self.generator.copy()
         def P_from_R(n,m):            
