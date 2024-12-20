@@ -81,6 +81,42 @@ probability distribution.</p>
 at time t given the initial probability distribution alpha</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.first_passage_time">
+<span class="sig-name descname"><span class="pre">first_passage_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctmc.ctmc.first_passage_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the expected first passage time to a target state from a start state.</p>
+<p>This method calculates the expected number of steps required for the Markov chain to reach
+the specified target state from the start state by creating a sub-matrix of the generator matrix with the target removed.</p>
+<p>Returns the expected steps to reach the target state from any start state (except target) in array form</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.occupation_time">
+<span class="sig-name descname"><span class="pre">occupation_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctmc.ctmc.occupation_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the expected occupation time in each state until time T.</p>
+<p>This method computes the expected time the chain spends in each state,
+from time 0 until time T. To this end it uses the embedded matrix and 
+the uniformization method.</p>
+<p>Returns the expected time in each state from 0 to T</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.is_irreducible">
+<span class="sig-name descname"><span class="pre">is_irreducible</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctmc.ctmc.is_irreducible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given continous-time Markov Chain is irreducible.</p>
+<p>This method determines if the continous-time Markov Chain is irreducible by checking if, starting in
+any state, it is possible to reach any other state in a sequence of transitions.</p>
+<p>Returns a boolean</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.ctmc.ctmc.is_ergodic">
+<span class="sig-name descname"><span class="pre">is_ergodic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.ctmc.ctmc.is_ergodic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a given continous-time Markov Chain is ergodic.</p>
+<p>Given that a finite continous-time Markov Chain is ergodic if it is irreducible, this
+method checks if it is irreducible to determine if the provided chain is ergodic or not.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>

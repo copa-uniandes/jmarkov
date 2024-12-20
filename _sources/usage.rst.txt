@@ -26,6 +26,14 @@ Continuous-time Markov chains
 
    .. automethod:: jmarkov.ctmc.ctmc.transient_probabilities
 
+   .. automethod:: jmarkov.ctmc.ctmc.first_passage_time
+
+   .. automethod:: jmarkov.ctmc.ctmc.occupation_time
+   
+   .. automethod:: jmarkov.ctmc.ctmc.is_irreducible
+
+   .. automethod:: jmarkov.ctmc.ctmc.is_ergodic
+
 Discrete-time Markov chains 
 -----------------------------
 
