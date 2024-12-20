@@ -24,6 +24,8 @@ dependencies = [
 
 
 [project.urls]
-Documentation = "https:/https://jmarkov.readthedocs.io/en/latest/"
-Homepage = "https://github.com/copa-uniandes/jmarkov"
-Issues = "https://github.com/copa-uniandes/jmarkov/issues"
+homepage = "https://github.com/copa-uniandes/jmarkov"
+documentation = "https:/https://jmarkov.readthedocs.io/en/latest/"
+source = "https://github.com/copa-uniandes/jmarkov"
+download = "https://pypi.org/project/jmarkov/"
+tracker = "https://github.com/copa-uniandes/jmarkov/issues"
