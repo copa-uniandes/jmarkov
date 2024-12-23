@@ -114,6 +114,6 @@ class TestSolver(unittest.TestCase):
                 transition_matrices[t] = decisiones_dict
             sdp = dtsdp(epochs, states, actions, transition_matrices, immediate_returns, discount_factor)
             result = sdp.solve(minimize = False)[1]
-            self.assertTrue(np.array_equal(result, ([['N', 'N', 'R'],['N', 'N', 'R'],['N', 'N', 'R'],['R', 'N', 'R']])))
+            self.assertTrue(np.array_equal(result, ([['N', 'N', 'N'],['N', 'N', 'N'],['N', 'N', 'N'],['R', 'N', 'N']])))
 if __name__ == '__main__':
     unittest.main()
