@@ -13,36 +13,37 @@ estados = np.array(["Excelente","Bueno","Promedio","Malo"]) # Estado de la máqu
 # Decisiones
 A = np.array(["Reemplazar","No Reemplazar"])
 # Retornos Inmediatos
-R = np.zeros((len(E), len(estados), len(A)))
-for t in range(len(E)): 
-    for s_index,i in enumerate(estados):
-        for posA,a in enumerate(A):
-            if(i=="Excelente" and a=="Reemplazar"):
-                R[t,s_index,posA]=-1000000
-            elif(i=="Excelente" and a=="No Reemplazar"):
-                R[t,s_index,posA]=100
+R = np.zeros((len(E),len(S),len(A)))
+# Recorremos sobre las épocas
+for t in range(len(E)):
+    # Recorremos sobre los estados:
+    for s_index, i in enumerate(S):
+        # Recorremos sobre las decisiones:
+        for a_index, a in enumerate(A):
+            if i=='Excelente' and a=='Reemplazar':
+                R[t,s_index,a_index] = -1000
+            elif i=='Excelente' and a=='No Reemplazar':
+                R[t,s_index,a_index] = 100
             elif(i=="Bueno" and a=="Reemplazar"):
-                R[t,s_index,posA]=-100
+                R[t,s_index,a_index]=-100
             elif(i=="Bueno" and a=="No Reemplazar"):
-                R[t,s_index,posA]=80
+                R[t,s_index,a_index]=80
             elif(i=="Promedio" and a=="Reemplazar"):
-                R[t,s_index,posA]=-100
+                R[t,s_index,a_index]=-100
             elif(i=="Promedio" and a=="No Reemplazar"):
-                R[t,s_index,posA]=50
+                R[t,s_index,a_index]=50
             elif(i=="Malo" and a=="Reemplazar"):
-                R[t,s_index,posA]=-100
+                R[t,s_index,a_index]=-100
             elif(i=="Malo" and a=="No Reemplazar"):
-                R[t,s_index,posA]=10
+                R[t,s_index,a_index]=10
 
 # Matrices de transición
-probs = {t:np.zeros((len(A), len(estados), len(estados))) for t in E}
-
 matNoReemplazar = np.array([[0.7,0.3,0,0],
                           [0,0.7,0.3,0],
-                          [0,0,0.7,0.3],
+                          [0,0,0.6,0.4],
                           [0,0,0,1]])
 
-matReemplazar = np.array([[1,0,0,0],
+matReemplazar = np.array([[0,0,0,0],
                           [0.7,0.3,0,0],
                           [0.7,0.3,0,0],
                           [0.7,0.3,0,0]])

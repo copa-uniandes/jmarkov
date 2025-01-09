@@ -132,7 +132,7 @@ class dtsdp():
         f = R
         for s_index,i in enumerate(S):
             Ft_optimo[s_index,-1] = max(f[-1,s_index])
-            dec = int(np.where(Ft_optimo[s_index,-1] == max(f[-1,s_index]))[0][0])
+            dec = int(np.argmax(f[-1, s_index]))
             Mat_Dec_optimo[s_index,-1] = A[dec]
         # start backward iteration
         # iterate through time steps (from second to last, to first)
