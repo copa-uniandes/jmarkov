@@ -94,7 +94,6 @@ class mmkn():
         then used with Little's Law to obtain the mean time in the system in steady state
         """
         L = self.mean_number_entities()
-        print(self.eff_arr_rate)
         return L/self.eff_arr_rate
 
 
@@ -128,3 +127,15 @@ class mmkn():
         probs = bd.steady_state()
         self.eff_arr_rate = self.arr_rate*(1-probs[-1])
         return probs
+
+    def effective_arrival_rate(self)-> np.float64:
+        probs = self._solve_bd_process()
+        self.eff_arr_rate = self.arr_rate*(1-probs[-1])
+        return self.eff_arr_rate
+
+    def utilization(self)-> np.float64:
+        rho = self.arr_rate/(self.k*self.ser_rate)
+        return rho
+    
+    def is_stable(self):
+        return self.arr_rate < self.k*self.ser_rate 

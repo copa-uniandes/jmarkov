@@ -63,11 +63,8 @@ class mmk():
         to compute the mean number of entities in queue in steady state
         """
         if self.is_stable():
-            birth = np.ones(self.k)*self.arr_rate
-            death = np.arange(1,self.k+1)*self.ser_rate
-            bd = ctbd(birth, death)
             n = 100
-            probs = bd.steady_state(n)
+            probs = self._solve_bd_process(n)
             mean_num = 0 
             for i in range(self.k, n):
                 mean_num += probs[i]*(i-self.k)
@@ -132,8 +129,17 @@ class mmk():
             print('Unstable queue')
             return 0
     
+    def _solve_bd_process(self,n:int):
+        birth = np.ones(self.k)*self.arr_rate
+        death = np.arange(1,self.k+1)*self.ser_rate
+        bd = ctbd(birth, death)
+        probs = bd.steady_state(n)  
+        return probs  
 
-
+    def utilization(self)-> np.float64:
+        rho = self.arr_rate/(self.k*self.ser_rate)
+        return rho
+    
     def is_stable(self)-> bool:
         """
         Returns True if the queue is stable, False otherwise
@@ -143,5 +149,3 @@ class mmk():
         """
         return self.arr_rate < self.k*self.ser_rate 
         
-
-    
