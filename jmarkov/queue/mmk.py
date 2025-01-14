@@ -23,6 +23,13 @@ class mmk():
     # service rate
     ser_rate:np.float64
 
+    # steady state probabilities
+    probs:np.array
+
+    # number of entries in the steady state vector to compute
+    n:int
+
+
     # initializer 
     def __init__(self, k:int, arr_rate:np.float64, ser_rate:np.float64):
         """
@@ -31,6 +38,9 @@ class mmk():
         self.k=k
         self.arr_rate = arr_rate
         self.ser_rate = ser_rate
+        self.n=100
+        self.probs = np.full(self.n+1, np.nan)
+        
 
     def mean_number_entities(self)-> np.float64:
         """
@@ -40,14 +50,11 @@ class mmk():
         to compute the mean number of entities in the system in steady state
         """
         if self.is_stable():
-            birth = np.ones(self.k)*self.arr_rate
-            death = np.arange(1,self.k+1)*self.ser_rate
-            bd = ctbd(birth, death)
-            n = 100
-            probs = bd.steady_state(n)
+            if np.isnan(self.probs).any():
+                self._solve_bd_process(self.n)
             mean_num = 0 
-            for i in range(n):
-                mean_num += probs[i]*i
+            for i in range(self.n):
+                mean_num += self.probs[i]*i
 
             return mean_num
         else:
@@ -63,11 +70,11 @@ class mmk():
         to compute the mean number of entities in queue in steady state
         """
         if self.is_stable():
-            n = 100
-            probs = self._solve_bd_process(n)
+            if np.isnan(self.probs).any():
+                self._solve_bd_process(self.n)
             mean_num = 0 
-            for i in range(self.k, n):
-                mean_num += probs[i]*(i-self.k)
+            for i in range(self.k, self.n):
+                mean_num += self.probs[i]*(i-self.k)
 
             return mean_num
         else:
@@ -130,13 +137,24 @@ class mmk():
             return 0
     
     def _solve_bd_process(self,n:int):
-        birth = np.ones(self.k)*self.arr_rate
-        death = np.arange(1,self.k+1)*self.ser_rate
-        bd = ctbd(birth, death)
-        probs = bd.steady_state(n)  
-        return probs  
+        """
+        Computes the steady state probabilities of the Markov chain that models the M/M/k queue
+        
+        A birth-death chain is built and its stationary probability distribution is obtained
+        """
+        if self.is_stable():
+            birth = np.ones(self.k)*self.arr_rate
+            death = np.arange(1,self.k+1)*self.ser_rate
+            bd = ctbd(birth, death)
+            self.probs = bd.steady_state(n)  
 
     def utilization(self)-> np.float64:
+        """
+        Computes the mean server utilization
+        
+        The mean server utilization is computed as the ratio between the arrival rate
+        and the servce rate times the number of servers
+        """
         rho = self.arr_rate/(self.k*self.ser_rate)
         return rho
     

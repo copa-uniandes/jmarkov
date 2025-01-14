@@ -9,7 +9,7 @@ With jmarkov it is possible to model
 - Markov decision processes (MDPs)
 - Stochastic dynamic programs (SDPs)
 
-To use it 
+To use it you can install it from pypi with the command
 ```bash
 pip install jmarkov
 ```
