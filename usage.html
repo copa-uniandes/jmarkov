@@ -451,6 +451,63 @@ then used with Little’s Law to obtain the mean time in the system in steady st
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jmarkov.queue.mmkn.</span></span><span class="sig-name descname"><span class="pre">mmkn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ser_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements an M/M/k/n queue and computes steady state metrics</p>
+<p>The M/M/k/n queue has exponential interarrival times, with rate arr_rate,
+exponential service times, with ser_rate,
+k servers in parallel, and
+n places in total (n-k for waiting).</p>
+<p>The class builds a birth-death chain that models this queue and uses 
+the steady state probability distribution of the chain to compute
+measures of performance such as mean number of entities in the system,
+in queue, in service, and the mean time in the system, in queue, and in service.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mg1.mmkn.mg1.__init__">
+<span class="sig-prename descclassname"><span class="pre">mg1.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ser_mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ser_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float64</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jmarkov.queue.mg1.mmkn.mg1.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an M/G/1 queue with 1 server, arr_rate arrival rate, 
+ser_mean service time mean rate and ser_var service time variance</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mg1.mmkn.mg1.mean_number_entities">
+<span class="sig-prename descclassname"><span class="pre">mg1.</span></span><span class="sig-name descname"><span class="pre">mean_number_entities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mg1.mmkn.mg1.mean_number_entities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mg1.mmkn.mg1.mean_number_entities_queue">
+<span class="sig-prename descclassname"><span class="pre">mg1.</span></span><span class="sig-name descname"><span class="pre">mean_number_entities_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mg1.mmkn.mg1.mean_number_entities_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in queue in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mg1.mmkn.mg1.mean_number_entities_service">
+<span class="sig-prename descclassname"><span class="pre">mg1.</span></span><span class="sig-name descname"><span class="pre">mean_number_entities_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mg1.mmkn.mg1.mean_number_entities_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean number of entities in service in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mg1.mmkn.mg1.mean_time_system">
+<span class="sig-prename descclassname"><span class="pre">mg1.</span></span><span class="sig-name descname"><span class="pre">mean_time_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mg1.mmkn.mg1.mean_time_system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in the system in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mg1.mmkn.mg1.mean_time_queue">
+<span class="sig-prename descclassname"><span class="pre">mg1.</span></span><span class="sig-name descname"><span class="pre">mean_time_queue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mg1.mmkn.mg1.mean_time_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in the queue in steady state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jmarkov.queue.mg1.mmkn.mg1.mean_time_service">
+<span class="sig-prename descclassname"><span class="pre">mg1.</span></span><span class="sig-name descname"><span class="pre">mean_time_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float64</span></span></span><a class="headerlink" href="#jmarkov.queue.mg1.mmkn.mg1.mean_time_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mean time in service</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="discrete-time-markov-decision-processes-mdps">
 <h2>Discrete-time Markov Decision Processes (MDPs)<a class="headerlink" href="#discrete-time-markov-decision-processes-mdps" title="Permalink to this heading">¶</a></h2>
