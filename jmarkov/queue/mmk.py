@@ -153,7 +153,7 @@ class mmk():
         Computes the mean server utilization
         
         The mean server utilization is computed as the ratio between the arrival rate
-        and the servce rate times the number of servers
+        and the service rate times the number of servers
         """
         rho = self.arr_rate/(self.k*self.ser_rate)
         return rho
