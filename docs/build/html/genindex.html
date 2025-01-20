@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Index &#8212; jMarkov 0.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
     <script src="_static/documentation_options.js?v=2709fde1"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
@@ -39,6 +40,7 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#M"><strong>M</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
@@ -62,6 +64,8 @@
 </li>
         <li><a href="usage.html#jmarkov.queue.mmkn.mmkn.__init__">(jmarkov.queue.mmkn.mmkn method)</a>
 </li>
+        <li><a href="usage.html#jmarkov.sdp.dtsdp.dtsdp.__init__">(jmarkov.sdp.dtsdp.dtsdp method)</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -72,11 +76,25 @@
 </li>
       </ul></li>
       <li><a href="usage.html#jmarkov.mdp.dtmdp.dtmdp._check_discount_factor">_check_discount_factor() (jmarkov.mdp.dtmdp.dtmdp method)</a>
+
+      <ul>
+        <li><a href="usage.html#jmarkov.sdp.dtsdp.dtsdp._check_discount_factor">(jmarkov.sdp.dtsdp.dtsdp method)</a>
 </li>
+      </ul></li>
       <li><a href="usage.html#jmarkov.mdp.dtmdp.dtmdp._check_immediate_returns">_check_immediate_returns() (jmarkov.mdp.dtmdp.dtmdp method)</a>
+
+      <ul>
+        <li><a href="usage.html#jmarkov.sdp.dtsdp.dtsdp._check_immediate_returns">(jmarkov.sdp.dtsdp.dtsdp method)</a>
+</li>
+      </ul></li>
+      <li><a href="usage.html#jmarkov.sdp.dtsdp.dtsdp._check_time_period">_check_time_period() (jmarkov.sdp.dtsdp.dtsdp method)</a>
 </li>
       <li><a href="usage.html#jmarkov.mdp.dtmdp.dtmdp._check_transition_matrices">_check_transition_matrices() (jmarkov.mdp.dtmdp.dtmdp method)</a>
+
+      <ul>
+        <li><a href="usage.html#jmarkov.sdp.dtsdp.dtsdp._check_transition_matrices">(jmarkov.sdp.dtsdp.dtsdp method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -101,6 +119,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="usage.html#jmarkov.mdp.dtmdp.dtmdp">dtmdp (class in jmarkov.mdp.dtmdp)</a>
 </li>
+      <li><a href="usage.html#jmarkov.sdp.dtsdp.dtsdp">dtsdp (class in jmarkov.sdp.dtsdp)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -108,6 +128,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="usage.html#jmarkov.finite_ctbd.finite_ctbd">finite_ctbd (class in jmarkov.finite_ctbd)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="usage.html#jmarkov.ctmc.ctmc.first_passage_time">first_passage_time() (jmarkov.ctmc.ctmc method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -118,6 +142,8 @@
       <li><a href="usage.html#jmarkov.ctbd.ctbd.is_ergodic">is_ergodic() (jmarkov.ctbd.ctbd method)</a>
 
       <ul>
+        <li><a href="usage.html#jmarkov.ctmc.ctmc.is_ergodic">(jmarkov.ctmc.ctmc method)</a>
+</li>
         <li><a href="usage.html#jmarkov.dtmc.dtmc.is_ergodic">(jmarkov.dtmc.dtmc method)</a>
 </li>
         <li><a href="usage.html#jmarkov.finite_ctbd.finite_ctbd.is_ergodic">(jmarkov.finite_ctbd.finite_ctbd method)</a>
@@ -128,6 +154,8 @@
       <li><a href="usage.html#jmarkov.ctbd.ctbd.is_irreducible">is_irreducible() (jmarkov.ctbd.ctbd method)</a>
 
       <ul>
+        <li><a href="usage.html#jmarkov.ctmc.ctmc.is_irreducible">(jmarkov.ctmc.ctmc method)</a>
+</li>
         <li><a href="usage.html#jmarkov.dtmc.dtmc.is_irreducible">(jmarkov.dtmc.dtmc method)</a>
 </li>
         <li><a href="usage.html#jmarkov.finite_ctbd.finite_ctbd.is_irreducible">(jmarkov.finite_ctbd.finite_ctbd method)</a>
@@ -188,6 +216,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="usage.html#jmarkov.ctmc.ctmc.occupation_time">occupation_time() (jmarkov.ctmc.ctmc method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -199,6 +235,8 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="usage.html#jmarkov.sdp.dtsdp.dtsdp.solve">solve() (jmarkov.sdp.dtsdp.dtsdp method)</a>
+</li>
       <li><a href="usage.html#jmarkov.ctbd.ctbd.steady_state">steady_state() (jmarkov.ctbd.ctbd method)</a>
 
       <ul>
@@ -241,7 +279,16 @@
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -254,16 +301,6 @@
   </ul></li>
 </ul>
 </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -280,8 +317,8 @@
       &#169;2024, COPA@Uniandes.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
     </div>
 
