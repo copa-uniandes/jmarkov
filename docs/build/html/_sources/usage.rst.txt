@@ -117,6 +117,38 @@ Queueing systems
 
    .. automethod:: jmarkov.queue.mmkn.mmkn.mean_time_service
 
+.. autoclass:: jmarkov.queue.mmkn.mmkn
+
+   .. automethod:: jmarkov.queue.mg1.mg1.__init__
+   
+   .. automethod:: jmarkov.queue.mg1.mg1.mean_number_entities
+
+   .. automethod:: jmarkov.queue.mg1.mg1.mean_number_entities_queue
+
+   .. automethod:: jmarkov.queue.mg1.mg1.mean_number_entities_service
+
+   .. automethod:: jmarkov.queue.mg1.mg1.mean_time_system
+
+   .. automethod:: jmarkov.queue.mg1.mg1.mean_time_queue
+
+   .. automethod:: jmarkov.queue.mg1.mg1.mean_time_service
+
+.. autoclass:: jmarkov.queue.gginf.gginf
+
+   .. automethod:: jmarkov.queue.gginf.gginf.__init__
+   
+   .. automethod:: jmarkov.queue.gginf.gginf.mean_number_entities
+
+   .. automethod:: jmarkov.queue.gginf.gginf.mean_number_entities_queue
+
+   .. automethod:: jmarkov.queue.gginf.gginf.mean_number_entities_service
+
+   .. automethod:: jmarkov.queue.gginf.gginf.mean_time_system
+
+   .. automethod:: jmarkov.queue.gginf.gginf.mean_time_queue
+
+   .. automethod:: jmarkov.queue.gginf.gginf.mean_time_service
+
 Discrete-time Markov Decision Processes (MDPs) 
 ----------------------------------------------
 
