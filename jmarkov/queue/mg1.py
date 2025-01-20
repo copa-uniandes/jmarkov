@@ -2,30 +2,30 @@ import numpy as np
 
 class mg1():
     """
-    Implements an M/G/1 queue and computes different metrics 
+    Implements an M/G/1 queue and computes several performance metrics 
     
     The M/G/1 queue has exponential interarrival times, with rate arr_rate,
-    service times that follow any probability distribution, with ser_mean and ser_var,
-    and 1 server.
+    and one server with service times that follow any probability distribution, 
+    specified by its mean ser_mean and variances ser_var.
 
-    The class builds a birth-death chain that models this queue and computes measures
+    The class employs the Pollaczek–Khinchine formula to compute measures
     of performance such as mean number of entities in the system, in queue, in service, 
-    and the mean time in the system, in queue, and in service, as well, as utilization 
-    of the server.
+    and the mean time in the system, in queue, and in service, as well, as server utilization.
     """
     # arrival rate
     arr_rate:np.float64
 
-    # service mean
+    # service time mean
     ser_mean:np.float64
 
-    # service variance
+    # service time variance
     ser_var:np.float64
 
     # initializer 
     def __init__(self, arr_rate:np.float64, ser_mean:np.float64, ser_var:np.float64):
         """
-        Creates an M/G/1 queue with 1 server, arr_rate arrival rate, ser_rate service rate and ser_var service variance
+        Creates an M/G/1 queue with 1 server, arr_rate arrival rate, 
+        ser_mean service time mean rate and ser_var service time variance
         """
         self.arr_rate = arr_rate
         self.ser_mean = ser_mean
@@ -38,7 +38,7 @@ class mg1():
         The mean server utilization is computed as the ratio between the arrival rate
         and the service rate times the number of servers
         """
-        rho = self.arr_rate/(1/self.ser_mean)
+        rho = self.arr_rate*self.ser_mean
         return rho
 
     def mean_number_entities_queue(self)-> np.float64:
@@ -58,7 +58,7 @@ class mg1():
         Computes the mean number of entities in service in steady state
         """
         if self.is_stable:
-            return self.arr_rate/(1/self.ser_mean)
+            return self.arr_rate*self.ser_mean
         else:
             print('Unstable queue')
             return 0
@@ -92,6 +92,7 @@ class mg1():
         else:
             print('Unstable queue')
             return 0
+        
     def mean_time_service(self)->np.float64:
         """
         Computes the mean time in service
@@ -109,7 +110,7 @@ class mg1():
         This queue is stable if the arrival rate is smaller than the 
         maximum service rate
         """
-        return self.arr_rate < (1/self.ser_mean) 
+        return self.arr_rate < 1/self.ser_mean
 
     
 

@@ -2,16 +2,14 @@ import numpy as np
 
 class ggInf():
     """
-    Implements an G/G/Inf queue and computes different metrics 
+    Implements an G/G/Inf queue and computes several performance metrics 
     
     The G/G/Inf queue has interarrival and service times that follow any probability 
-    distribution, with arr_rate and ser_rate (respectively), and the servers, the capacity and
-    the population are infinite.
+    distribution, with arr_rate and ser_rate (respectively), and the number of servers, 
+    the system capacity and the population are infinite.
 
-    The class builds a birth-death chain that models this queue and computes measures
-    of performance such as mean number of entities in the system, in queue, in service, 
-    and the mean time in the system, in queue, and in service, as well, as utilization 
-    of the server.
+    The class uses the fact that the infinite number of servers simplifies may of the 
+    metrics to obtain closed-form results for many average performance metrics.
     """
     # arrival rate
     arr_rate:np.float64
