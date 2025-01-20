@@ -117,7 +117,7 @@ Queueing systems
 
    .. automethod:: jmarkov.queue.mmkn.mmkn.mean_time_service
 
-.. autoclass:: jmarkov.queue.mmkn.mmkn
+.. autoclass:: jmarkov.queue.mg1.mg1
 
    .. automethod:: jmarkov.queue.mg1.mg1.__init__
    

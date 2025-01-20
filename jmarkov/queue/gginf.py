@@ -1,6 +1,6 @@
 import numpy as np
 
-class ggInf():
+class gginf():
     """
     Implements an G/G/Inf queue and computes several performance metrics 
     
