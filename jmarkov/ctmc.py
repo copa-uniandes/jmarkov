@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import linalg
 from scipy import sparse
-from markov_chain import markov_chain
+from .markov_chain import markov_chain
 
 class ctmc(markov_chain):
     """
@@ -206,7 +206,3 @@ class ctmc(markov_chain):
             return True
         else:
             return False
-
-Q = np.array([[-4, 1, 3], [2, -5, 3], [1, 2, -3]])
-mc = ctmc(Q)
-print(mc.is_ergodic())
