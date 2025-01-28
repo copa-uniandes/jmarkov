@@ -44,17 +44,17 @@ class ctmc(markov_chain):
         self.generator = generator
 
 
-    def _check_generator_matrix(self,M:np.ndarray):
+    def _check_generator_matrix(self,M:np.ndarray, tol=10e-14):
         """
         Checks that a matrix is a Markov chain generator
          
         Checks that all row sums are equal to zero, diagonal entries are non-positive, and 
         non-diagonal entries are non-negative
         """
-        #
-        vector = np.isclose(np.sum(M, axis = 1),0,1e-5) == True
+        # Check if the sum of the rows of the transition matrix equals (or is sufficiently close) to zero 
+        check1 = np.max(np.sum(M, axis = 1)) <= tol and np.min(np.sum(M,axis=1)) >= -tol
         # Check if a given transition matrix has all diagonal elements non positive
-        if vector.all() and np.all(np.diag(M)<0):
+        if check1 and np.all(np.diag(M)<0):
             return True
         else:
             return False
