@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import linalg
 from scipy import sparse
-from .markov_chain import markov_chain
+from markov_chain import markov_chain
 
 class ctmc(markov_chain):
     """
@@ -44,7 +44,7 @@ class ctmc(markov_chain):
         self.generator = generator
 
 
-    def _check_generator_matrix(self,M:np.ndarray,tol:1e-14):
+    def _check_generator_matrix(self,M:np.ndarray, tol=10e-14):
         """
         Checks that a matrix is a Markov chain generator
          
@@ -52,7 +52,7 @@ class ctmc(markov_chain):
         non-diagonal entries are non-negative
         """
         # Check if the sum of the rows of the transition matrix equals (or is sufficiently close) to zero 
-        check1 = np.max(np.sum(M, axis = 1)) <= tol and np.min(np.sum(M,axis=1)) >= tol
+        check1 = np.max(np.sum(M, axis = 1)) <= tol and np.min(np.sum(M,axis=1)) >= -tol
         # Check if a given transition matrix has all diagonal elements non positive
         if check1 and np.all(np.diag(M)<0):
             return True
@@ -206,3 +206,7 @@ class ctmc(markov_chain):
             return True
         else:
             return False
+
+Q = np.array([[-4, 1, 3], [2, -5, 3], [1, 2, -3]])
+mc = ctmc(Q)
+print(mc.is_ergodic())
