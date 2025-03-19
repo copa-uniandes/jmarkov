@@ -97,6 +97,8 @@ class ctmc(markov_chain):
         shape=alpha.shape#lets get the shape of alpha vector
         if shape[0]!=self.n_states:
             raise ValueError("The dimensions of alpha vector are incorrect. It must be a vector 1xn_states")
+        if not np.isclose(sum(alpha),1,1e-10,1e-10):
+            raise ValueError("The alpha vector does not sum to 1. It should be an stochastic vector.")
         P=linalg.expm(self.generator*t)#exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
         probs=alpha@P
         return probs
