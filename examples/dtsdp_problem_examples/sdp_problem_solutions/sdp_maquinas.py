@@ -9,7 +9,7 @@ from jmarkov.sdp.dtsdp import dtsdp
 #Vector de épocas
 E = np.array([i for i in range(1,4)])
 # Variables
-estados = np.array(["Excelente","Bueno","Promedio","Malo"]) # Estado de la máquina al inicio de la semana
+S = np.array(["Excelente","Bueno","Promedio","Malo"]) # Estado de la máquina al inicio de la semana
 # Decisiones
 A = np.array(["Reemplazar","No Reemplazar"])
 # Retornos Inmediatos
@@ -57,5 +57,5 @@ for t in E:  # Iterar sobre cada época
             decisiones_dict[a] = matNoReemplazar
     probs[t] = decisiones_dict
 
-sdpMaquinas = dtsdp(E,estados,A,probs,R,0.9)
+sdpMaquinas = dtsdp(E,S,A,probs,R,0.9)
 print(sdpMaquinas.solve(minimize = False))
