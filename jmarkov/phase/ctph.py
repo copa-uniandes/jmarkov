@@ -29,14 +29,18 @@ class ctph():
 
     # initializer with both alpha and T
     def __init__(self, alpha:np.array, T:np.array):
-        if not self._check_sub_generator_matrix(T): #Lets check if transition matrix is logical (i.e the rows sum 0)
-            raise ValueError("the rows of transition matrix do not sum 0 or the diagonal has non negative values")
+        if T.shape[0]!=T.shape[1]:
+            raise ValueError("The dimensions of the T matrix are incorrect. It must be a square matrix.")
         self.n_phases=T.shape[0]
         self.T = T
         shape = alpha.shape
+        self.alpha = alpha
         if shape[0]!=self.n_phases:
             raise ValueError("The dimensions of alpha vector are incorrect. Its length must coincide with the size of T")
-        self.alpha = alpha
+        if not self._check_sub_generator_matrix(T): #Lets check if transition matrix is logical (i.e the rows sum 0)
+            raise ValueError("the rows of transition matrix do not sum 0 or the diagonal has non negative values")
+        
+        
 
     def _check_sub_generator_matrix(self, M:np.ndarray):
         #Check if a given rate matrix has the condition that every row sum <= 0, with at least one < 0 
