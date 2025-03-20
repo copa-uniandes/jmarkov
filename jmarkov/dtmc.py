@@ -103,7 +103,8 @@ class dtmc(markov_chain):
             return None
         if shape[0]!=self.n_states:
             raise ValueError("The dimensions of alpha vector are incorrect. It must be a vector 1xn_states")
-        
+        if not np.isclose(sum(alpha),1,1e-10,1e-10):
+            raise ValueError("The alpha vector does not sum to 1. It should be an stochastic vector.")
         #Computes transient_matrix**n
         matrix_n=np.linalg.matrix_power(self.transition_matrix,n)
         vector=alpha@matrix_n
