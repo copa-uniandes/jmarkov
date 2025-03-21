@@ -44,7 +44,7 @@ class ctph():
 
     def _check_sub_generator_matrix(self, M:np.ndarray):
         #Check if a given rate matrix has the condition that every row sum <= 0, with at least one < 0 
-        check1 = np.max(np.sum(M, axis = 1)) <= 0 and np.min(np.sum(M, axis = 1)) < 0 
+        check1 = np.max(np.sum(M, axis = 1)) <= 1e-14 and np.min(np.sum(M, axis = 1)) < -1e-14 
         # Check if a given transition matrix has all diagonal elements non positive
         if check1 and np.all(np.diag(M)<0):
             return True

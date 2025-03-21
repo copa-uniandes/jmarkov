@@ -48,3 +48,9 @@ print(W)
 Wq = q.mean_time_queue()
 print("Mean time in queue:")
 print(Wq)
+
+WT = q.wait_time_dist()
+print("Waiting time distribution:")
+print(f'alpha: {WT.alpha}')
+print(f'T: {WT.T}')
+

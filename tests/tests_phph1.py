@@ -99,6 +99,24 @@ class TestSteadyState(unittest.TestCase):
         assert_almost_equal(q.mean_time_service(), 0.265, 
                         err_msg="should be 0.265]")
     
+    def test_phph1_wait_time_dist(self):
+        alpha = np.array([0.9, 0.1])
+        T = np.array([[-2, 1], [0, -3]])
+        IAT = ctph(alpha, T)
+        beta = np.array([0.3, 0.7])
+        S = np.array([[-5, 2], [0, -4]])
+        ST = ctph(beta, S)
+        q = phph1(IAT,ST)
+        WT = q.wait_time_dist() 
+        assert_allclose(WT.alpha, 
+                         [0.087261802731903, 0.292692473447050], 
+                        err_msg="should be [0.087261802731903, 0.292692473447050]")
+        assert_allclose(WT.T, 
+                         [[-4.563690986340487, 1.463462367235248],
+                          [0.883332984938204, -3.000562285790562]], 
+                        err_msg="""should be [[-4.563690986340487, 1.463462367235248],
+                                             [0.883332984938204, -3.000562285790562]]""")
+    
 
 if __name__ == '__main__':
     unittest.main()

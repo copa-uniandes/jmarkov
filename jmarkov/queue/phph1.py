@@ -28,6 +28,9 @@ class phph1():
     # number of entries in the steady state vector to compute
     n:int
 
+    # phase-type representation of the waiting time distribution
+    WT:ctph
+
 
     # initializer 
     def __init__(self, IAT:ctph, ST:ctph):
@@ -135,7 +138,7 @@ class phph1():
                 print(f'Check after {numit} iterations: {check}')
 
         Gm = np.linalg.inv(np.eye(ma)-A0mp@Gamma)@A2mm
-        R_Gam = A0pp*np.linalg.inv(np.eye(ms)-Gamma@A0mp)
+        R_Gam = A0pp@np.linalg.inv(np.eye(ms)-Gamma@A0mp)
 
 
         # Compute pi and queue length distribution
@@ -161,7 +164,23 @@ class phph1():
         pi=np.reshape(pi, pi.shape[0]*pi.shape[1])
         if numit == 1+self.n:
             raise Warning(f'Maximum Number of Components {numit-1} reached')
-
+        
+        # wait time distribution
+        sigtilde = np.linalg.inv(beta@np.linalg.inv(S)@np.ones((ms,1)))@beta@np.linalg.inv(S)
+        # turn 2d array into 1d array 
+        sigtilde = sigtilde[0]
+        Delta = np.diag(sigtilde)
+        
+        wait_T = np.linalg.inv(Delta)@np.transpose(S+R_Gam@s@beta)@Delta
+        theta = (-beta@np.linalg.inv(S)@np.ones((ms,1)))@np.transpose(s)@Delta
+        D = np.linalg.inv(Delta)@np.transpose(R_Gam)@Delta
+        wait_alpha = (1-np.linalg.inv(beta@np.linalg.inv(np.eye(ms)-R_Gam)@np.ones((ms,1)))@beta@np.ones((ms,1)))@np.linalg.inv(theta@D@np.ones((ms,1)))@theta@D
+        # turn 2d array into 1d array 
+        wait_alpha = wait_alpha[0]
+        print(wait_alpha)
+        print(wait_T)
+        self.WT = ctph(wait_alpha, wait_T)
+    
     def number_entities_dist(self)-> np.float64:
         """
         Computes the distribution of the number of entities in the system in steady state
@@ -232,6 +251,22 @@ class phph1():
             print('Unstable queue')
             return 0
         
+    def wait_time_dist(self)-> np.float64:
+        """
+        Computes the phase-type representation of the distribution of the waiting time in steady state
+        
+        A quasi-birth-death chain is built and its stationary probability distribution is used 
+        to compute the phase-type representation of the distribution of the waiting time in steady state
+        """
+        if self.is_stable():
+            if np.isnan(self.probs).any():
+                self._solve_mc(self.n)
+            return self.WT
+        else:
+            print('Unstable queue')
+            return 0
+
+
     def mean_time_system(self)-> np.float64:
         """
         Computes the mean time in the system in steady state

@@ -15,7 +15,7 @@ beta = np.array([0.3, 0.7])
 S = np.array([[-5, 2], [0, -4]])
 ST = ctph(beta, S)
 q = phph1(IAT,ST) 
-q._solve_mc(verbose=False)
+q._solve_mc(verbose=True)
 
 
 print("Distributions of the number of entities in system:")
@@ -28,3 +28,18 @@ print(L)
 Lq = q.mean_number_entities_queue()
 print("Mean number of entities in queue:")
 print(Lq)
+
+W = q.mean_time_system()
+print("Mean time in the system:")
+print(W)
+
+Wq = q.mean_time_queue()
+print("Mean time in queue:")
+print(Wq)
+
+WT = q.wait_time_dist()
+print("Waiting time distribution:")
+print(f'alpha: {WT.alpha}')
+print(f'T: {WT.T}')
+
+
