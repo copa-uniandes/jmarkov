@@ -34,7 +34,7 @@ class ctmc(markov_chain):
         self.generator = np.zeros((n,n), dtype=float)
 
     # initializer with a generator matrix
-    def __init__(self,generator:np.array):
+    def __init__(self,generator:np.array, states:np.array=[1]):
         """
         Creates a continuous-time Markov chain from its generator matrix
         """
@@ -42,6 +42,7 @@ class ctmc(markov_chain):
             raise ValueError("the rows of generator matrix do not sum 0 or the diagonal has non negative values")
         self.n_states=generator.shape[0]
         self.generator = generator
+        self.states = states
 
 
     def _check_generator_matrix(self,M:np.ndarray, tol=10e-14):
@@ -54,7 +55,7 @@ class ctmc(markov_chain):
         # Check if the sum of the rows of the transition matrix equals (or is sufficiently close) to zero 
         check1 = np.max(np.sum(M, axis = 1)) <= tol and np.min(np.sum(M,axis=1)) >= -tol
         # Check if a given transition matrix has all diagonal elements non positive
-        if check1 and np.all(np.diag(M)<0):
+        if check1 and np.all(np.diag(M)<=0):
             return True
         else:
             return False
@@ -204,7 +205,37 @@ class ctmc(markov_chain):
         method checks if it is irreducible to determine if the provided chain is ergodic or not.
         """
         # We check if the chain is irreducible
-        if self.is_irreducible()==True:
+        if self.is_irreducible():
             return True
         else:
             return False
+    
+    def absorbing_times(self,target:str,start=None):
+        """
+        
+        
+        """
+        U = self.generator
+        target = np.where(self.states == target)
+        start = np.where(self.states == start) if start is not None else None
+        if self.is_ergodic():
+            U = np.delete(U, target, axis=0)
+            U = np.delete(U, target, axis=1)
+            # check that start is a transient state (must be different than target)
+            if start != target:
+                mat_Abs = -np.linalg.inv(U)
+                
+                return mat_Abs[start,]
+            else:
+                return "start should be different than target"
+        else:
+            # check that both start and end are transient
+            absorbing_states = np.where(np.all(U == 0, axis=1))[0]
+            transient_states = np.setdiff1d(np.arange(U.shape[0]), absorbing_states)
+            if np.isin(target, transient_states).all() and np.isin(start, transient_states).all():
+                U = U[np.ix_(transient_states, transient_states)]
+                mat_Abs = -np.linalg.inv(U)
+                return mat_Abs[start,target]
+            else:
+                return "start and target should be transient"
+            
