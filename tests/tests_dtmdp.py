@@ -14,7 +14,7 @@ class TestSolver(unittest.TestCase):
         # states:
         states = np.array([i for i in range(0,N)])
         # actions
-        actions = np.array([a for a in range(0,N)]) 
+        actions = np.array([str(a) for a in range(0,N)]) 
         # immediate returns:
         immediate_returns = np.array([[3, 1], [2, 3]])
         # discount factor:
@@ -33,7 +33,7 @@ class TestSolver(unittest.TestCase):
         # states:
         states = np.array([i for i in range(0,N)])
         # actions
-        actions = np.array([a for a in range(0,N)]) 
+        actions = np.array([str(a) for a in range(0,N)]) 
         # immediate returns:
         immediate_returns = np.array([[3, 1], [2, 3]])
         # discount factor:
@@ -45,14 +45,14 @@ class TestSolver(unittest.TestCase):
 
         mdp = dtmdp(states, actions, transition_matrices, immediate_returns, discount_factor)
         result = mdp.solve(0, minimize = True)[1]
-        self.assertEqual(result, {0: 1, 1: 0})
+        self.assertEqual(result, {0: '1', 1: '0'})
     def test_V_policy_iteration(self):
         # number of states:
         N = 2
         # states:
         states = np.array([i for i in range(0,N)])
         # actions
-        actions = np.array([a for a in range(0,N)]) 
+        actions = np.array([str(a) for a in range(0,N)]) 
         # immediate returns:
         immediate_returns = np.array([[3, 1], [2, 3]])
         # discount factor:
@@ -71,7 +71,7 @@ class TestSolver(unittest.TestCase):
         # states:
         states = np.array([i for i in range(0,N)])
         # actions
-        actions = np.array([a for a in range(0,N)]) 
+        actions = np.array([str(a) for a in range(0,N)]) 
         # immediate returns:
         immediate_returns = np.array([[3, 1], [2, 3]])
         # discount factor:
@@ -83,7 +83,7 @@ class TestSolver(unittest.TestCase):
 
         mdp = dtmdp(states, actions, transition_matrices, immediate_returns, discount_factor)
         result = mdp.solve(0, minimize = True)[1]
-        self.assertEqual(result, {0: 1, 1: 0})
+        self.assertEqual(result, {0: '1', 1: '0'})
         
 if __name__ == '__main__':
     unittest.main()
