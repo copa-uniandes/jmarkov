@@ -26,5 +26,12 @@ class TestFirstPassageTime(unittest.TestCase):
         mc = ctmc(Q)
         assert_allclose(mc.first_passage_time(0), [[0.71428571], [0.85714286]], err_msg="should be [0.71428571, 0.85714286]")
 
+class TestAbsorbingTimes(unittest.TestCase):
+    def test_absorbing_times(self):
+        Q = np.array([[-4, 1, 3], [2, -5, 3], [0, 0, 0]])
+        states = np.array([0,1,2])
+        mc = ctmc(Q, states)
+        self.assertAlmostEquals(mc.absorbtion_times(target=0,start=1)[0][0],0.1111111)
+
 if __name__ == '__main__':
     unittest.main()

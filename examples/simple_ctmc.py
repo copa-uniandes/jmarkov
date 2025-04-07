@@ -36,3 +36,12 @@ for i in range(3):
     print(f'The expected first passage time to state {i} is:')
     print(G.first_passage_time(i))
 
+A = ctmc(np.array([[-4, 1, 3], [2, -5, 3], [0, 0, 0]]),
+         states = np.array([0,1,2]))
+
+print("Let's try the absorbing times")
+for i in range(2):
+    for j in range(2):
+        print(f'The mean time of being in state {j} given that it started in state {i}, before absorbing is:')
+        print(A.absorbtion_times(start=i,target=j))
+    

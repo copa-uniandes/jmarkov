@@ -224,7 +224,7 @@ class ctmc(markov_chain):
             U = np.delete(U, target, axis=1)
             # check that start is a transient state (must be different than target)
             if start != target:
-                mat_Abs = -np.linalg.inv(U)
+                mat_Abs = np.linalg.inv(-U)
                 
                 return mat_Abs[start,]
             else:
@@ -235,7 +235,7 @@ class ctmc(markov_chain):
             transient_states = np.setdiff1d(np.arange(U.shape[0]), absorbing_states)
             if np.isin(target, transient_states).all() and np.isin(start, transient_states).all():
                 U = U[np.ix_(transient_states, transient_states)]
-                mat_Abs = -np.linalg.inv(U)
+                mat_Abs = np.linalg.inv(-U)
                 return mat_Abs[start,target]
             else:
                 return "start and target should be transient"
