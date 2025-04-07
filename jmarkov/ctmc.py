@@ -114,19 +114,17 @@ class ctmc(markov_chain):
 
         Returns the expected steps to reach the target state from any start state (except target) in array form        
         """
-        #The transition matrix and the number of states are brought
-        e=self.n_states 
-        q=self.generator.copy()
+        #A copy of the transition matrix is created to solve the linear system
+        m=self.generator.copy()
         
         # Matrix of ones with n-1 rows is created
-        u=np.full([e-1,1],1)
+        u=np.full([self.n_states-1,1],1)
 
-        #The column and row corresponding to the target state are eliminated from the transition matrix 
-        m=np.delete(q,target, axis=0)
+        #The column and row corresponding to the target state are deleted from the transition matrix 
+        m=np.delete(m,target, axis=0)
         m=np.delete(m,target, axis=1)
 
-
-        t=np.matmul(np.linalg.inv(-m),u)
+        t = linalg.solve(-m,u,transposed=False)
         return t
 
     def occupation_time(self,T,Epsilon=0.00001):
@@ -210,10 +208,13 @@ class ctmc(markov_chain):
         else:
             return False
     
-    def absorbing_times(self,target:str,start=None):
+    def absorbtion_times(self,target:str,start=None):
         """
-        
-        
+        Computes the mean time spent in state target before absorption, starting from state start. 
+
+        If the chain is absorbing, both start and target must be transient. 
+        If the chain is ergodic, this is the same as the mean first passage time 
+        to state target, starting from state start. 
         """
         U = self.generator
         target = np.where(self.states == target)
@@ -229,7 +230,7 @@ class ctmc(markov_chain):
             else:
                 return "start should be different than target"
         else:
-            # check that both start and end are transient
+            # check that both start and end states are transient
             absorbing_states = np.where(np.all(U == 0, axis=1))[0]
             transient_states = np.setdiff1d(np.arange(U.shape[0]), absorbing_states)
             if np.isin(target, transient_states).all() and np.isin(start, transient_states).all():

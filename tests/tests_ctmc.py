@@ -20,5 +20,11 @@ class TestIsErgodic(unittest.TestCase):
         mc = ctmc(Q)
         self.assertTrue(mc.is_ergodic())
 
+class TestFirstPassageTime(unittest.TestCase):
+    def test_ctmc_first_passage_time(self):
+        Q = np.array([[-3, 2, 1], [2, -5, 3], [1, 1, -2]])
+        mc = ctmc(Q)
+        assert_allclose(mc.first_passage_time(0), [[0.71428571], [0.85714286]], err_msg="should be [0.71428571, 0.85714286]")
+
 if __name__ == '__main__':
     unittest.main()
