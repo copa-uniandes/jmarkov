@@ -39,6 +39,10 @@ Ws = q.mean_time_service()
 print("Mean time in service:")
 print(Ws)
 
+util = q.utilization()
+print("Utilization:")
+print(util)
+
 # M/M/2/5
 
 lda = 1 
@@ -70,3 +74,23 @@ print(Wq)
 Ws = q.mean_time_service()
 print("Mean time in service:")
 print(Ws)
+
+util = q.utilization()
+print("Utilization:")
+print(util)
+
+# M/M/1/3
+
+lda = 2 
+mu = 3
+k = 1
+n = 3
+
+q = mmkn(k,lda,mu,n) 
+effrate = q.effective_arrival_rate()
+print("Effective arrival rate:")
+print(effrate)
+
+util = q.utilization()
+print("Utilization:")
+print(util)

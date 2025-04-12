@@ -118,6 +118,27 @@ class TestSteadyState(unittest.TestCase):
         q = mmkn(k,lda,mu,n) 
         assert_almost_equal(q.mean_time_service(), 0.5, 
                         err_msg="should be 0.5]")
+        
+    # tests for M/M/1/3 - effective arrival rate - utilization
+    def test_mm13_effective_arrival_rate(self):
+        lda = 2 
+        mu = 3
+        k = 1
+        n = 3
+        q = mmkn(k,lda,mu,n) 
+        assert_almost_equal(q.effective_arrival_rate(), 1.7538461538461538, 
+                        err_msg="should be 1.7538461538461538]")
+
+    def test_mm13utilization(self):
+        lda = 2 
+        mu = 3
+        k = 1
+        n = 3
+        q = mmkn(k,lda,mu,n) 
+        assert_almost_equal(q.utilization(), 0.5846153846153846, 
+                        err_msg="should be 0.5846153846153846]")
+
+    
 
 if __name__ == '__main__':
     unittest.main()

@@ -148,18 +148,19 @@ class mmkn():
         of the underlying Markov chain
         """
         if np.isnan(self.probs).any():
-            self.probs = self._solve_bd_process()
+            self._solve_bd_process()
         self.eff_arr_rate = self.arr_rate*(1-self.probs[-1])
+        return self.eff_arr_rate
 
     def utilization(self)-> np.float64:
         """
         Computes the mean server utilization
         
-        The mean server utilization is computed as the ratio between the arrival rate
-        and the servce rate times the number of servers
+        The mean server utilization is computed as the ratio between the 
+        mean number of entities in service and number of servers available 
         """
-        rho = self.arr_rate/(self.k*self.ser_rate)
-        return rho
+
+        return self.mean_number_entities_service()/self.k
     
     def is_stable(self):
         """
