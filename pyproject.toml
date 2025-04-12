@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jmarkov"
-version = "0.3.0"
+version = "0.3.1"
 authors = [
   { name="Juan F Perez", email="juanfernando.perez@gmail.com" },
   { name="Maria-Gabriela Urango", email="m.urango@uniandes.edu.co" },
