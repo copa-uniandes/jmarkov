@@ -215,7 +215,8 @@ class dtmc(markov_chain):
 
     def absorbtion_times(self,target:int,start=None):
         """
-        Computes the mean time spent in state target before absorption, starting from state start. 
+        Computes the mean time spent in state target before absorption, 
+        starting from state start. 
 
         If the chain is absorbing, both start and target must be transient. 
         If the chain is ergodic, this is the same as the mean first passage time 
@@ -247,7 +248,8 @@ class dtmc(markov_chain):
             
     def absorbtion_probabilities(self, target:int, start=None):
         """
-        Computes the probability of being absorbed by state target, starting from state start. 
+        Computes the probability of being absorbed by state target, 
+        starting from state start. 
 
         The chain must not be ergodic for the calculation to make sense.
         """
