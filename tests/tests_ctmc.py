@@ -33,5 +33,11 @@ class TestAbsorbtionTimes(unittest.TestCase):
         mc = ctmc(Q, states)
         self.assertAlmostEqual(mc.absorbtion_times(target=0,start=1)[0][0],0.1111111)
 
+class TestAbsorbtionProbabilities(unittest.TestCase):
+    def test_absortion_probabilities(self):
+        A = ctmc(np.array([[-5, 1, 3,1], [3, -10, 3,4], [0, 0, 0,0],[0,0,0,0]]),
+         states = np.array([0,1,2,3]))
+        self.assertAlmostEqual(A.absorbtion_probabilities(target=2,start=0)[0][0], 0.702127659574468)
+
 if __name__ == '__main__':
     unittest.main()

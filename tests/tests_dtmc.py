@@ -76,5 +76,26 @@ class TestIsErgodic(unittest.TestCase):
         mc = dtmc(P)
         self.assertFalse(mc.is_ergodic())
 
+class TestFirstPassageTime(unittest.TestCase):
+    def test_dtmc_first_passage_time(self):
+        P = np.array([[0.8,0.2,0],[0,0.2,0.8],[0.8,0.2,0]])
+        mc = dtmc(P)
+        assert_allclose(mc.first_passage_time(0), [[2.8125], [1.5625]], err_msg="should be [[2.8125], [1.5625]]")
+
+class TestAbsorbtionTimes(unittest.TestCase):
+    def test_absorbtion_times(self):
+        P = np.array([[0.2, 0.3, 0.1, 0.4], [0.1, 0.2, 0.5, 0.2], [0,0,1,0], [0,0,0,1]])
+        states = np.array([0,1,2])
+        mc = dtmc(P, states)
+        self.assertAlmostEqual(mc.absorbtion_times(target=0,start=0),1.31147540983607)
+
+class TestAbsorbtionProbabilities(unittest.TestCase):
+    def test_absortion_probabilities(self):
+        P = np.array([[0.2, 0.3, 0.1, 0.4], [0.1, 0.2, 0.5, 0.2], [0,0,1,0], [0,0,0,1]])
+        states = np.array([0,1,2])
+        mc = dtmc(P, states)
+        self.assertAlmostEqual(mc.absorbtion_probabilities(target=3,start=0)[0][0], 0.622950819672131)
+
+
 if __name__ == '__main__':
     unittest.main()

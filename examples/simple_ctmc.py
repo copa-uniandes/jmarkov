@@ -44,4 +44,9 @@ for i in range(2):
     for j in range(2):
         print(f'The mean time of being in state {j} given that it started in state {i}, before absorbing is:')
         print(A.absorbtion_times(start=i,target=j))
-    
+
+
+print("Let's try some absorbing probabilities")
+for i in range(2):
+    print(f'The probability of being absorbed by state {j} given that it started in state {i} is:')
+    print(A.absorbtion_probabilities(target=2,start=i))

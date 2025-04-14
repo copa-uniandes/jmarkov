@@ -128,4 +128,21 @@ print("This is the result: ")
 print(O.first_passage_time(1))
 
 print("lets try an error creating a dtcm")
-error_mc=dtmc(np.array([[0.5,0.5],[0.7,0.7]]))
+#error_mc=dtmc(np.array([[0.5,0.5],[0.7,0.7]]))
+
+print("let's try the methods for absorbing chains")
+
+abs_mc = dtmc(np.array([[0.2,0.3,0.1,0.4],
+          [0.1,0.2,0.5,0.2],
+          [0,0,1,0],
+          [0,0,0,1]]), states = [0,1,2,3])
+
+for i in range(0,2):
+    for j in range(0,2):
+        print(f'The mean time of being in state {j} given that it started in state {i}, before absorbing is:')
+        print(abs_mc.absorbtion_times(target=j, start=i))
+
+for i in range(0,2):
+    for j in range(2,4):
+        print(f'The probability of being absorbed by state {j} given that it started in state {i} is:')
+        print(abs_mc.absorbtion_probabilities(target=j, start=i))
