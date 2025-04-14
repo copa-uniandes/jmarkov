@@ -208,7 +208,7 @@ class ctmc(markov_chain):
         else:
             return False
     
-    def absorbtion_times(self,target:str,start=None):
+    def absorbtion_times(self,target:int,start=None):
         """
         Computes the mean time spent in state target before absorption, starting from state start. 
 
@@ -240,3 +240,20 @@ class ctmc(markov_chain):
             else:
                 return "start and target should be transient"
             
+    def absorbtion_probabilities(self, target:int, start=None):
+        """
+        Computes the probability of being absorbed by state target, starting from state start. 
+
+        The chain must not be ergodic for the calculation to make sense.
+        """
+        if not self.is_ergodic():
+            U = self.generator
+            absorbing_states = np.where(np.all(U == 0, axis=1))[0]
+            transient_states = np.setdiff1d(np.arange(U.shape[0]), absorbing_states)
+            if np.isin(target, absorbing_states).all() and np.isin(start, transient_states).all():
+                U_ = U[np.ix_(transient_states, transient_states)]
+                V = U[np.ix_(transient_states, absorbing_states)]
+                mat_Probs = np.matmul(np.linalg.inv(-U_),V)
+                return mat_Probs[start,np.where(absorbing_states==target)]
+        else:
+            return "the chain shouldn't be ergodic"

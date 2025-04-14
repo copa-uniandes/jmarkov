@@ -38,11 +38,12 @@ class dtmc(markov_chain):
         self.transition_matrix = np.eye(n, dtype=float)
 
     # initializer with a transition matrix
-    def __init__(self,transition_matrix:np.array):
+    def __init__(self,transition_matrix:np.array,states:np.array=[1]):
         if not self._check_transition_matrix(transition_matrix):#Lets check if transition matrix is logical (i.e the rows sum 1)
             raise ValueError("the rows of transition matrix do not sum 1 or has non positive values")
         self.n_states=transition_matrix.shape[0]
         self.transition_matrix = transition_matrix
+        self.states = states
 
     def _check_transition_matrix(self, M:np.array):
         """
@@ -211,7 +212,58 @@ class dtmc(markov_chain):
             return True
         else:
             return False
-    
+
+    def absorbtion_times(self,target:int,start=None):
+        """
+        Computes the mean time spent in state target before absorption, starting from state start. 
+
+        If the chain is absorbing, both start and target must be transient. 
+        If the chain is ergodic, this is the same as the mean first passage time 
+        to state target, starting from state start. 
+        """
+        P = self.transition_matrix
+
+        if self.is_ergodic():
+            Q = np.delete(P, target, axis=0)
+            Q = np.delete(Q, target, axis=1)
+            # check that start is a transient state (must be different than target)
+            if start != target:
+                I = np.eye(Q.shape[0])
+                mat_Abs = np.linalg.inv(I-Q)
+                return mat_Abs[start,]
+            else:
+                return "start should be different than target"
+        else:
+            # check that both start and end states are transient
+            absorbing_states = np.where( (np.sum(P == 1, axis=1) == 1) & (np.all((P == 0) | (P == 1), axis=1)) )[0]
+            transient_states = np.setdiff1d(np.arange(P.shape[0]), absorbing_states)
+            if np.isin(target, transient_states).all() and np.isin(start, transient_states).all():
+                Q = P[np.ix_(transient_states, transient_states)]
+                I = np.eye(len(transient_states))
+                mat_Abs = np.linalg.inv(I-Q)
+                return mat_Abs[start,target]
+            else:
+                return "start and target should be transient"
+            
+    def absorbtion_probabilities(self, target:int, start=None):
+        """
+        Computes the probability of being absorbed by state target, starting from state start. 
+
+        The chain must not be ergodic for the calculation to make sense.
+        """
+        if not self.is_ergodic():
+            P = self.transition_matrix
+            absorbing_states = np.where( (np.sum(P == 1, axis=1) == 1) & (np.all((P == 0) | (P == 1), axis=1)) )[0]
+            transient_states = np.setdiff1d(np.arange(P.shape[0]), absorbing_states)
+            if np.isin(target, absorbing_states).all() and np.isin(start, transient_states).all():
+                Q = P[np.ix_(transient_states, transient_states)]
+                I = np.eye(len(transient_states))
+                R = P[np.ix_(transient_states, absorbing_states)]
+                mat_Probs = np.matmul(np.linalg.inv(I-Q),R)
+                return mat_Probs[start,np.where(absorbing_states==target)]
+        else:
+            return "the chain shouldn't be ergodic"
+
 
 
 
