@@ -53,8 +53,13 @@ class ctph():
 
     def pdf(self,t:float) -> np.float64:
         P=linalg.expm(self.T*t)  #exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
-        probs=self.alpha@P
-        return sum(probs)
+        res = -self.alpha@P@(self.T).sum(1)
+        return res
+    
+    def cdf(self,t:float) -> np.float64:
+        P=linalg.expm(self.T*t)  #exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
+        probs= 1 - np.float64(sum(self.alpha@P))
+        return probs
 
 
     def expected_value(self):
