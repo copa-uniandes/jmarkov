@@ -177,8 +177,6 @@ class phph1():
         wait_alpha = (1-np.linalg.inv(beta@np.linalg.inv(np.eye(ms)-R_Gam)@np.ones((ms,1)))@beta@np.ones((ms,1)))@np.linalg.inv(theta@D@np.ones((ms,1)))@theta@D
         # turn 2d array into 1d array 
         wait_alpha = wait_alpha[0]
-        print(wait_alpha)
-        print(wait_T)
         self.WT = ctph(wait_alpha, wait_T)
     
     def number_entities_dist(self)-> np.float64:
