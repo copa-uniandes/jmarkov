@@ -50,7 +50,7 @@ class phph1():
         if rho >= 1:
             raise ValueError(f'The load {rho} exceeds one, que queue is unstable')   
 
-        self.n=100
+        self.n=1000
         self.probs = np.full(self.n+1, np.nan)
         
 
@@ -220,7 +220,7 @@ class phph1():
         """
         if self.is_stable():
             if np.isnan(self.probs).any():
-                self._solve_mc(self.n)
+                self._solve_mc()
             mean_num = 0 
             for i in range(self.n):
                 mean_num += self.probs[i]*i
@@ -240,7 +240,7 @@ class phph1():
         """
         if self.is_stable():
             if np.isnan(self.probs).any():
-                self._solve_mc(self.n)
+                self._solve_mc()
             mean_num = 0 
             for i in range(1, self.n):
                 mean_num += self.probs[i]*(i-1)
@@ -259,7 +259,7 @@ class phph1():
         """
         if self.is_stable():
             if np.isnan(self.probs).any():
-                self._solve_mc(self.n)
+                self._solve_mc()
             return 1 - self.probs[0]
         else:
             print('Unstable queue')
