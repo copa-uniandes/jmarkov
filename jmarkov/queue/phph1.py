@@ -31,6 +31,9 @@ class phph1():
     # phase-type representation of the waiting time distribution
     WT:ctph
 
+    # phase-type representation of the response time distribution
+    RT:ctph
+
 
     # initializer 
     def __init__(self, IAT:ctph, ST:ctph):
@@ -178,8 +181,21 @@ class phph1():
         # turn 2d array into 1d array 
         wait_alpha = wait_alpha[0]
         self.WT = ctph(wait_alpha, wait_T)
+        mw = len(wait_alpha)
+        # build ph representation of the response time distribution
+        norm_beta = (1-wait_alpha.sum())*beta
+        norm_beta = norm_beta[0]
+        resp_alpha = np.concatenate((wait_alpha, norm_beta), axis=0)
+        resp_exit = -wait_T@np.ones((mw,1))
+        resp_T = np.concatenate((
+                np.concatenate((wait_T, resp_exit@beta ), axis=1),
+                np.concatenate((np.zeros((ms,mw)), S), axis=1)
+                ),
+                axis=0
+            )
+        self.RT = ctph(resp_alpha,resp_T)
     
-    def number_entities_dist(self)-> np.float64:
+    def number_entities_dist(self)-> float:
         """
         Computes the distribution of the number of entities in the system in steady state
         
@@ -188,11 +204,11 @@ class phph1():
         """
         if self.is_stable():
             if np.isnan(self.probs).any():
-                self._solve_mc(self.n)
+                self._solve_mc()
             return self.probs
         else:
             print('Unstable queue')
-            return 0
+            return 0.0
     
 
     def mean_number_entities(self)-> np.float64:
@@ -249,7 +265,7 @@ class phph1():
             print('Unstable queue')
             return 0
         
-    def wait_time_dist(self)-> np.float64:
+    def wait_time_dist(self)-> ctph:
         """
         Computes the phase-type representation of the distribution of the waiting time in steady state
         
@@ -258,11 +274,27 @@ class phph1():
         """
         if self.is_stable():
             if np.isnan(self.probs).any():
-                self._solve_mc(self.n)
+                self._solve_mc()
             return self.WT
         else:
             print('Unstable queue')
-            return 0
+            return 0.0
+        
+    def resp_time_dist(self)-> ctph:
+        """
+        Computes the phase-type representation of the distribution of the response time in steady state
+        
+        A quasi-birth-death chain is built and its stationary probability distribution is used 
+        to compute the phase-type representation of the distribution of the waiting time in steady state,
+        which is then combined with the service time distribution to obtain the response time distribution
+        """
+        if self.is_stable():
+            if np.isnan(self.probs).any():
+                self._solve_mc()
+            return self.RT
+        else:
+            print('Unstable queue')
+            return 0.0
 
 
     def mean_time_system(self)-> np.float64:

@@ -51,9 +51,13 @@ class ctph():
         else:
             return False
 
-    def pdf(self,t:float) -> np.float64:
-        P=linalg.expm(self.T*t)  #exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
-        res = -self.alpha@P@(self.T).sum(1)
+    def pdf(self,t:float) -> float:
+        res = 0.0
+        if t == 0:
+            res = 1 - self.alpha.sum()
+        elif t > 0:                 
+            P=linalg.expm(self.T*t)  #exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
+            res = -self.alpha@P@(self.T).sum(1)
         return res
     
     def cdf(self,t:float) -> np.float64:
