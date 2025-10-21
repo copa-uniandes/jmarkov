@@ -45,6 +45,7 @@ class moments_ctph2():
         cx2 = self.m2/(self.m1*self.m1) - 1
         print(cx2)
         if cx2 < 1:
+            print('cx<1')
             k = math.ceil(1/cx2)
             phi = k/self.m1
             alpha = np.zeros(k)
@@ -56,12 +57,14 @@ class moments_ctph2():
             T[k-1,k-1] = -phi
             self.PH = ctph(alpha,T)
         else:
+            print('cx>=1')
             # fix 3rd moment
             m12 = self.m1*self.m1
             m13 = m12*self.m1
             #m3 = 1.5*m13*(1+cx2)*(1+cx2)
+            m3 = 2*m13*(1+cx2)*(1+cx2)
             #m3=6*m13*cx2
-            m3=6*m13*cx2*2
+            #m3=6*m13*cx2*2
                 
             d = 2*self.m1*self.m1 - self.m2
             c = 3*self.m2*self.m2-2*self.m1*m3
@@ -94,5 +97,7 @@ class moments_ctph2():
                 [-lda1, 0],
                 [0, -lda2]
             ])
+            print(alpha)
+            print(T)
             self.PH = ctph(alpha,T)
         return self.PH
