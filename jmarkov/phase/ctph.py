@@ -1,3 +1,4 @@
+import math
 import numpy as np
 from scipy import linalg
 from scipy import sparse
@@ -8,10 +9,10 @@ class ctph():
     n_phases:int=1
 
     # subgenerator matrix as 2d numpy array
-    T:np.array
+    T:np.ndarray
 
     # initial phase vector as 1d numpy array
-    alpha:np.array
+    alpha:np.ndarray
     
     # empty initializer 
     # chain with a single state
@@ -60,12 +61,25 @@ class ctph():
             res = -self.alpha@P@(self.T).sum(1)
         return res
     
-    def cdf(self,t:float) -> np.float64:
+    def cdf(self,t:float,stop:float=0,step:float=0) -> np.ndarray:
         P=linalg.expm(self.T*t)  #exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
-        probs= 1 - np.float64(sum(self.alpha@P))
-        return probs
+        if stop == 0 or step == 0:
+            probs= 1 - np.float64(sum(self.alpha@P))
+            return np.array(probs)
+        elif stop > t and step > 0:
+            n = math.ceil((stop-t)/step)
+            probs = np.zeros(n)
+            probs[0] = 1 - np.float64(sum(self.alpha@P))
+            Pstep=linalg.expm(self.T*step)
+            Ptemp = P
+            for i in range(1,n):
+                Ptemp = Ptemp*Pstep
+                probs[i] = 1 - np.float64(sum(self.alpha@Ptemp)) 
+            return probs
+        else:
+            return np.array(0.0)
 
-
+  
     def expected_value(self):
         # Compute the expected value as alpha*inv(T)*one
         return np.sum(self.alpha@np.linalg.inv(-self.T))
