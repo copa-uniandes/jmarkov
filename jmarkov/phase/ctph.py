@@ -14,22 +14,8 @@ class ctph():
     # initial phase vector as 1d numpy array
     alpha:np.ndarray
     
-    # empty initializer 
-    # chain with a single state
-    def __init__(self):
-        self.n_phases = 1
-        self.T = np.array([-1])
-        self.alpha = np.array([1])
-
-    # initializer with only the number of states
-    def __init__(self,n:int):
-        self.n_phases = n
-        self.generator = -1*np.eye(n, dtype=float)
-        self.alpha = np.zeros(n, dtype=float)
-        self.alpha[0] = 1
-
     # initializer with both alpha and T
-    def __init__(self, alpha:np.array, T:np.array):
+    def __init__(self, alpha:np.ndarray, T:np.ndarray):
         if T.shape[0]!=T.shape[1]:
             raise ValueError("The dimensions of the T matrix are incorrect. It must be a square matrix.")
         self.n_phases=T.shape[0]
@@ -80,7 +66,27 @@ class ctph():
             return np.array(0.0)
 
   
-    def expected_value(self):
+    def mean(self):
         # Compute the expected value as alpha*inv(T)*one
         return np.sum(self.alpha@np.linalg.inv(-self.T))
+    
+    def moment(self, k:int=1)->np.float64:
+        # Computes the k-th moment of a CTPH distribution
+        result:np.float64 = np.float64(0.0)
+        beta = np.ones([self.n_phases,1])
+        factk = 1
+        for i in range(1,k+1):
+            beta = np.linalg.solve(-self.T,beta)
+            factk*=i
+        result = factk*np.float64(self.alpha@beta)
 
+        return result
+
+    def var(self)->np.float64:
+        # compute variance 
+        mean = self.moment(1)
+        return self.moment(2) - mean*mean
+
+    def std(self)->np.float64:
+        # compute standard deviation 
+        return np.float64(math.sqrt(self.var()))
