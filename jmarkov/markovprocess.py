@@ -87,7 +87,7 @@ class MarkovProcess:
         self._generator_matrix = None
 
     # ------------------------------------------------------------------
-    # Metodo abstracto
+    # Method that the user must overwrite
     # ------------------------------------------------------------------
 
     def active_transitions(self, state: State, event: Event) -> TransitionsSet:
@@ -100,7 +100,7 @@ class MarkovProcess:
         raise NotImplementedError("You must implement active_transitions in your subclass.")
 
     # ------------------------------------------------------------------
-    # Algoritmo BuildRS
+    # BuildRS Algorithm
     # ------------------------------------------------------------------
 
     def generate(self, key: Callable = None):
@@ -153,7 +153,7 @@ class MarkovProcess:
         self._states.numerate_states(key=key)
 
     # ------------------------------------------------------------------
-    # Etiquetas internas (ordenadas por indice)
+    # Intern labels sorted by index
     # ------------------------------------------------------------------
 
     def _get_labels(self) -> list:
@@ -165,7 +165,7 @@ class MarkovProcess:
         return [s.description() for s in states_sorted]
 
     # ------------------------------------------------------------------
-    # Matriz R
+    # R Matrix
     # ------------------------------------------------------------------
 
     def get_rates_matrix(self) -> LabeledMatrix:
@@ -187,7 +187,7 @@ class MarkovProcess:
         return LabeledMatrix(matrix, self._get_labels(), name="R")
 
     # ------------------------------------------------------------------
-    # Matriz Q
+    # Q Matrix
     # ------------------------------------------------------------------
 
     def get_generator_matrix(self) -> LabeledMatrix:
@@ -212,7 +212,7 @@ class MarkovProcess:
         return LabeledMatrix(matrix, self._get_labels(), name="Q")
 
     # ------------------------------------------------------------------
-    # Utilidades
+    # Utilities
     # ------------------------------------------------------------------
 
     def get_states(self) -> StatesSet:
