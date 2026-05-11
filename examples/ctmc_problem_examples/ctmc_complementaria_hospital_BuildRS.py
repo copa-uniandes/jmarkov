@@ -6,7 +6,7 @@ from jmarkov.transition import TransitionsSet
 
 class hospital(MarkovProcess):
 
-    def __init__(self, lam1,lam2,mu1,mu2,B,b,):
+    def __init__(self, lam1,lam2,mu1,mu2,B,b):
         self.lam1 = lam1
         self.lam2 = lam2
         self.mu1 = mu1
