@@ -22,15 +22,22 @@ class elefantes(MarkovProcess):
         i = state.get_value(0)
         j = state.get_value(1)
 
+        #Llegada de clientes
         if event.description()=="Llegada":
             if i<6:
                 trans.add(State(i+1,j),self.lam)
+
+        #Salida de clientes
         elif event.description()=="Salida":
             if i>0 and j=="W":
                 trans.add(State(i-1,j),self.mu)
+
+        #Agotamiento del elefante
         elif event.description()=="Agotada":
             if j=="W":
                 trans.add(State(i,"R"),self.theta)
+            
+        #Recuperacion del elefante
         elif event.description()=="Lista":
             if j=="R":
                 trans.add(State(i,"W"),self.omega)
@@ -41,8 +48,3 @@ modelo.generate(key=lambda s:(s.get_value(0)))
 Q = modelo.get_generator_matrix()
 print(Q)
 modelo.print_states()
-
-
-        
-
-
