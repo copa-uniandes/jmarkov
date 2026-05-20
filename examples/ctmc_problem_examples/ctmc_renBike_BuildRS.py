@@ -6,15 +6,15 @@ from jmarkov.transition import TransitionsSet
 
 class rentBike(MarkovProcess):
 
-    def __init__(self, tasallegada,tasasalida,states_list, events_list):
+    def __init__(self, tasallegada,tasasalida):
         self.tasallegada=tasallegada
         self.tasasalida=tasasalida
-        self.states_list=states_list
-        self.events_list=events_list
+
 
         super().__init__(
-            states_list=self.states_list,
-            events_list=self.events_list
+            states_list=[State(0)],
+            events_list=[Event(description="llegada"),
+                         Event(description="salida")]
         )
     
     def active_transitions(self, state, event):
@@ -30,7 +30,7 @@ class rentBike(MarkovProcess):
         
         return trans
     
-modelo=rentBike(5,9,[State(0)],[Event(description="llegada"),Event(description="salida")])
+modelo=rentBike(5,9)
 modelo.generate()
 print(modelo.get_generator_matrix())
 modelo.print_states()
