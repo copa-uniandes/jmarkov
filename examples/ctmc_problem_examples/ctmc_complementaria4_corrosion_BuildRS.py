@@ -6,6 +6,18 @@ from jmarkov.transition import TransitionsSet
 
 
 class Corrosion(MarkovProcess):
+    """
+    Example with 2 state variables where x(t) = Is the pump corrosion level, 
+    y(t) = Is the level of impact on the environment. Where Sx = {0, 1, 2,..., 5},
+    S(y) = {low, high}
+    """
+
+    lam_alto:float
+    lam_bajo:float
+    lam_alto_bajo:float
+    lam_bajo_alto:float
+    max:int
+    min:int
 
     def __init__(self, lam_alto, lam_bajo, lam_alto_bajo, lam_bajo_alto,max,min):
         self.lam_alto      = lam_alto        
@@ -17,12 +29,12 @@ class Corrosion(MarkovProcess):
 
         
         super().__init__(
-            states_list=[State(1, "alto")],
+            states_list=[State(1, "Alto")],
             events_list=[
-                Event(description="corrosion_sube"),
-                Event(description="corrosion_baja"),
-                Event(description="ambiente_baja"),
-                Event(description="ambiente_sube"),
+                Event(description="Corrosion_Sube"),
+                Event(description="Corrosion_Baja"),
+                Event(description="Ambiente_Baja"),
+                Event(description="Ambiente_Sube"),
             ]
         )
 
@@ -31,21 +43,21 @@ class Corrosion(MarkovProcess):
         i = state.get_value(0)   
         j = state.get_value(1)   
 
-        if event.description() == "corrosion_sube":
+        if event.description() == "Corrosion_Sube":
             if i < self.max:
                 trans.add(State(i + 1, j), self.lam_alto)
 
-        elif event.description() == "corrosion_baja":
+        elif event.description() == "Corrosion_Baja":
             if i > self.min:
                 trans.add(State(i - 1, j), self.lam_bajo)
 
-        elif event.description() == "ambiente_baja":
-            if j == "alto":
-                trans.add(State(i, "bajo"), self.lam_alto_bajo)
+        elif event.description() == "Ambiente_Baja":
+            if j == "Alto":
+                trans.add(State(i, "Bajo"), self.lam_alto_bajo)
 
-        elif event.description() == "ambiente_sube":
-            if j == "bajo":
-                trans.add(State(i, "alto"), self.lam_bajo_alto)
+        elif event.description() == "Ambiente_Sube":
+            if j == "Bajo":
+                trans.add(State(i, "Alto"), self.lam_bajo_alto)
 
         return trans
 
@@ -60,8 +72,8 @@ modelo = Corrosion(
     )
 
     
-orden_ambiente = {"alto": 0, "bajo": 1}
-modelo.generate(key=lambda s: (s.get_value(0), orden_ambiente[s.get_value(1)]))
+
+modelo.generate(key=lambda s: (s.get_value(0)))
 
 modelo.print_states()
 
@@ -72,12 +84,3 @@ print(Q)
 print("\nVerificacion - suma de filas de Q:")
 for i, row in enumerate(Q):
     print(f"  fila {i}: {sum(row):+.6f}")
-
-
-
-
-
-
-
-    
-    
