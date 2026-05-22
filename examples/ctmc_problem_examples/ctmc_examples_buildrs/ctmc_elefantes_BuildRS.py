@@ -1,9 +1,25 @@
+import sys
+import os.path
+import numpy as np
+# context for the examples
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..')))
+
 from jmarkov.markovprocess import MarkovProcess
 from jmarkov.state import State
 from jmarkov.event import Event
 from jmarkov.transition import TransitionsSet
 
 class elefantes(MarkovProcess):
+    """
+    Example with 2 state variables where x(t) = Is the number of customers in the circus, 
+    y(t) = The state of the elephant. Where Sx = {0, 1, 2,..., 6},
+    S(y) = {R(resting), W(working)}
+    """
+
+    lam:float
+    mu:float
+    theta:float
+    omega:float
 
     def __init__(self,lam,mu,theta,omega):
         self.lam=lam
@@ -43,7 +59,7 @@ class elefantes(MarkovProcess):
                 trans.add(State(i,"W"),self.omega)
         return trans
     
-modelo = elefantes(lam=0.5,mu=1/4,theta=1/45,omega=1/10)
+modelo = elefantes(lam = 0.5, mu = 1/4, theta = 1/45, omega = 1/10)
 modelo.generate(key=lambda s:(s.get_value(0)))
 Q = modelo.get_generator_matrix()
 print(Q)

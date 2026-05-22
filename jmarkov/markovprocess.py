@@ -153,7 +153,7 @@ class MarkovProcess:
         self._states.numerate_states(key=key)
 
     # ------------------------------------------------------------------
-    # Intern labels sorted by index
+    # Internal labels sorted by index
     # ------------------------------------------------------------------
 
     def _get_labels(self) -> list:
