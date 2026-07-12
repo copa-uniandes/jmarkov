@@ -208,7 +208,7 @@ class phph1():
             return self.probs
         else:
             print('Unstable queue')
-            return np.array([0.0])
+            return np.array([1.0])
     
 
     def mean_number_entities(self)-> np.float64:
@@ -221,7 +221,7 @@ class phph1():
         if self.is_stable():
             if np.isnan(self.probs).any():
                 self._solve_mc()
-            mean_num = 0.0
+            mean_num = np.float64(0.0)
             for i in range(self.n):
                 mean_num += self.probs[i]*i
 
@@ -241,7 +241,7 @@ class phph1():
         if self.is_stable():
             if np.isnan(self.probs).any():
                 self._solve_mc()
-            mean_num = 0.0 
+            mean_num = np.float64(0.0) 
             for i in range(1, self.n):
                 mean_num += self.probs[i]*(i-1)
 
@@ -328,7 +328,7 @@ class phph1():
         else:
             print('Unstable queue')
             return np.float64(0.0)
-
+        
     def mean_time_service(self)-> np.float64:
         """
         Computes the mean time in service
@@ -351,12 +351,12 @@ class phph1():
         rho = self.ST.mean()/self.IAT.mean()
         return rho
     
-    def is_stable(self)-> bool:
+    def is_stable(self)-> np.bool:
         """
         Returns True if the queue is stable, False otherwise
         
         This queue is stable if the arrival rate is smaller than the 
         maximum service rate
         """
-        return (bool)(self.ST.mean() < self.IAT.mean()) 
+        return (self.ST.mean() < self.IAT.mean()) 
         
