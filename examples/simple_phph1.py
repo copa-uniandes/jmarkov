@@ -72,7 +72,7 @@ print("Response time distribution:")
 print(f'alpha: {RT.alpha}')
 print(f'T: {RT.T}')
 
-mean_RT = RT.expected_value()
+mean_RT = RT.mean()
 print(f'mean RT: {mean_RT}')
 rango = np.arange(0,1,0.001)*3*mean_RT
 

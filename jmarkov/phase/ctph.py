@@ -2,6 +2,7 @@ import math
 import numpy as np
 from scipy import linalg
 from scipy import sparse
+from ..matrix_utils import exp_unif
 
 class ctph():
 
@@ -38,13 +39,24 @@ class ctph():
         else:
             return False
 
-    def pdf(self,t:float) -> float:
-        res = 0.0
-        if t == 0:
-            res = 1 - self.alpha.sum()
-        elif t > 0:                 
-            P=linalg.expm(self.T*t)  #exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
-            res = -self.alpha@P@(self.T).sum(1)
+    def pdf(self,t:list, unif:bool=True) -> list[float]:
+        n = len(t)
+        res = list(np.zeros(n)*0.0)
+        if unif:
+            #print(f"(self.T).sum(1): {(self.T).sum(1)}")
+            #print(f"-self.T@np.ones((self.n_phases,1)): {(-self.T@np.ones((self.n_phases,1)))}")
+            #print(f"np.ones((self.n_phases,1)): {np.ones((self.n_phases,1))}")
+
+            #res = exp_unif(self.T, np.array([t]), self.alpha, np.ones((self.n_phases,1)) )[0]
+            res = list(exp_unif(self.T, t, self.alpha, -self.T@np.ones((self.n_phases,1)) ))
+        else:
+            for i in range(n):
+                if t[i] == 0:
+                    res[i] = 1 - self.alpha.sum()
+                else:
+                    P=linalg.expm(self.T*t)  #exponentiate the diferential generator following the method of Mohy et al (https://eprints.maths.manchester.ac.uk/1300/1/alhi09a.pdf)
+                    res[i] = -self.alpha@P@(self.T).sum(1)
+                
         return res
     
     def cdf(self,t:float,stop:float=0,step:float=0) -> np.ndarray:

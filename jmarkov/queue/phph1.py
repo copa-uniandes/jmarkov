@@ -23,7 +23,7 @@ class phph1():
     ST:ctph
 
     # steady state probabilities
-    probs:np.array
+    probs:np.ndarray
 
     # number of entries in the steady state vector to compute
     n:int
@@ -43,8 +43,8 @@ class phph1():
         self.IAT=IAT
         self.ST = ST
 
-        mean_iat = IAT.expected_value()
-        mean_st = ST.expected_value()
+        mean_iat = IAT.mean()
+        mean_st = ST.mean()
         rho = mean_st/mean_iat
 
         if rho >= 1:
@@ -75,7 +75,7 @@ class phph1():
         t = -np.sum(T,axis=1)
         # convert t to column vector
         t = t[:,np.newaxis]
-        avgt = self.IAT.expected_value()
+        avgt = self.IAT.mean()
 
         # service
         ms = self.ST.n_phases
@@ -86,7 +86,7 @@ class phph1():
         s = -np.sum(S,axis=1)
         # convert s to column vector
         s = s[:,np.newaxis]
-        avgs = self.ST.expected_value()
+        avgs = self.ST.mean()
 
         mtot = ms*ma
         rho = avgs/avgt
@@ -195,7 +195,7 @@ class phph1():
             )
         self.RT = ctph(resp_alpha,resp_T)
     
-    def number_entities_dist(self)-> float:
+    def number_entities_dist(self)-> np.ndarray:
         """
         Computes the distribution of the number of entities in the system in steady state
         
@@ -208,7 +208,7 @@ class phph1():
             return self.probs
         else:
             print('Unstable queue')
-            return 0.0
+            return np.array([0.0])
     
 
     def mean_number_entities(self)-> np.float64:
@@ -221,14 +221,14 @@ class phph1():
         if self.is_stable():
             if np.isnan(self.probs).any():
                 self._solve_mc()
-            mean_num = 0 
+            mean_num = 0.0
             for i in range(self.n):
                 mean_num += self.probs[i]*i
 
-            return mean_num
+            return np.float64(mean_num)
         else:
             print('Unstable queue')
-            return 0
+            return np.float64(0.0)
 
 
     def mean_number_entities_queue(self)-> np.float64:
@@ -241,14 +241,14 @@ class phph1():
         if self.is_stable():
             if np.isnan(self.probs).any():
                 self._solve_mc()
-            mean_num = 0 
+            mean_num = 0.0 
             for i in range(1, self.n):
                 mean_num += self.probs[i]*(i-1)
 
-            return mean_num
+            return np.float64(mean_num)
         else:
             print('Unstable queue')
-            return 0
+            return np.float64(0.0)
 
     def mean_number_entities_service(self)-> np.float64:
         """
@@ -263,7 +263,7 @@ class phph1():
             return 1 - self.probs[0]
         else:
             print('Unstable queue')
-            return 0
+            return np.float64(0.0)
         
     def wait_time_dist(self)-> ctph:
         """
@@ -278,7 +278,7 @@ class phph1():
             return self.WT
         else:
             print('Unstable queue')
-            return 0.0
+            return ctph(np.array([0]), np.array([-0.0]))
         
     def resp_time_dist(self)-> ctph:
         """
@@ -294,7 +294,7 @@ class phph1():
             return self.RT
         else:
             print('Unstable queue')
-            return 0.0
+            return ctph(np.array([0]), np.array([-0.0]))
 
 
     def mean_time_system(self)-> np.float64:
@@ -307,11 +307,11 @@ class phph1():
         """
         if self.is_stable():
             L = self.mean_number_entities()
-            arr_rate = 1/self.IAT.expected_value()
+            arr_rate = 1/self.IAT.mean()
             return L/arr_rate
         else:
             print('Unstable queue')
-            return 0
+            return np.float64(0.0)
     
     def mean_time_queue(self)-> np.float64:
         """
@@ -323,12 +323,12 @@ class phph1():
         """
         if self.is_stable():
             Lq = self.mean_number_entities_queue()
-            arr_rate = 1/self.IAT.expected_value()
+            arr_rate = 1/self.IAT.mean()
             return Lq/arr_rate
         else:
             print('Unstable queue')
-            return 0
-    
+            return np.float64(0.0)
+
     def mean_time_service(self)-> np.float64:
         """
         Computes the mean time in service
@@ -336,11 +336,10 @@ class phph1():
         A simple relation is used to obtain the mean service time
         """
         if self.is_stable():
-            return self.ST.expected_value()
+            return self.ST.mean()
         else:
             print('Unstable queue')
-            return 0
-    
+            return np.float64(0.0)
 
     def utilization(self)-> np.float64:
         """
@@ -349,7 +348,7 @@ class phph1():
         The mean server utilization is computed as the ratio between the arrival rate
         and the service rate times the number of servers
         """
-        rho = self.ST.expected_value()/self.IAT.expected_value()
+        rho = self.ST.mean()/self.IAT.mean()
         return rho
     
     def is_stable(self)-> bool:
@@ -359,5 +358,5 @@ class phph1():
         This queue is stable if the arrival rate is smaller than the 
         maximum service rate
         """
-        return self.ST.expected_value() < self.IAT.expected_value() 
+        return (bool)(self.ST.mean() < self.IAT.mean()) 
         

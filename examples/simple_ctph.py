@@ -15,10 +15,10 @@ ph = ctph(alpha, T)
 print(ph.alpha)
 print(ph.T)
 
-pdf1 = ph.pdf(0.5)
+pdf1 = ph.pdf([0.5])
 print(pdf1)
 
-pdf2 = ph.pdf(5)
+pdf2 = ph.pdf([5])
 print(pdf2)
 
 ev = ph.mean()
