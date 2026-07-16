@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jmarkov"
-version = "0.3.12"
+version = "0.3.13"
 authors = [
   { name="Juan F Perez", email="juanfernando.perez@gmail.com" },
   { name="Maria-Gabriela Urango", email="m.urango@uniandes.edu.co" },
@@ -22,7 +22,7 @@ dependencies = [
   "scipy",
   "typing"
 ]
-license = "ECLIPSE PUBLIC LICENSE 2.0 (EPL-2.0)"
+license = "EPL-2.0"
 license-file = ["LICENSE"]
 
 

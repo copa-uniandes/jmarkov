@@ -13,7 +13,7 @@ cof:list = [76.18009172947146, -86.50532032941677,    24.01409824083091,
 # Log factorial coefficients
 a:list = [0.0] * 101
 
-def exp_unif(A: ndarray, times: list, leftVec: ndarray, rightVec: ndarray, truncate: int=1000) -> ndarray:
+def exp_unif(A: ndarray, times: list, leftVec: ndarray, rightVec: ndarray, truncate: int=100000) -> ndarray:
     """
     Computes leftVec * exp(A x) * rightVec, for all values x in times, using the uniformization algorithm
     A: Matrix
