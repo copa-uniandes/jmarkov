@@ -1,0 +1,58 @@
+\noindent\textit{Enunciado adaptado del problema 8 del Banco de Problemas de Aprendizaje por Refuerzo (Modelos de Decisión en el Tiempo, Módulo 3, IIND-3518, Universidad de los Andes).}
+
+\bigskip
+
+\noindent Un hotel escoge cada día una tarifa baja ($b$) o alta ($a$) según su ocupación: baja ($B$), media ($M$) o alta ($A$). El ingreso del día depende de la ocupación y de la tarifa:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\toprule
+Ocupación & Tarifa baja ($b$) & Tarifa alta ($a$)\\
+\midrule
+B & 6,5 & 3\\
+M & 6 & 4\\
+A & 7 & 10\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent La ocupación del día siguiente es \textbf{aleatoria}: desde una misma ocupación y con la misma tarifa, el hotel puede amanecer al día siguiente con ocupación baja, media o alta. Las probabilidades dependen solo de la ocupación de hoy y de la tarifa elegida, y están dadas por las siguientes tablas. Cada fila corresponde a la ocupación de hoy, cada columna a la ocupación de mañana, y cada fila suma 1.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\multicolumn{4}{c}{\textit{Si se cobra la tarifa baja ($b$)}}\\
+\toprule
+Ocupación hoy & Mañana B & Mañana M & Mañana A\\
+\midrule
+B & 0,3 & 0,5 & 0,2\\
+M & 0,2 & 0,4 & 0,4\\
+A & 0,1 & 0,3 & 0,6\\
+\bottomrule
+\end{tabular}
+\qquad
+\begin{tabular}{cccc}
+\multicolumn{4}{c}{\textit{Si se cobra la tarifa alta ($a$)}}\\
+\toprule
+Ocupación hoy & Mañana B & Mañana M & Mañana A\\
+\midrule
+B & 0,7 & 0,3 & 0\\
+M & 0,4 & 0,4 & 0,2\\
+A & 0,2 & 0,5 & 0,3\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Por ejemplo, si hoy la ocupación es baja y se cobra la tarifa baja, mañana la ocupación será baja con probabilidad 0,3, media con probabilidad 0,5 y alta con probabilidad 0,2. Con ocupación baja y tarifa alta, en cambio, la ocupación no puede subir a alta al día siguiente. El algoritmo de Q-learning \textbf{no conoce estas probabilidades}: solo observa, en cada día simulado, la ocupación a la que efectivamente se pasa y el ingreso recibido.
+
+\noindent El hotel opera indefinidamente, empieza con ocupación baja y usa $\gamma = 0{,}9$.
+
+\begin{enumerate}
+\item Formule el problema para Q-learning: estados, acciones factibles y qué observa el algoritmo después de cada decisión.
+\item Entrene Q-learning con $\alpha = 0{,}01$, $\varepsilon = 0{,}2$, $2 \times 10^5$ pasos y semilla 2026. Presente la tabla $Q$ y la política greedy aprendida.
+\item Calcule la política óptima de forma exacta con \emph{value iteration} y compárela con la aprendida en el inciso anterior. Compare también la ganancia máxima de cada estado con la ganancia de seguir la política aprendida.
+\item Interprete la política óptima y compárela con la política greedy $(b, b, a)$ que se obtiene en el problema original después de procesar las seis experiencias.
+\end{enumerate}
+
+\noindent\textbf{Solución:} \texttt{qlearning\_problem\_solutions/qlearning\_hotel.ipynb}.
