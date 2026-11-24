@@ -1,0 +1,18 @@
+\noindent\textit{Enunciado adaptado de los problemas 4 y 5 del Banco de Problemas de Aprendizaje por Refuerzo (Modelos de Decisión en el Tiempo, Módulo 3, IIND-3518, Universidad de los Andes).}
+
+\bigskip
+
+\noindent Una tienda mantiene un inventario $S_t \in \{0, 1, 2\}$. Al comenzar el día elige un pedido $A_t \in \{0, \dots, 2 - S_t\}$, que llega de inmediato. La demanda del día es $D_t \in \{0, 1\}$, con probabilidad $1/2$ para cada valor. Las ventas, el inventario siguiente y la recompensa son
+\[
+Y_t = \min\{S_t + A_t,\ D_t\}, \qquad S_{t+1} = S_t + A_t - Y_t, \qquad R_{t+1} = 5Y_t - 2A_t - S_{t+1}.
+\]
+Es decir, cada unidad vendida deja 5, cada unidad pedida cuesta 2 y cada unidad que queda en inventario al final del día cuesta 1. El negocio opera indefinidamente, empieza con $S_0 = 1$ y usa $\gamma = 0{,}9$.
+
+\begin{enumerate}
+\item Formule el problema para Q-learning: estados, acciones factibles y qué observa el algoritmo después de cada decisión.
+\item Entrene Q-learning con $\alpha = 0{,}005$, $\varepsilon = 0{,}2$, $10^6$ pasos y semilla 2026. Presente la tabla $Q$ y la política greedy aprendida.
+\item Calcule la política óptima de forma exacta con \emph{value iteration} y compárela con la aprendida en el inciso anterior. Compare también la ganancia máxima de cada estado con la ganancia de seguir la política aprendida.
+\item Interprete la política óptima en cada estado.
+\end{enumerate}
+
+\noindent\textbf{Solución:} \texttt{qlearning\_problem\_solutions/qlearning\_tienda.ipynb}.

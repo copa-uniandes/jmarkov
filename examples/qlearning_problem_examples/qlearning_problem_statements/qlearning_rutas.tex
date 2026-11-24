@@ -1,0 +1,30 @@
+\noindent\textit{Enunciado adaptado del problema 9 del Banco de Problemas de Aprendizaje por Refuerzo (Modelos de Decisión en el Tiempo, Módulo 3, IIND-3518, Universidad de los Andes).}
+
+\bigskip
+
+\noindent Un vehículo autónomo opera en una cuadrícula de $3 \times 5$. Las coordenadas son (fila, columna), con $(0,0)$ arriba a la izquierda. Parte de $S = (2,0)$ y debe hacer entregas en $G = (2,4)$. Las posiciones $(2,1)$, $(2,2)$ y $(2,3)$ son peligrosas:
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$(0,0)$ & $(0,1)$ & $(0,2)$ & $(0,3)$ & $(0,4)$\\
+\hline
+$(1,0)$ & $(1,1)$ & $(1,2)$ & $(1,3)$ & $(1,4)$\\
+\hline
+$S$ & ! & ! & ! & $G$\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent Las acciones, indexadas 0, 1, 2 y 3, son arriba, derecha, abajo e izquierda. Los movimientos son \textbf{determinísticos}: cada acción lleva siempre a la posición vecina en esa dirección. Un movimiento fuera de la cuadrícula deja al vehículo en el mismo lugar. Todo movimiento normal genera $-1$. Entrar en una posición peligrosa genera $-30$ y devuelve al vehículo a $S$. Llegar a $G$ genera $+10$ por la entrega y el vehículo vuelve a $S$. El vehículo opera indefinidamente y se usa $\gamma = 0{,}95$.
+
+\begin{enumerate}
+\item Formule el problema para Q-learning: estados, acciones factibles y qué observa el algoritmo después de cada decisión.
+\item Entrene Q-learning con $\alpha = 0{,}1$, $\varepsilon = 0{,}1$, $2 \times 10^5$ pasos y semilla 2026. Reporte la trayectoria greedy desde $S$ hasta $G$ y su recompensa.
+\item Calcule la política óptima de forma exacta con \emph{value iteration}. Compare la ganancia máxima de cada estado con la ganancia de seguir la política aprendida en el inciso anterior.
+\item Repita el entrenamiento con $\varepsilon = 0{,}3$ y la misma semilla. Compare la trayectoria greedy y la ganancia de la política aprendida con las de $\varepsilon = 0{,}1$.
+\end{enumerate}
+
+\noindent\textbf{Solución:} \texttt{qlearning\_problem\_solutions/qlearning\_rutas.ipynb}.
